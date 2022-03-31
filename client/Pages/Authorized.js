@@ -42,6 +42,7 @@ export default function App() {
                 ></FontAwesome5>
               </View>
             ),
+            title: "",
           }}
         />
         <Tab.Screen
