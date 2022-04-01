@@ -40,26 +40,14 @@ const ItemView = ({ item }) => {
 };
 
 const SearchRandomUser = ({ search }) => {
-  //use the present search context rather than the context from which the debounce func was called
-  const currentSearch = useRef();
-  const debounce = (func) => {
-    let timer;
-    return function (...args) {
-      const context = this;
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        timer = null;
-        func.apply(context, args);
-      }, 1000)
-    }
-  }
-
-  currentSearch.current = search;
-
-  const optimizedSearch = useCallback(debounce(() => console.log(currentSearch.current)), []);
-  optimizedSearch()
   return (
-    <TouchableOpacity onPress={() => console.log('throttle (1s) the query to the db, then go to blocked user page')}>
+    <TouchableOpacity
+      onPress={() =>
+        console.log(
+          "throttle (1s) the query to the db, then go to blocked user page"
+        )
+      }
+    >
       <View>
         <Text style={{ padding: 15 }}>Searching for User: {search}</Text>
       </View>
@@ -83,6 +71,7 @@ export default function SearchScreen() {
   const [recentSearches, setRecentSearches] = useState();
   const [filteredData, setFilteredData] = useState();
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getLocally("searchHistory")
@@ -100,11 +89,55 @@ export default function SearchScreen() {
     // removeLocally("searchHistory")
   }, []);
 
+  const currentSearch = useRef();
+  const debounce = (func) => {
+    let timer;
+    return function (...args) {
+      const context = this;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = null;
+        func.apply(context, args);
+      }, 2000);
+    };
+  };
+
+  currentSearch.current = search;
+
+  const optimizedSearch = useCallback(
+    debounce(() => {
+      //hard coded
+      //joseph exists in db, but jose does not
+      if (
+        reduxData.filter((item) =>
+          item.toLowerCase().startsWith(currentSearch.current.toLowerCase())
+        ).length
+      ) {
+        setLoading(false);
+        return;
+      }
+        if (currentSearch.current === "Joseph") {
+          setFilteredData([currentSearch.current, "this query was from database"]);
+        } else {
+          setFilteredData(["User not found"]);
+        }
+      setLoading(false);
+    }),
+    []
+  );
+
   const searchFilter = (text) => {
     if (text) {
       const newData = reduxData.filter((item) =>
         item.toLowerCase().startsWith(text.toLowerCase())
       );
+      if (!newData.length) {
+        setLoading(true);
+        optimizedSearch();
+        setSearch(text);
+        return;
+      }
+      setLoading(false);
       setFilteredData(newData);
       setSearch(text);
     } else {
@@ -131,7 +164,7 @@ export default function SearchScreen() {
         underlineColorAndroid="transparent"
         onChangeText={(text) => searchFilter(text)}
       />
-      {Array.isArray(filteredData) && filteredData.length ? (
+      {!loading ? (
         <FlatList
           keyExtractor={(item) => item}
           ItemSeparatorComponent={ItemSeparatorView}
