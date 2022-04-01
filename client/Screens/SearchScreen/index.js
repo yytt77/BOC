@@ -1,10 +1,8 @@
 import { Text, View } from 'react-native';
-import styles from "../../Styles/searchStyles";
+import Search from "./Search"
 
-export default function SearchScreen() {
+export default function SettingsScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Search Screen</Text>
-    </View>
+    <Search/>
   );
 }
