@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import styles from "../../Styles/searchStyles";
 import { colorTheme1 } from "../../constants";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { getLocally, storeLocally, removeLocally } from "../../LocalStorage";
 
 const ItemSeparatorView = () => (
@@ -40,10 +40,28 @@ const ItemView = ({ item }) => {
 };
 
 const SearchRandomUser = ({ search }) => {
+  //use the present search context rather than the context from which the debounce func was called
+  const currentSearch = useRef();
+  const debounce = (func) => {
+    let timer;
+    return function (...args) {
+      const context = this;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = null;
+        func.apply(context, args);
+      }, 1000)
+    }
+  }
+
+  currentSearch.current = search;
+
+  const optimizedSearch = useCallback(debounce(() => console.log(currentSearch.current)), []);
+  optimizedSearch()
   return (
     <TouchableOpacity onPress={() => console.log('throttle (1s) the query to the db, then go to blocked user page')}>
       <View>
-        <Text style={{ padding: 15 }}>Search for User: {search}</Text>
+        <Text style={{ padding: 15 }}>Searching for User: {search}</Text>
       </View>
     </TouchableOpacity>
   );
