@@ -1,54 +1,30 @@
-import React, { Fragment, Component } from 'react';
-import ImagePicker from 'react-native-image-picker';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Image,
-  Button,
-  Dimensions,
-  TouchableOpacity
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Button, Image, Text, View, Platform } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
-export default function () {
-  let options = {
-    title: 'Select Image',
-    customButtons: [
-      { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-    ],
-    storageOptions: {
-      skipBackup: true,
-      path: 'images',
-    },
+export default function Upload() {
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
   };
 
-  /**
-* The first arg is the options object for customization (it can also be null or omitted for default options),
-* The second arg is the callback which sends object: response (more info in the API Reference)
-*/
-  ImagePicker.showImagePicker(options, (response) => {
-    console.log('Response = ', response);
-
-    if (response.didCancel) {
-      console.log('User cancelled image picker');
-    } else if (response.error) {
-      console.log('ImagePicker Error: ', response.error);
-    } else if (response.customButton) {
-      console.log('User tapped custom button: ', response.customButton);
-    } else {
-      const source = { uri: response.uri };
-
-      // You can also display the image using data:
-      // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-      this.setState({
-        filePath: response,
-        fileData: response.data,
-        fileUri: response.uri
-      });
-    }
-  });
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+    </View>
+  );
 }
