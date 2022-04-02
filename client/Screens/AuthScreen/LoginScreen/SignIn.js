@@ -4,12 +4,16 @@ import PasswordInput from './PasswordInput.js';
 
 export default function SignInScreen() {
 
+   const onPressSignInButton = () => {
+     //
+   }
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Sign in here</Text>
       <AccountInput />
       <PasswordInput />
+      <SignInButton onPress = {onPressSignInButton} />
     </View>
   );
 }
