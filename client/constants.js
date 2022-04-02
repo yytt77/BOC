@@ -3,3 +3,5 @@ export const colorTheme1 = {
   navColor: "#57D785",
   buttonColor: "#FEFB9F",
 };
+
+export const API_IP = "localhost:3000"

@@ -5,11 +5,14 @@ import {
   SafeAreaView,
   FlatList,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
 import styles from "../../Styles/searchStyles";
-import { colorTheme1 } from "../../constants";
+import { colorTheme1, API_IP } from "../../constants";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { getLocally, storeLocally, removeLocally } from "../../LocalStorage";
+
+import axios from "axios";
 
 const ItemSeparatorView = () => (
   <View style={{ height: 1, width: 500, backgroundColor: "white" }}></View>
@@ -41,17 +44,10 @@ const ItemView = ({ item }) => {
 
 const SearchRandomUser = ({ search }) => {
   return (
-    <TouchableOpacity
-      onPress={() =>
-        console.log(
-          "throttle (1s) the query to the db, then go to blocked user page"
-        )
-      }
-    >
-      <View>
-        <Text style={{ padding: 15 }}>Searching for User: {search}</Text>
-      </View>
-    </TouchableOpacity>
+    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+      <Text style={{ padding: 15 }}>Searching for User: {search}</Text>
+      <ActivityIndicator size="small" color={colorTheme1.buttonColor} />
+    </View>
   );
 };
 
@@ -98,16 +94,14 @@ export default function SearchScreen() {
       timer = setTimeout(() => {
         timer = null;
         func.apply(context, args);
-      }, 2000);
+      }, 1000);
     };
   };
 
   currentSearch.current = search;
 
   const optimizedSearch = useCallback(
-    debounce(() => {
-      //hard coded
-      //joseph exists in db, but jose does not
+    debounce(async () => {
       if (
         reduxData.filter((item) =>
           item.toLowerCase().startsWith(currentSearch.current.toLowerCase())
@@ -116,11 +110,14 @@ export default function SearchScreen() {
         setLoading(false);
         return;
       }
-        if (currentSearch.current === "Joseph") {
-          setFilteredData([currentSearch.current, "this query was from database"]);
-        } else {
-          setFilteredData(["User not found"]);
-        }
+      const user = await axios.get(
+        `http://${API_IP}/user/getUser/${currentSearch.current}`
+      );
+      if (user.data.userInfo) {
+        setFilteredData([currentSearch.current]);
+      } else {
+        setFilteredData(["User not found"]);
+      }
       setLoading(false);
     }),
     []
@@ -163,6 +160,7 @@ export default function SearchScreen() {
         placeholder="Search people you follow"
         underlineColorAndroid="transparent"
         onChangeText={(text) => searchFilter(text)}
+        autoCapitalize="none"
       />
       {!loading ? (
         <FlatList
