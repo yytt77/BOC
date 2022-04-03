@@ -5,11 +5,14 @@ import {
   SafeAreaView,
   FlatList,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
 import styles from "../../Styles/searchStyles";
-import { colorTheme1 } from "../../constants";
-import { useState, useEffect } from "react";
+import { colorTheme1, API_IP } from "../../constants";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { getLocally, storeLocally, removeLocally } from "../../LocalStorage";
+
+import axios from "axios";
 
 const ItemSeparatorView = () => (
   <View style={{ height: 1, width: 500, backgroundColor: "white" }}></View>
@@ -41,11 +44,10 @@ const ItemView = ({ item }) => {
 
 const SearchRandomUser = ({ search }) => {
   return (
-    <TouchableOpacity onPress={() => console.log('throttle (1s) the query to the db, then go to blocked user page')}>
-      <View>
-        <Text style={{ padding: 15 }}>Search for User: {search}</Text>
-      </View>
-    </TouchableOpacity>
+    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+      <Text style={{ padding: 15 }}>Searching for User: {search}</Text>
+      <ActivityIndicator size="small" color={colorTheme1.buttonColor} />
+    </View>
   );
 };
 
@@ -65,6 +67,7 @@ export default function SearchScreen() {
   const [recentSearches, setRecentSearches] = useState();
   const [filteredData, setFilteredData] = useState();
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getLocally("searchHistory")
@@ -82,11 +85,56 @@ export default function SearchScreen() {
     // removeLocally("searchHistory")
   }, []);
 
+  const currentSearch = useRef();
+  const debounce = (func) => {
+    let timer;
+    return function (...args) {
+      const context = this;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = null;
+        func.apply(context, args);
+      }, 1000);
+    };
+  };
+
+  currentSearch.current = search;
+
+  const optimizedSearch = useCallback(
+    debounce(async () => {
+      if (
+        reduxData.filter((item) =>
+          item.toLowerCase().startsWith(currentSearch.current.toLowerCase())
+        ).length
+      ) {
+        setLoading(false);
+        return;
+      }
+      const user = await axios.get(
+        `http://${API_IP}/user/getUser/${currentSearch.current}`
+      );
+      if (user.data.userInfo) {
+        setFilteredData([currentSearch.current]);
+      } else {
+        setFilteredData(["User not found"]);
+      }
+      setLoading(false);
+    }),
+    []
+  );
+
   const searchFilter = (text) => {
     if (text) {
       const newData = reduxData.filter((item) =>
         item.toLowerCase().startsWith(text.toLowerCase())
       );
+      if (!newData.length) {
+        setLoading(true);
+        optimizedSearch();
+        setSearch(text);
+        return;
+      }
+      setLoading(false);
       setFilteredData(newData);
       setSearch(text);
     } else {
@@ -112,8 +160,9 @@ export default function SearchScreen() {
         placeholder="Search people you follow"
         underlineColorAndroid="transparent"
         onChangeText={(text) => searchFilter(text)}
+        autoCapitalize="none"
       />
-      {Array.isArray(filteredData) && filteredData.length ? (
+      {!loading ? (
         <FlatList
           keyExtractor={(item) => item}
           ItemSeparatorComponent={ItemSeparatorView}
