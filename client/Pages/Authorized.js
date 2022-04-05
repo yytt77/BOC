@@ -22,9 +22,9 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          headerStyle: { "height": 50, "backgroundColor": colorTheme1.navColor },
+          headerStyle: {"height": 50, "backgroundColor": colorTheme1.navColor},
           tabBarShowLabel: true,
-          tabBarStyle: { ...styles.tabBarStyle, backgroundColor: colorTheme1.navColor },
+          tabBarStyle: {...styles.tabBarStyle, backgroundColor: colorTheme1.navColor},
           tabBarActiveTintColor: colorTheme1.pageColor,
           tabBarInactiveTintColor: colorTheme1.buttonColor,
         })}
@@ -61,12 +61,14 @@ export default function App() {
         />
         <Tab.Screen
           name="Upload"
-          component={Upload}
+          component={EmptyScreen}
           options={{
             tabBarIcon: () => (
-              <View style={[styles.uploadCircle, { backgroundColor: colorTheme1.buttonColor }]}>
-                <Image source={plus} style={[styles.plus, { tintColor: colorTheme1.navColor }]}></Image>
-              </View>
+              <TouchableOpacity onPress={Upload}>
+                <View style={[styles.uploadCircle, {backgroundColor: colorTheme1.buttonColor}]}>
+                  <Image source={plus} style={[styles.plus, {tintColor: colorTheme1.navColor}]}></Image>
+                </View>
+              </TouchableOpacity>
             ),
           }}
         />
