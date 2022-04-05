@@ -4,11 +4,14 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 // import 'font-awesome/css/font-awesome.min.css';
 import { FontAwesome } from '@expo/vector-icons';
+import * as Location from 'expo-location';
 // import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 
 export default function Upload() {
   const [image, setImage] = useState(null);
   const [text, setText] = useState('');
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const pickImage = async () => {
 
@@ -61,23 +64,44 @@ export default function Upload() {
       setImage(result.uri);
       console.log(result.uri);
     }
+    locationPicker();
   }
 
-  return (
-    <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#84C0FB' }}>
-      <Text style={styles.header}> Post Your Pets</Text>
+  const locationPicker = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
 
-      <TouchableOpacity style={styles.button} onPress={openCamera}>
-        {image === null ? <FontAwesome name="image" style={styles.icon} size={100} /> : <Image source={{ uri: image }} style={{ width: 300, height: 200 }} />}
-      </TouchableOpacity>
-      <Text style={styles.caption}>Caption</Text>
-      <TextInput
-        style={{ height: 150, width: 300, backgroundColor: 'azure', fontSize: 15 }}
-        placeholder="Say something about your pet!"
-        onChangeText={(text) => setText({ text })}
-      />
-    </View>
-  );
+    let location = await Location.getCurrentPositionAsync({});
+    let gps = await Location.reverseGeocodeAsync({
+      latitude : location.coords.latitude,
+      longitude : location.coords.longitude
+    })
+    let address = await Location.geocodeAsync({
+    })
+    setLocation(location);
+    console.log('thisis', location);
+    console.log('address', address);
+    console.log('we have city', gps[0].city, '    ', gps[0].region);
+  }
+
+return (
+  <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#84C0FB' }}>
+    <Text style={styles.header}> Post Your Pets</Text>
+
+    <TouchableOpacity style={styles.button} onPress={openCamera}>
+      {image === null ? <FontAwesome name="image" style={styles.icon} size={100} /> : <Image source={{ uri: image }} style={{ width: 300, height: 200 }} />}
+    </TouchableOpacity>
+    <Text style={styles.caption}>Caption</Text>
+    <TextInput
+      style={{ height: 150, width: 300, backgroundColor: 'azure', fontSize: 15 }}
+      placeholder="Say something about your pet!"
+      onChangeText={(text) => setText({ text })}
+    />
+  </View>
+);
 }
 
 const styles = StyleSheet.create({
