@@ -61,14 +61,12 @@ export default function Authorized() {
         />
         <Tab.Screen
           name="Upload"
-          component={EmptyScreen}
+          component={Upload}
           options={{
             tabBarIcon: () => (
-              <TouchableOpacity onPress={Upload}>
-                <View style={[styles.uploadCircle, {backgroundColor: colorTheme1.buttonColor}]}>
-                  <Image source={plus} style={[styles.plus, {tintColor: colorTheme1.navColor}]}></Image>
-                </View>
-              </TouchableOpacity>
+              <View style={[styles.uploadCircle, { backgroundColor: colorTheme1.buttonColor }]}>
+                <Image source={plus} style={[styles.plus, { tintColor: colorTheme1.navColor }]}></Image>
+              </View>
             ),
           }}
         />
