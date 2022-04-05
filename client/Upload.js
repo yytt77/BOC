@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Button, Image, Text, View, Platform, TouchableOpacity, TextInput} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import * as ImagePicker from 'expo-image-picker';
