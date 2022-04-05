@@ -18,25 +18,59 @@ const ItemSeparatorView = () => (
   <View style={{ height: 1, width: 500, backgroundColor: "white" }}></View>
 );
 
-const ItemView = ({ item }) => {
+const ItemView = ({ item }, deleteHistory, goToUserPage) => {
   const onUserPress = async (username) => {
     const history = await getLocally("searchHistory");
     let newHistory = history ? [...JSON.parse(history)] : [];
-    if (newHistory.includes(username)) return;
-    newHistory.push(username);
-    storeLocally("searchHistory", JSON.stringify(newHistory));
+    if (!newHistory.includes(username)) {
+      newHistory.push(username);
+      storeLocally("searchHistory", JSON.stringify(newHistory));
+    }
+    goToUserPage();
   };
 
-  if (item === "Recent Searches" || item === "No Recent Searches")
+  if (item === "Recent Searches")
+    return (
+      <View
+        style={{
+          padding: 15,
+          fontSize: 15,
+          fontWeight: "100",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text>{item}</Text>
+        <TouchableOpacity onPress={deleteHistory}>
+          <Text style={{ color: "red" }}>Clear All</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  if (item === "No Recent Searches")
     return (
       <Text style={{ padding: 15, fontSize: 15, fontWeight: "100" }}>
         {item}
       </Text>
     );
   return (
-    <TouchableOpacity onPress={() => onUserPress(item)}>
+    <TouchableOpacity onPress={() => onUserPress(item.followedUser)}>
       <View>
-        <Text style={{ padding: 15 }}>{item}</Text>
+        {item?.followedUser ? (
+          <View
+            style={{
+              padding: 15,
+              fontSize: 15,
+              fontWeight: "100",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text>{item.followedProfPic}</Text>
+            <Text>{item.followedUser}</Text>
+          </View>
+        ) : (
+          <Text style={{ padding: 15 }}>{item}</Text>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -51,18 +85,13 @@ const SearchRandomUser = ({ search }) => {
   );
 };
 
-export default function SearchScreen() {
+export default function MainScreen({ navigation }) {
   //placeholder data for now
   const reduxData = [
-    "Joe",
-    "jackie",
-    "Judith",
-    "Harry",
-    "Dominic",
-    "Troy",
-    "Jenya",
-    "Glen",
-    "Ash",
+    {
+      followedUser: "joe",
+      followedProfPic: "Joe's profile photo",
+    },
   ];
   const [recentSearches, setRecentSearches] = useState();
   const [filteredData, setFilteredData] = useState();
@@ -82,8 +111,17 @@ export default function SearchScreen() {
         }
       })
       .catch((err) => console.error(err));
-    // removeLocally("searchHistory")
   }, []);
+
+  const deleteHistory = async () => {
+    await removeLocally("searchHistory");
+    setFilteredData(["No Recent Searches"]);
+    setRecentSearches(["No Recent Searches"]);
+  };
+
+  const goToUserPage = () => {
+    navigation.navigate('FollowedUser')
+  }
 
   const currentSearch = useRef();
   const debounce = (func) => {
@@ -104,19 +142,30 @@ export default function SearchScreen() {
     debounce(async () => {
       if (
         reduxData.filter((item) =>
-          item.toLowerCase().startsWith(currentSearch.current.toLowerCase())
+          item.followedUser
+            .toLowerCase()
+            .startsWith(currentSearch.current.toLowerCase())
         ).length
       ) {
         setLoading(false);
         return;
       }
-      const user = await axios.get(
-        `http://${API_IP}/user/getUser/${currentSearch.current}`
-      );
-      if (user.data.userInfo) {
-        setFilteredData([currentSearch.current]);
-      } else {
-        setFilteredData(["User not found"]);
+      try {
+        const user = await axios.get(
+          `http://${API_IP}/user/getUserMeta/${currentSearch.current}`
+        );
+        if (user.data.username) {
+          setFilteredData([
+            {
+              followedUser: user.data.username,
+              followedProfPic: user.data.profPhoto,
+            },
+          ]);
+        } else {
+          setFilteredData(["User not found"]);
+        }
+      } catch (err) {
+        setFilteredData(["Could not connect"]);
       }
       setLoading(false);
     }),
@@ -126,7 +175,7 @@ export default function SearchScreen() {
   const searchFilter = (text) => {
     if (text) {
       const newData = reduxData.filter((item) =>
-        item.toLowerCase().startsWith(text.toLowerCase())
+        item.followedUser.toLowerCase().startsWith(text.toLowerCase())
       );
       if (!newData.length) {
         setLoading(true);
@@ -167,7 +216,7 @@ export default function SearchScreen() {
           keyExtractor={(item) => item}
           ItemSeparatorComponent={ItemSeparatorView}
           data={filteredData}
-          renderItem={ItemView}
+          renderItem={(item) => ItemView(item, deleteHistory, goToUserPage)}
         />
       ) : (
         <SearchRandomUser search={search} />

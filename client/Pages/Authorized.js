@@ -17,7 +17,7 @@ import plus from "../assets/plus.png";
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+export default function Authorized() {
   return (
     <NavigationContainer>
       <Tab.Navigator
