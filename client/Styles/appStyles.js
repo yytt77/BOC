@@ -1,34 +1,26 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+  headerStyle: {
+    height: 50
+  },
   tabBarStyle: {
-    display: "flex",
-    backgroundColor: "white",
-    position: "absolute",
-    bottom: 30,
-    marginHorizontal: 20,
-    height: 60,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.06,
-    shadowOffset: {
-      width: 10,
-      height: 10,
-    },
+    height: 90,
     paddingHorizontal: 20,
+    paddingVertical: 20,
+    color: "#FEFB9F",
+    borderRadius: 4,
   },
   uploadCircle: {
     width: 50,
     height: 50,
-    backgroundColor: 'red',
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10
+    marginBottom: 40
   },
   plus: {
-    width: 20,
-    height: 20,
-    tintColor: 'white'
+    width: 25,
+    height: 25,
   }
 });
