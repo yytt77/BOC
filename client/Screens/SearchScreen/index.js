@@ -1,9 +1,8 @@
 import { Text, View } from 'react-native';
+import Search from "./Search"
 
-export default function SearchScreen() {
+export default function SettingsScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Search Screen</Text>
-    </View>
+    <Search/>
   );
 }

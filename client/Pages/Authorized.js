@@ -9,10 +9,11 @@ import SettingsScreen from "../Screens/SettingsScreen";
 import UserScreen from "../Screens/UserScreen";
 import SearchScreen from "../Screens/SearchScreen";
 import Upload from "../Upload";
+import { colorTheme1 } from "../constants";
 
 //Icons
-import { FontAwesome5, Feather } from "@expo/vector-icons";
-import plus from '../assets/plus.png'
+import { FontAwesome5, Entypo } from "@expo/vector-icons";
+import plus from "../assets/plus.png";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,95 +22,81 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarShowLabel: false,
-          tabBarStyle: styles.tabBarStyle,
+          headerStyle: {"height": 50, "backgroundColor": colorTheme1.navColor},
+          tabBarShowLabel: true,
+          tabBarStyle: {...styles.tabBarStyle, backgroundColor: colorTheme1.navColor},
+          tabBarActiveTintColor: colorTheme1.pageColor,
+          tabBarInactiveTintColor: colorTheme1.buttonColor,
         })}
       >
         <Tab.Screen
-          name="discover"
+          name="Home"
           component={DiscoverScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View
-                style={{
-                  top: "50%",
-                }}
-              >
+              <View>
                 <FontAwesome5
                   name="home"
                   size={20}
-                  color={focused ? "red" : "gray"}
+                  color={focused ? colorTheme1.pageColor : colorTheme1.buttonColor}
                 ></FontAwesome5>
               </View>
             ),
           }}
         />
         <Tab.Screen
-          name="search"
+          name="Search"
           component={SearchScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View
-                style={{
-                  top: "50%",
-                }}
-              >
+              <View>
                 <FontAwesome5
                   name="search"
                   size={20}
-                  color={focused ? "red" : "gray"}
+                  color={focused ? colorTheme1.pageColor : colorTheme1.buttonColor}
                 ></FontAwesome5>
               </View>
             ),
           }}
         />
         <Tab.Screen
-          name="upload"
+          name="Upload"
           component={EmptyScreen}
           options={{
             tabBarIcon: () => (
               <TouchableOpacity onPress={Upload}>
-                <View style={styles.uploadCircle}>
-                  <Image source={plus} style={styles.plus}></Image>
+                <View style={[styles.uploadCircle, {backgroundColor: colorTheme1.buttonColor}]}>
+                  <Image source={plus} style={[styles.plus, {tintColor: colorTheme1.navColor}]}></Image>
                 </View>
               </TouchableOpacity>
             ),
           }}
         />
         <Tab.Screen
-          name="settings"
+          name="Settings"
           component={SettingsScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View
-                style={{
-                  top: "50%",
-                }}
-              >
-                <Feather
-                  name="settings"
+              <View>
+                <Entypo
+                  name="dots-three-horizontal"
                   size={24}
-                  color={focused ? "red" : "gray"}
+                  color={focused ? colorTheme1.pageColor : colorTheme1.buttonColor}
                 />
               </View>
             ),
           }}
         />
         <Tab.Screen
-          name="user"
+          name="Profile"
           component={UserScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View
-                style={{
-                  top: "50%",
-                }}
-              >
+              <View>
                 <FontAwesome5
                   name="user-alt"
                   size={20}
-                  color={focused ? "red" : "gray"}
+                  color={focused ? colorTheme1.pageColor : colorTheme1.buttonColor}
                 ></FontAwesome5>
               </View>
             ),
@@ -120,4 +107,4 @@ export default function App() {
   );
 }
 
-const EmptyScreen = () => <View></View>
+const EmptyScreen = () => <View></View>;
