@@ -26,4 +26,4 @@ export default function SignInScreen() {
       <Text>Sign Up</Text>
     </View>
   );
-}
+}//
