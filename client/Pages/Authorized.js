@@ -17,7 +17,7 @@ import plus from "../assets/plus.png";
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+export default function Authorized() {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -61,14 +61,12 @@ export default function App() {
         />
         <Tab.Screen
           name="Upload"
-          component={EmptyScreen}
+          component={Upload}
           options={{
             tabBarIcon: () => (
-              <TouchableOpacity onPress={Upload}>
-                <View style={[styles.uploadCircle, {backgroundColor: colorTheme1.buttonColor}]}>
-                  <Image source={plus} style={[styles.plus, {tintColor: colorTheme1.navColor}]}></Image>
-                </View>
-              </TouchableOpacity>
+              <View style={[styles.uploadCircle, { backgroundColor: colorTheme1.buttonColor }]}>
+                <Image source={plus} style={[styles.plus, { tintColor: colorTheme1.navColor }]}></Image>
+              </View>
             ),
           }}
         />
