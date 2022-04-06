@@ -88,47 +88,56 @@ export default function Upload() {
     console.log('we have city', gps[0].city, '    ', gps[0].region);
   }
 
-return (
-  <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#84C0FB' }}>
-    <Text style={styles.header}> Post Your Pets</Text>
-    <TouchableOpacity style={styles.button} onPress={pickImage}>
-      {image === null ? <FontAwesome name="image" style={styles.icon} size={100} /> : <Image source={{ uri: image }} style={{ width: 300, height: 200 }} />}
-    </TouchableOpacity>
-    <View style={styles.section}>
-      <Text style={styles.caption}>Caption </Text>
-
-      <TextInput
-        style={styles.input}
-        // style={{ height: 150, width: 300, backgroundColor: 'azure', fontSize: 15 }}
-        placeholder="Say something about your pet!"
-        onChangeText={(text) => setText({ text })}
-      />
+  return (
+    <View style={styles.main}>
+      <View style={styles.container}>
+        <Text style={styles.header}> Post Your Pets</Text>
+        <TouchableOpacity style={styles.button} onPress={pickImage}>
+          {image === null ? <FontAwesome name="image" style={styles.icon} size={100} /> : <Image source={{ uri: image }} style={{ width: 300, height: 200 }} />}
+        </TouchableOpacity>
+          <Text style={styles.caption}>Caption </Text>
+          <TextInput
+            style={styles.inputBox}
+            // style={{ height: 150, width: 300, backgroundColor: 'azure', fontSize: 15 }}
+            placeholder="Say something about your pet!"
+            onChangeText={(text) => setText({ text })}
+            multiline={true}
+          />
+        <View style={styles.checkBoxSection}>
+          <Checkbox
+            value={isSelected}
+            onValueChange={setSelection}
+            style={styles.checkbox}
+            color={isSelected? '#4630EB' : undefined}
+          />
+          <Text style={styles.locationCaption}>Share Location</Text>
+        </View>
+        <TouchableOpacity
+              style={styles.postButton}
+              // onPress={() => navigate('HomeScreen')}
+              underlayColor='#fff'>
+              <Text style={styles.post}>Post</Text>
+        </TouchableOpacity>
+      </View>
     </View>
-    <View style={styles.section}>
-      <Checkbox
-        value={isSelected}
-        onValueChange={setSelection}
-        style={styles.checkbox}
-        color={isSelected? '#4630EB' : undefined}
-      />
-      <Text style={styles.caption}>Share Location</Text>
-    </View>
-    <TouchableOpacity
-          style={styles.postButton}
-          // onPress={() => navigate('HomeScreen')}
-          underlayColor='#fff'>
-          <Text style={styles.post}>Post</Text>
-    </TouchableOpacity>
-  </View>
-);
+  );
 }
 
 const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    backgroundColor: '#84C0FB',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#84C0FB',
+    marginTop: 80,
+  },
   button: {
     backgroundColor: '#57D785',
     // borderRadius: 20,
-    // padding: 10,
-    // marginBottom: 20,
+    padding: 10,
+    marginTop: 20,
     shadowColor: '#303838',
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
@@ -136,44 +145,58 @@ const styles = StyleSheet.create({
     width: 300,
     height: 200,
     borderRadius:10,
-    borderColor: '#6E96BD'
-
+    borderColor: '#6E96BD',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
   },
   icon: {
     color: '#D6F7D6',
   },
   header: {
     color: '#FFFFFF',
-    fontSize: 25
+    fontSize: 25,
+    textAlign: 'center',
   },
   caption: {
     color: '#FFFFFF',
     fontSize: 15,
     padding: 10,
+    left: 45,
+    marginTop: 20,
+  },
+  locationCaption: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    padding: 10,
+    textAlign: 'center',
   },
   checkbox: {
     margin: 8,
     backgroundColor: '#D6F7D6',
     borderWidth: 1,
   },
-  section: {
+  checkBoxSection: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 10,
   },
   captionSection: {
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
-  input: {
+  inputBox: {
     height: 150,
-    width:300,
-    margin: 12,
+    width:310,
+    // margin: 12,
     borderWidth: 1,
     padding: 10,
     backgroundColor: 'azure',
     fontSize: 15,
     borderRadius:10,
-    borderColor: '#6E96BD'
+    borderColor: '#6E96BD',
+    alignSelf: 'center',
+    textAlignVertical: 'top'
   },
   post: {
     color:'#D6F7D6',
@@ -181,7 +204,7 @@ const styles = StyleSheet.create({
     marginTop:5,
     paddingLeft : 10,
     paddingRight : 10,
-    fontSize: 20
+    fontSize: 20,
   },
   postButton: {
     height: 60,
@@ -194,6 +217,9 @@ const styles = StyleSheet.create({
     backgroundColor:'#57D785',
     borderRadius:10,
     borderWidth: 1,
-    borderColor: '#6E96BD'
+    borderColor: '#6E96BD',
+    position: 'relative',
+    alignSelf: 'center',
+    justifyContent: 'center',
   }
 });
