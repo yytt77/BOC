@@ -7,7 +7,7 @@ import { store } from './Redux/store';
 export default function AppWrapper() {
   return(
     <Provider store={store}>
-      <UnAuthorized/>
+      <App/>
     </Provider>
   );
 }
