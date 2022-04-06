@@ -15,7 +15,7 @@ import axios from 'axios';
 export default function Authenticate() {
   const [accessToken, setAccessToken] = useState();
   let [name, setName] = useState(null);
-  console.log('AUTH DOMAIN ', AUTH_DOMAIN)
+  // console.log('AUTH DOMAIN ', AUTH_DOMAIN)
   let [request, result, promptAsync] = AuthSession.useAuthRequest(
     {
       redirectUri,
@@ -29,7 +29,7 @@ export default function Authenticate() {
     { authorizationEndpoint }
   );
 
-  console.log(`Redirect URL: ${redirectUri}`);
+  // console.log(`Redirect URL: ${redirectUri}`);
 
   useEffect(() => {
     if (result) {
@@ -50,38 +50,19 @@ export default function Authenticate() {
     }
   }, [result]);
 
-  let styles = StyleSheet.create({ // temp
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    title: {
-      fontSize: 20,
-      textAlign: "center",
-      marginTop: 40,
-    },
-  });
+  // console.log('NAME ', name);
 
-  // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //   <TouchableOpacity onPress={() => onRegisterPress()}>
-  //     <Text>Register Screen</Text>
-  //   </TouchableOpacity>
-  // </View>
-
-  console.log('NAME ', name);
   return (
-    <View style={styles.container}>
+    <View>
       {name ? (
         <>
-          <Text style={styles.title}>You are logged in, {name.nickname}!</Text>
+          <Text>You are logged in, {name.nickname}!</Text>
           <Button title="Log out" onPress={() => setName(null)} />
         </>
       ) : (
         <Button
           disabled={!request}
-          title='Log in with Auth0'
+          title='Log in'
           onPress={() => promptAsync({ useProxy })}
         />
       )}
