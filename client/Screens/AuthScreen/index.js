@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import RegisterScreen from './RegisterScreen';
+import Authenticate from './AuthScreen';
 
 //<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 //  <Text>Random Feed Here</Text>
@@ -7,6 +7,6 @@ import RegisterScreen from './RegisterScreen';
 //</View>
 export default function AuthScreen() {
   return (
-    <RegisterScreen />
+    <Authenticate />
   );
 }

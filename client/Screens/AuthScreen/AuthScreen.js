@@ -3,38 +3,23 @@ import jwtDecode from 'jwt-decode';
 import { useEffect, useNavigationState, useState } from 'react';
 import { Text, View, Platform, Button, StyleSheet } from 'react-native';
 
-import { AUTH_DOMAIN, AUTH_CLIENT_ID } from '../../../constants';
+import { AUTH_DOMAIN, AUTH_CLIENT_ID } from '../../constants';
 
 const authorizationEndpoint = `${AUTH_DOMAIN}/authorize`;
 const useProxy = Platform.select({web: false, default: true});
 const redirectUri = AuthSession.makeRedirectUri({ useProxy });
-import API_IP from '../../../constants.js';
+import API_IP from '../../constants.js';
 
 import axios from 'axios';
 
-export default function RegisterScreen() {
-  // const onRegisterPress = () => {
-  //   console.log('TEST')
-  //   axios.post(`http://${API_IP}/user/addNewUser`, {
-  //     test: 1,
-  //     tests: 2
-  //   }, {
-  //     headers: {
-  //       'Content-Type': 'text/json',
-  //       'Accept': 'application/json'
-  //     }
-  //   })
-  //   .then(res => {console.log(res)})
-  //   .catch(err => {console.log(err)});
-  // }
-
+export default function Authenticate() {
   const [accessToken, setAccessToken] = useState();
   let [name, setName] = useState(null);
   console.log('AUTH DOMAIN ', AUTH_DOMAIN)
   let [request, result, promptAsync] = AuthSession.useAuthRequest(
     {
       redirectUri,
-      cliendId: AUTH_CLIENT_ID,
+      clientId: AUTH_CLIENT_ID,
       responseType: 'id_token',
       scopes: ['openid', 'profile'],
       extraParams: {
@@ -85,11 +70,12 @@ export default function RegisterScreen() {
   //   </TouchableOpacity>
   // </View>
 
+  console.log('NAME ', name);
   return (
     <View style={styles.container}>
       {name ? (
         <>
-          <Text style={styles.title}>You are logged in, {name}!</Text>
+          <Text style={styles.title}>You are logged in, {name.nickname}!</Text>
           <Button title="Log out" onPress={() => setName(null)} />
         </>
       ) : (
