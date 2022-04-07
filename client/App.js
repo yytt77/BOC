@@ -5,10 +5,20 @@ import { Provider } from 'react-redux';
 import { store } from './Redux/store';
 
 export default function AppWrapper() {
+  console.log('STORE ', store.getState().authorizedUser);
+  let authorizedUser;
+
+  // if (store.getState().authorizedUser) {
+  //   authorizedUser =
+  // }
+
   return(
     <Provider store={store}>
-      <UnAuthorized/>
+      {store.getState().authorizedUser ? (
+        <App />
+      ) : (
+        <UnAuthorized />
+      )}
     </Provider>
   );
 }
-
