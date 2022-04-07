@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, Image } from "react-native";
-import styles from "../Styles/appStyles";
+import styles from "./appStyles";
 
 //Navigation/Screens
 import { NavigationContainer, StackRouter } from "@react-navigation/native";

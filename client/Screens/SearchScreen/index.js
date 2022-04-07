@@ -1,6 +1,5 @@
-import { Text, View } from "react-native";
-import Main from "./Main";
-import FollowedUser from "./FollowedUser";
+import SearchBar from "./SearchBar";
+import OtherUser from "./OtherUser";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const SearchStack = createNativeStackNavigator();
@@ -12,8 +11,8 @@ export default function SearchScreen() {
         headerShown: false,
       }}
     >
-      <SearchStack.Screen name="Main" component={Main} />
-      <SearchStack.Screen name="FollowedUser" component={FollowedUser} />
+      <SearchStack.Screen name="SearchBar" component={SearchBar} />
+      <SearchStack.Screen name="OtherUser" component={OtherUser} />
     </SearchStack.Navigator>
   );
 }
