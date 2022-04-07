@@ -3,13 +3,13 @@ const userAuthReducer = (state = null, action) => {
     case 'authorized':
       return {
         ...state,
-        userT: action.payload
-      }
+        user: action.payload
+      }.user
     case 'unauthorized':
       return {
         ...state,
         user: null
-      }
+      }.user
     default:
       return state;
   }
