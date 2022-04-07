@@ -4,7 +4,7 @@ import userAuthReducer from './userAuthReducer';
 
 const reducers = combineReducers({
   uploadProfilePictureClickCount: uploadProfilePictureReducer,
-  user: userAuthReducer
+  authorizedUser: userAuthReducer
 });
 
 export default reducers;
