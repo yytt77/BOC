@@ -1,22 +1,33 @@
 import * as AuthSession from 'expo-auth-session';
 import jwtDecode from 'jwt-decode';
+
 import { useEffect, useNavigationState, useState } from 'react';
 import { Text, View, Platform, Button, StyleSheet } from 'react-native';
 
+import { bindActionCreators } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
+import * as actions from '../../Redux/actions/authorizeUser';
+
 import { AUTH_DOMAIN, AUTH_CLIENT_ID } from '../../constants';
+import API_IP from '../../constants.js';
+import DiscoverScreen from '../DiscoverScreen';
 
 const authorizationEndpoint = `${AUTH_DOMAIN}/authorize`;
 const useProxy = Platform.select({web: false, default: true});
 const redirectUri = AuthSession.makeRedirectUri({ useProxy });
-import API_IP from '../../constants.js';
 
 import axios from 'axios';
 
 export default function Authenticate() {
+
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
+  const { login, logout } = bindActionCreators(actions, dispatch);
+
   const [accessToken, setAccessToken] = useState();
-  let [name, setName] = useState(null);
+  // const [name, setName] = useState(null);
   // console.log('AUTH DOMAIN ', AUTH_DOMAIN)
-  let [request, result, promptAsync] = AuthSession.useAuthRequest(
+  const [request, result, promptAsync] = AuthSession.useAuthRequest(
     {
       redirectUri,
       clientId: AUTH_CLIENT_ID,
@@ -45,27 +56,23 @@ export default function Authenticate() {
         const jwtToken = result.params.id_token;
         const decoded = jwtDecode(jwtToken);
         let name = decoded;
-        setName(name)
+        // setName(name)
+        login(name.name);
       }
     }
   }, [result]);
 
-  // console.log('NAME ', name);
-
   return (
+    //<Text>You are logged in, {name.nickname}!</Text>
+    //<Button title="Log out" onPress={() => setName(null)} />
+
     <View>
-      {name ? (
-        <>
-          <Text>You are logged in, {name.nickname}!</Text>
-          <Button title="Log out" onPress={() => setName(null)} />
-        </>
-      ) : (
-        <Button
-          disabled={!request}
-          title='Log in'
-          onPress={() => promptAsync({ useProxy })}
-        />
-      )}
+      <Button
+        disabled={!request}
+        title='Log in'
+        onPress={() => promptAsync({ useProxy })}
+      />
     </View>
+
   );
 }
