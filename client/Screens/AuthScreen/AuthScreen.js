@@ -22,7 +22,7 @@ export default function Authenticate() {
 
   const state = useSelector(state => state);
   const dispatch = useDispatch();
-  const { login, logout } = bindActionCreators(actions, dispatch);
+  const { login } = bindActionCreators(actions, dispatch);
 
   const [accessToken, setAccessToken] = useState();
   const [request, result, promptAsync] = AuthSession.useAuthRequest(
