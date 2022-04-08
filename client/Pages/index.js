@@ -5,8 +5,9 @@ import Authorized from "./Authorized";
 import UnAuthorized from "./UnAuthorized";
 
 const App = function(props) {
+  console.log('PROPS ', props);
   return (
-    props.authorizedUser ? (
+    props.user.username ? (
       <Authorized />
     ) : (
       <UnAuthorized />
@@ -15,7 +16,7 @@ const App = function(props) {
 }
 
 const mapStateToProps = (state) => ({
-  authorizedUser: state.authorizedUser
+  user: state.user
 })
 
 export default connect(mapStateToProps, null)(App);

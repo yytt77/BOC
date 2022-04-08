@@ -6,7 +6,7 @@ import { Text, View, Platform, Button, StyleSheet } from 'react-native';
 
 import { bindActionCreators } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
-import * as actions from '../../Redux/actions/authorizeUser';
+import * as actions from '../../Redux/actions/index';
 
 import { AUTH_DOMAIN, AUTH_CLIENT_ID } from '../../constants';
 import API_IP from '../../constants.js';
@@ -22,7 +22,7 @@ export default function Authenticate() {
 
   const state = useSelector(state => state);
   const dispatch = useDispatch();
-  const { login, logout } = bindActionCreators(actions, dispatch);
+  const { login } = bindActionCreators(actions, dispatch);
 
   const [accessToken, setAccessToken] = useState();
   const [request, result, promptAsync] = AuthSession.useAuthRequest(

@@ -5,6 +5,7 @@ import { store } from './Redux/store';
 import App from "./Pages/index";
 
 export default function AppWrapper() {
+  console.log('STORE ', store.getState());
   return(
     <Provider store={store}>
       <App />
