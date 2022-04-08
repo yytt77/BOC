@@ -42,7 +42,11 @@ const Item = StyleSheet.create({
     fontSize: 15,
     fontWeight: "100",
   },
-
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+  }
 });
 
 const ItemSeparator = StyleSheet.create({

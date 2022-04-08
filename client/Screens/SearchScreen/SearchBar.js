@@ -27,7 +27,7 @@ export default function SearchBar({ navigation }) {
   const reduxData = [
     {
       followedUser: "joe",
-      followedProfPic: "Joe's profile photo",
+      followedProfPic: "https://placeimg.com/100/100/animals",
     },
   ];
   const [recentSearches, setRecentSearches] = useState();
@@ -63,8 +63,8 @@ export default function SearchBar({ navigation }) {
     setRecentSearches(initialItems);
   };
 
-  const openOtherUser = () => {
-    navigation.navigate("OtherUser");
+  const openOtherUser = (userData) => {
+    navigation.navigate("OtherUser", userData);
   };
 
   const matchFollowing = (searchParam) => {
@@ -80,8 +80,9 @@ export default function SearchBar({ navigation }) {
         const user = await axios.get(
           `${userExistsEndpoint}${currentSearch.current}`
         );
+        let queriedItem;
         if (user.data.username) {
-          const queriedItem = [
+          queriedItem = [
             {
               followedUser: user.data.username,
               followedProfPic: user.data.profPhoto,
@@ -92,6 +93,7 @@ export default function SearchBar({ navigation }) {
         }
         setFilteredData(queriedItem);
       } catch (err) {
+        console.error(err)
         setFilteredData([failedConnection]);
       }
     }
