@@ -7,7 +7,7 @@ import { store } from '../Redux/store';
 
 const App = function(props) {
   return (
-    props.user ? (
+    props.authorizedUser ? (
       <Authorized />
     ) : (
       <UnAuthorized />
