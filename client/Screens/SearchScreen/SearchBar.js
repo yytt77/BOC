@@ -1,6 +1,7 @@
 //External Libraries
 import { View, TouchableOpacity, FlatList, TextInput } from "react-native";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 //Internal Dependencies
@@ -22,14 +23,9 @@ const userExistsEndpoint = `http://${API_IP}/user/getUserMeta/`;
 
 export default function SearchBar({ navigation }) {
   //STATE MANAGEMENT
-
+  const user = useSelector(state => state.user);
   //User's following list, which will be suggested users without querying database
-  const reduxData = [
-    {
-      followedUser: "joe",
-      followedProfPic: "https://placeimg.com/100/100/animals",
-    },
-  ];
+  const reduxData = user.userInfo.following;
   const [recentSearches, setRecentSearches] = useState();
   const [filteredData, setFilteredData] = useState();
   const [search, setSearch] = useState("");
@@ -93,7 +89,7 @@ export default function SearchBar({ navigation }) {
         }
         setFilteredData(queriedItem);
       } catch (err) {
-        console.error(err)
+        console.error(err);
         setFilteredData([failedConnection]);
       }
     }
@@ -147,7 +143,7 @@ export default function SearchBar({ navigation }) {
           keyExtractor={(item) => item}
           ItemSeparatorComponent={ItemSeparator}
           data={filteredData}
-          renderItem={(item) => Item(item, deleteHistory, openOtherUser)}
+          renderItem={(item) => Item(item, deleteHistory, openOtherUser, recentSearches, setRecentSearches)}
         />
       ) : (
         <Loading search={search} />

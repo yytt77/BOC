@@ -3,9 +3,27 @@ import { getLocally, storeLocally } from "../../../LocalStorage";
 import { Item as styles } from "../Styles";
 import { API_IP } from "../../../constants";
 import axios from "axios";
+const emptyHistory = "No Recent Searches";
+const recentHistory = "Recent Searches";
+const emptyQuery = "User not found";
+const failedConnection = "Could not connect";
 const userEndpoint = `http://${API_IP}/user/getUser/`;
 
-export default ({ item }, deleteHistory, openOtherUser) => {
+const arrayIncludesObj = (targetObj, arr) => {
+  const target = JSON.stringify(targetObj);
+  for (let obj of arr) {
+    if (JSON.stringify(obj) === target) return true;
+  }
+  return false;
+};
+
+export default (
+  { item },
+  deleteHistory,
+  openOtherUser,
+  recentSearches,
+  setRecentSearches
+) => {
   const onUserPress = async (username) => {
     try {
       const user = await axios.get(`${userEndpoint}${item.followedUser}`);
@@ -15,9 +33,14 @@ export default ({ item }, deleteHistory, openOtherUser) => {
       };
       const history = await getLocally("searchHistory");
       let newHistory = history ? [...JSON.parse(history)] : [];
-      if (!newHistory.includes(userMeta)) {
+      if (!arrayIncludesObj(userMeta, newHistory)) {
         newHistory.push(userMeta);
         storeLocally("searchHistory", JSON.stringify(newHistory));
+        let recentSearch =
+          recentSearches.length && recentSearches[0] === emptyHistory
+            ? [recentHistory, userMeta]
+            : [...recentSearches, userMeta];
+        setRecentSearches(recentSearch);
       }
       openOtherUser(user.data);
     } catch (err) {
@@ -26,7 +49,7 @@ export default ({ item }, deleteHistory, openOtherUser) => {
     }
   };
 
-  if (item === "Recent Searches")
+  if (item === recentHistory)
     return (
       <View style={styles.historyLabel}>
         <Text>{item}</Text>
@@ -35,7 +58,7 @@ export default ({ item }, deleteHistory, openOtherUser) => {
         </TouchableOpacity>
       </View>
     );
-  if (item === "No Recent Searches")
+  if (item === emptyHistory || item === emptyQuery || item === failedConnection)
     return <Text style={styles.historyLabel}>{item}</Text>;
   return (
     <TouchableOpacity onPress={() => onUserPress(item.followedUser)}>
