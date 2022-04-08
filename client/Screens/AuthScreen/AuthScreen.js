@@ -63,7 +63,7 @@ export default function Authenticate() {
     <View>
       <Button
         disabled={!request}
-        title='Log in'
+        title='Log In'
         onPress={() => promptAsync({ useProxy })}
       />
     </View>
