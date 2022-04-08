@@ -25,8 +25,6 @@ export default function Authenticate() {
   const { login, logout } = bindActionCreators(actions, dispatch);
 
   const [accessToken, setAccessToken] = useState();
-  // const [name, setName] = useState(null);
-  // console.log('AUTH DOMAIN ', AUTH_DOMAIN)
   const [request, result, promptAsync] = AuthSession.useAuthRequest(
     {
       redirectUri,
@@ -56,16 +54,12 @@ export default function Authenticate() {
         const jwtToken = result.params.id_token;
         const decoded = jwtDecode(jwtToken);
         let name = decoded;
-        // setName(name)
         login(name.name);
       }
     }
   }, [result]);
 
   return (
-    //<Text>You are logged in, {name.nickname}!</Text>
-    //<Button title="Log out" onPress={() => setName(null)} />
-
     <View>
       <Button
         disabled={!request}
@@ -73,6 +67,5 @@ export default function Authenticate() {
         onPress={() => promptAsync({ useProxy })}
       />
     </View>
-
   );
 }
