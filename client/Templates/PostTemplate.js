@@ -15,7 +15,7 @@ export default function PostTemplate(props) {
             style={styles.profileImage}
             resizeMode='cover'
             source={{
-              uri: `${props.userInfo}`,
+              uri: `${props.data.profPhoto}`,
             }}
           />
         </View>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'space-between'
   },
   usernameContainer: {
-    flex: 1,
+    flex: 3,
     // backgroundColor: 'red',
     justifyContent: 'center',
   },
