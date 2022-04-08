@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import Authorized from "./Authorized";
 import UnAuthorized from "./UnAuthorized";
 
+// replace return statement w/ Authorized to bypass
+// return <Authorized />
 const App = function(props) {
-  console.log('PROPS ', props);
   return (
     props.user.username ? (
       <Authorized />
