@@ -2,7 +2,7 @@ import { Text, View, Modal, StyleSheet } from 'react-native';
 import FeedTemplate from '../../Templates/FeedTemplate'
 import HeaderTemplate from '../../Templates/HeaderTemplate'
 import { colorTheme1 } from "../../constants";
-import userData from '../../Templates/sampleData';
+import { userData } from '../../Templates/sampleData';
 
 export default function UserScreen() {
   const refreshUserData = () => {
@@ -16,7 +16,7 @@ export default function UserScreen() {
       </View>
       <View
         styles={styles.feedContainer}>
-        <FeedTemplate userData={userData} refreshData={refreshUserData}></FeedTemplate>
+        <FeedTemplate userData={userData.posts} refreshData={refreshUserData}></FeedTemplate>
       </View>
     </View>
   );

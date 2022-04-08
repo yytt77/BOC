@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Modal, Dimensions, ScrollView, StyleSheet, Image, TouchableOpacity, RefreshControl, StatusBar } from 'react-native';
 import Constants from 'expo-constants';
 import PostTemplate from './PostTemplate';
-// import userData from './sampleData';
 
 
 var width = Dimensions.get('window').width;
@@ -11,7 +10,6 @@ var statusBarHeight = Constants.statusBarHeight;
 var safeHeight = height - statusBarHeight - 80;
 
 const FeedTemplate = (props) => {
-  console.log('props', props.refreshData);
   const [isVisible, setIsVisible] = useState(false);
   const [displayedPhoto, setDisplayedPhoto] = useState();
 
@@ -62,8 +60,8 @@ const FeedTemplate = (props) => {
           />
         }
       >
-        {props.userData.posts.map((element, index) => {
-          return <PostTemplate userInfo={props.userData.userInfo.profPhoto} data={element}
+        {props.userData.map((element, index) => {
+          return <PostTemplate data={element}
           key={index} displayModal={displayModal}></PostTemplate>
         })}
       </ScrollView>
