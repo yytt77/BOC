@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Authorized from "./Authorized";
 import UnAuthorized from "./UnAuthorized";
-import { store } from '../Redux/store';
 
 const App = function(props) {
   return (
@@ -16,7 +15,7 @@ const App = function(props) {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  authorizedUser: state.authorizedUser
 })
 
 export default connect(mapStateToProps, null)(App);
