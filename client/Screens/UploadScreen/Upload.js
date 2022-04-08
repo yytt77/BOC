@@ -137,9 +137,9 @@ export default function Upload() {
       <Modal
         animationType="slide"
         transparent={true}
+        style={styles.selectorButton}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >
@@ -177,11 +177,12 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    marginTop: 140,
+    backgroundColor: "#84C0FB",
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
+    // alignItems: "center",
+    shadowColor: "#84C0FB",
     shadowOffset: {
       width: 0,
       height: 2
@@ -208,8 +209,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
-  },  icon: {
+    backgroundColor: "#57D785",
+  },
+
+  icon: {
     color: '#D6F7D6',
   },
   header: {
@@ -280,5 +283,8 @@ const styles = StyleSheet.create({
     position: 'relative',
     alignSelf: 'center',
     justifyContent: 'center',
-  }
+  },
+  textStyle: {
+    color: '#FEFB9F',
+  },
 });
