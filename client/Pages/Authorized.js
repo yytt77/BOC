@@ -8,7 +8,7 @@ import DiscoverScreen from "../Screens/DiscoverScreen";
 import SettingsScreen from "../Screens/SettingsScreen";
 import UserScreen from "../Screens/UserScreen";
 import SearchScreen from "../Screens/SearchScreen";
-import Upload from "../Screens/UploadScreen/Selector";
+import Upload from "../Screens/UploadScreen/Upload";
 import { colorTheme1 } from "../constants";
 
 //Icons
