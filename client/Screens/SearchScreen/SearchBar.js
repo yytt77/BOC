@@ -131,7 +131,7 @@ export default function SearchBar({ navigation }) {
       style={[styles.container, { backgroundColor: colorTheme1.pageColor }]}
     >
       <TextInput
-        style={[styles.bar, { borderColor: colorTheme1.navColor }]}
+        style={styles.bar}
         value={search}
         placeholder="Search people you follow"
         underlineColorAndroid="transparent"
@@ -140,7 +140,7 @@ export default function SearchBar({ navigation }) {
       />
       {!loading ? (
         <FlatList
-          keyExtractor={(item) => item}
+          keyExtractor={(item) => JSON.stringify(item)}
           ItemSeparatorComponent={ItemSeparator}
           data={filteredData}
           renderItem={(item) => Item(item, deleteHistory, openOtherUser, recentSearches, setRecentSearches)}

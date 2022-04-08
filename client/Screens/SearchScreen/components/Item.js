@@ -52,7 +52,7 @@ export default (
   if (item === recentHistory)
     return (
       <View style={styles.historyLabel}>
-        <Text>{item}</Text>
+        <Text style={styles.comicText}>{item}</Text>
         <TouchableOpacity onPress={deleteHistory}>
           <Text style={styles.clear}>Clear All</Text>
         </TouchableOpacity>
@@ -71,7 +71,7 @@ export default (
               uri: `${item.followedProfPic}`,
             }}
           />
-          <Text>{item.followedUser}</Text>
+          <Text style={styles.comicText}>{item.followedUser}</Text>
         </View>
       </View>
     </TouchableOpacity>
