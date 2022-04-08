@@ -6,10 +6,13 @@ const SearchBar = StyleSheet.create({
   },
   bar: {
     height: 50,
-    borderWidth: 1,
     paddingLeft: 20,
-    margin: 5,
-    backgroundColor: "white",
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    color: 'white',
+    borderRadius: 50
   },
 });
 
@@ -42,7 +45,14 @@ const Item = StyleSheet.create({
     fontSize: 15,
     fontWeight: "100",
   },
-
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+  },
+  comicText: {
+    fontFamily: 'comicSans'
+  }
 });
 
 const ItemSeparator = StyleSheet.create({

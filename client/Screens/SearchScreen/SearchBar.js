@@ -1,6 +1,7 @@
 //External Libraries
 import { View, TouchableOpacity, FlatList, TextInput } from "react-native";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 //Internal Dependencies
@@ -22,14 +23,9 @@ const userExistsEndpoint = `http://${API_IP}/user/getUserMeta/`;
 
 export default function SearchBar({ navigation }) {
   //STATE MANAGEMENT
-
+  const user = useSelector(state => state.user);
   //User's following list, which will be suggested users without querying database
-  const reduxData = [
-    {
-      followedUser: "joe",
-      followedProfPic: "Joe's profile photo",
-    },
-  ];
+  const reduxData = user.userInfo.following;
   const [recentSearches, setRecentSearches] = useState();
   const [filteredData, setFilteredData] = useState();
   const [search, setSearch] = useState("");
@@ -63,8 +59,8 @@ export default function SearchBar({ navigation }) {
     setRecentSearches(initialItems);
   };
 
-  const openOtherUser = () => {
-    navigation.navigate("OtherUser");
+  const openOtherUser = (userData) => {
+    navigation.navigate("OtherUser", userData);
   };
 
   const matchFollowing = (searchParam) => {
@@ -80,8 +76,9 @@ export default function SearchBar({ navigation }) {
         const user = await axios.get(
           `${userExistsEndpoint}${currentSearch.current}`
         );
+        let queriedItem;
         if (user.data.username) {
-          const queriedItem = [
+          queriedItem = [
             {
               followedUser: user.data.username,
               followedProfPic: user.data.profPhoto,
@@ -92,6 +89,7 @@ export default function SearchBar({ navigation }) {
         }
         setFilteredData(queriedItem);
       } catch (err) {
+        console.error(err);
         setFilteredData([failedConnection]);
       }
     }
@@ -133,7 +131,7 @@ export default function SearchBar({ navigation }) {
       style={[styles.container, { backgroundColor: colorTheme1.pageColor }]}
     >
       <TextInput
-        style={[styles.bar, { borderColor: colorTheme1.navColor }]}
+        style={styles.bar}
         value={search}
         placeholder="Search people you follow"
         underlineColorAndroid="transparent"
@@ -142,10 +140,10 @@ export default function SearchBar({ navigation }) {
       />
       {!loading ? (
         <FlatList
-          keyExtractor={(item) => item}
+          keyExtractor={(item) => JSON.stringify(item)}
           ItemSeparatorComponent={ItemSeparator}
           data={filteredData}
-          renderItem={(item) => Item(item, deleteHistory, openOtherUser)}
+          renderItem={(item) => Item(item, deleteHistory, openOtherUser, recentSearches, setRecentSearches)}
         />
       ) : (
         <Loading search={search} />
