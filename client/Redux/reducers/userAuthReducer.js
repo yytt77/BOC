@@ -1,19 +1,9 @@
 const userAuthReducer = (state = null, action) => {
-  console.log('ACTION ', action.payload);
   switch (action.type) {
     case 'authorized':
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          user: action.payload
-        }
-      }
+      return action.payload;
     case 'unauthorized':
-      return {
-        ...state,
-        user: null
-      }
+      return null;
     default:
       return state;
   }
