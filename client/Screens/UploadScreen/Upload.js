@@ -56,12 +56,10 @@ export default function Upload() {
     .then((gps) => {
       let gpsData = JSON.parse(gps);
       console.log('there is GPS', gpsData);
-      if (gpsData[0]) {
+      if (gpsData[0] && gpsData[1]) {
         console.log('go here', gpsData[0], gpsData[1]);
-        if (isSelected) {
-          setLatitude(gpsData[0]);
-          setLatitude(-gpsData[1]);
-        }
+        setLatitude(gpsData[0]);
+        setLongitude(-gpsData[1]);
         locationPicker(gpsData[0], -gpsData[1]);
       } else {
         if (isSelected) {
