@@ -10,9 +10,9 @@ const SearchBar = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 20,
     marginBottom: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    color: 'white',
-    borderRadius: 50
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
+    color: "white",
+    borderRadius: 50,
   },
 });
 
@@ -20,6 +20,46 @@ const OtherUser = StyleSheet.create({
   container: {
     flex: 1,
   },
+  back: {
+    // position: 'absolute',
+    // left: 100,
+    // top: 16
+  }
+});
+
+const BlockContent = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  popUp: {
+    backgroundColor: "white",
+    height: 600,
+    width: 340,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 10,
+  },
+  button: {
+    backgroundColor: "rgba(0,0,0,0.5)",
+    margin: 10,
+    padding: 10,
+    width: 200,
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+  message: {
+    paddingBottom: 100,
+  },
+  text: {
+    fontFamily: "comicSans",
+    fontSize: 20
+  }
 });
 
 const Item = StyleSheet.create({
@@ -51,8 +91,8 @@ const Item = StyleSheet.create({
     borderRadius: 50,
   },
   comicText: {
-    fontFamily: 'comicSans'
-  }
+    fontFamily: "comicSans",
+  },
 });
 
 const ItemSeparator = StyleSheet.create({
@@ -69,4 +109,4 @@ const Loading = StyleSheet.create({
   },
 });
 
-export { SearchBar, OtherUser, Item, ItemSeparator, Loading };
+export { SearchBar, OtherUser, Item, ItemSeparator, Loading, BlockContent };
