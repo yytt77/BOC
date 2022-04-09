@@ -134,6 +134,15 @@ export default function Upload() {
       uploadInfo['location'] = null;
     }
     console.log('info', uploadInfo);
+    // removeLocally("image")
+    axios({
+      method: 'POST',
+      url: 'http://localhost:3000/post/uploadPost',
+      data: uploadInfo,
+    }).then(function(res) {
+      console.log('data sent', res)
+    })
+
   }
 
   return (

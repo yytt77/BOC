@@ -7,13 +7,14 @@ import UnAuthorized from "./UnAuthorized";
 // replace return statement w/ Authorized to bypass
 // return <Authorized />
 const App = function(props) {
-  return (
-    props.user.username ? (
-      <Authorized />
-    ) : (
-      <UnAuthorized />
-    )
-  )
+  // return (
+  //   props.user.username ? (
+  //     <Authorized />
+  //   ) : (
+  //     <UnAuthorized />
+  //   )
+  // )
+  return <Authorized />
 }
 
 const mapStateToProps = (state) => ({
