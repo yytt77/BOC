@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, Image } from "react-native";
 import { useState, useEffect } from "react";
 import { OtherUser as styles } from "./Styles";
 import FeedTemplate from "../../Templates/FeedTemplate";
@@ -41,7 +41,7 @@ export default function OtherUser({ route, navigation }) {
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   const refreshCallback = async () => {
     try {
@@ -89,9 +89,14 @@ export default function OtherUser({ route, navigation }) {
         navigation={navigation}
         setBlocked={setBlocked}
         follow={follow}
+        blockedUser={userData.userInfo.username}
       />
-      <TouchableOpacity onPress={() => navigation.navigate("SearchBar")}>
-        <Text>Go Back</Text>
+      <TouchableOpacity style={styles.back} onPress={() => navigation.navigate("SearchBar")}>
+        <Image
+          source={require("../../assets/back.png")}
+          fadeDuration={0}
+          style={{ width: 10, height: 30, marginLeft: 10 }}
+        />
       </TouchableOpacity>
       <View styles={styles.headerContainer}>
         <HeaderTemplate userData={userData}></HeaderTemplate>

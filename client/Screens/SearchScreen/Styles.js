@@ -20,22 +20,45 @@ const OtherUser = StyleSheet.create({
   container: {
     flex: 1,
   },
+  back: {
+    // position: 'absolute',
+    // left: 100,
+    // top: 16
+  }
 });
 
 const BlockContent = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   popUp: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     height: 600,
     width: 340,
     borderRadius: 50,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    paddingTop: 10,
+  },
+  button: {
+    backgroundColor: "rgba(0,0,0,0.5)",
+    margin: 10,
+    padding: 10,
+    width: 200,
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+  message: {
+    paddingBottom: 100,
+  },
+  text: {
+    fontFamily: "comicSans",
+    fontSize: 20
   }
 });
 
