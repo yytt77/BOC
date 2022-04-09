@@ -41,6 +41,7 @@ export default function Authorized() {
       }
     } catch (err) {
       console.error(err);
+      dispatch(updateUser(defaultUser));
       alert("No Connection");
     }
   };
