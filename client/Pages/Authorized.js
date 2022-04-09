@@ -22,13 +22,15 @@ import { FontAwesome5, Entypo } from "@expo/vector-icons";
 import plus from "../assets/plus.png";
 
 //Redux
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { updateUser } from "../Redux/actions";
 
 const Tab = createBottomTabNavigator();
 
 export default function Authorized() {
   const dispatch = useDispatch();
+  const currUser = useSelector(state => state.user);
+  // console.log(currUser);
   const getUser = async () => {
     //for now hardcoded, but later get current logged in user from redux store (Dominic puts in there from login screen)
     const currentUser = "joe"
