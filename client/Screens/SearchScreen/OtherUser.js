@@ -21,6 +21,7 @@ export default function OtherUser({ route, navigation }) {
   useEffect(() => {
     let targetUser = userData.userInfo.username;
     let userFollowing = user.userInfo.following;
+    if (targetUser === user.userInfo.username) setBlocked(false);
     for (let { followedUser } of userFollowing) {
       if (targetUser === followedUser) {
         setBlocked(false);
@@ -29,14 +30,26 @@ export default function OtherUser({ route, navigation }) {
     }
   }, []);
 
+  const updateReduxUser = async () => {
+    try {
+      const response = await axios.get(
+        `${userEndpoint}${user.userInfo.username}`
+      );
+      if (response.data.userInfo) {
+        dispatch(updateUser(response.data));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   const refreshCallback = async () => {
     try {
-      const user = await axios.get(
+      const response = await axios.get(
         `${userEndpoint}${userData.userInfo.username}`
       );
-      if (user.data.userInfo) {
-        dispatch(updateUser(user.data));
-        setUserData(user.data);
+      if (response.data.userInfo) {
+        setUserData(response.data);
       }
     } catch (err) {
       console.error(err);
@@ -60,6 +73,7 @@ export default function OtherUser({ route, navigation }) {
   };
 
   useEffect(() => {
+    updateReduxUser();
     refreshCallback();
   }, [blocked]);
 
