@@ -15,6 +15,7 @@ import { colorTheme1, API_IP } from "../constants";
 
 import axios from "axios";
 const userEndpoint = `http://${API_IP}/user/getUser/`;
+import defaultUser from "./defaultUser.json";
 
 //Icons
 import { FontAwesome5, Entypo } from "@expo/vector-icons";
@@ -33,9 +34,14 @@ export default function Authorized() {
     const currentUser = "joe"
     try {
       const user = await axios.get(`${userEndpoint}${currentUser}`);
-      dispatch(updateUser(user.data))
+      if (user.data.userInfo) {
+        dispatch(updateUser(user.data))
+      } else {
+        dispatch(updateUser(defaultUser))
+      }
     } catch (err) {
       console.error(err);
+      dispatch(updateUser(defaultUser));
       alert("No Connection");
     }
   };
