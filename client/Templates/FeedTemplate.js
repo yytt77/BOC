@@ -41,14 +41,14 @@ const FeedTemplate = (props) => {
             }}/>
           </TouchableOpacity>
       </Modal>
-      <View
+      {/* <View
         style={styles.headerContainer}
       >
         <Image
           style={styles.logoImage}
           source={require('../assets/petpixLogoSmall.png')}
         />
-      </View>
+      </View> */}
       <ScrollView
         style={styles.scrollcontainer}
         refreshControl={

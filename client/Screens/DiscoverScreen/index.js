@@ -1,6 +1,7 @@
 import { Text, View, Modal, StyleSheet } from 'react-native';
 import { colorTheme1 } from "../../constants";
-import FeedTemplate from '../../Templates/FeedTemplate'
+import FeedTemplate from '../../Templates/FeedTemplate';
+import PetPixLogoTemplate from '../../Templates/PetPixLogoTemplate';
 import { randomData } from '../../Templates/sampleData';
 
 export default function DiscoverScreen() {
@@ -9,6 +10,7 @@ export default function DiscoverScreen() {
   };
   return (
     <View style={styles.discoverScreenContainer}>
+      <PetPixLogoTemplate></PetPixLogoTemplate>
       <FeedTemplate userData={randomData} refreshData={refreshRandomUserData}></FeedTemplate>
     </View>
   );
@@ -17,8 +19,6 @@ export default function DiscoverScreen() {
 const styles = StyleSheet.create({
   discoverScreenContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: `${colorTheme1.pageColor}`,
   }
 });

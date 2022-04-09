@@ -1,6 +1,8 @@
 import { Text, View, Modal, StyleSheet } from 'react-native';
-import FeedTemplate from '../../Templates/FeedTemplate'
-import HeaderTemplate from '../../Templates/HeaderTemplate'
+import FeedTemplate from '../../Templates/FeedTemplate';
+import HeaderTemplate from '../../Templates/HeaderTemplate';
+import PetPixLogoTemplate from '../../Templates/PetPixLogoTemplate';
+import userInfo from './UserInfo.js';
 import { colorTheme1 } from "../../constants";
 import { userData } from '../../Templates/sampleData';
 
@@ -12,6 +14,7 @@ export default function UserScreen() {
     <View style={styles.userScreenContainer}>
       <View
         styles={styles.headerContainer}>
+        <PetPixLogoTemplate></PetPixLogoTemplate>
         <HeaderTemplate userData={userData}></HeaderTemplate>
       </View>
       <View
