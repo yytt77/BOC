@@ -13,6 +13,7 @@ import { colorTheme1 } from '../../constants';
 import FeedTemplate from '../../Templates/FeedTemplate';
 import axios from 'axios';
 import styles from '../UploadScreen/Styles';
+import { CLOUDINARY_API, upload_preset } from '@env';
 
 export default function Upload() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,6 +26,8 @@ export default function Upload() {
   const [imgURL, setImgURL] = useState(null);
   const [latitude, setLatitude] = useState(undefined);
   const [longitude, setLongitude] = useState(undefined);
+
+  console.log(CLOUDINARY_API, upload_preset);
 
   const CameraAccess = () => {
     async function camera() {
@@ -75,9 +78,9 @@ export default function Upload() {
   const handleUpload = (image)=>{
     const data = new FormData();
     data.append('file',image);
-    data.append('upload_preset','p9buobh3');
+    data.append('upload_preset',upload_preset);
 
-    //  fetch("https://api.cloudinary.com/v1_1/dy91vvft0/image/upload",{  method:'post',body:data})
+    //  fetch(CLOUDINARY_API,{  method:'post',body:data})
     //    .then(res=>res.json())
     //    .then(data=>{  setImgURL(data.url); });
   }
@@ -141,6 +144,9 @@ export default function Upload() {
       data: uploadInfo,
     }).then(function(res) {
       console.log('data sent', res)
+    })
+    .catch((err) => {
+      console.log('not send', err);
     })
 
   }
