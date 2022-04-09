@@ -15,3 +15,10 @@ export const decrement = (amount) => {
     });
   }
 }
+
+export const updateUser = (userData) => {
+  return {
+    type: 'UPDATE',
+    payload: userData
+  }
+}

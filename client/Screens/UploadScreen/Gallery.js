@@ -20,13 +20,18 @@ export default function Gallery() {
 
     if (!result.cancelled) {
       let url = result.uri;
+      let GPS = [];
+      console.log('gps info', result);
+      console.log('this is the info', result.exif.GPSLatitude, 'and', result.exif.GPSLongitude);
       const onUserPress = async (url) => {
         // Save image to local storage;
         const uploadImage = await getLocally("image");
         let newHistory = uploadImage ? [...JSON.parse(uploadImage)] : [];
         if (!newHistory.includes(url)) {
           newHistory.push(url);
+          GPS.push(result.exif.GPSLatitude, result.exif.GPSLongitude);
           storeLocally("image", JSON.stringify(newHistory));
+          storeLocally("imageGPS", JSON.stringify(GPS));
         }
       };
      return onUserPress(url);
