@@ -1,18 +1,32 @@
 import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import AccountInput from './components/AccountInput';
 import { Register as styles } from './Styles'
-import { colorTheme1 } from '../../../constants';
+import { lightTheme, darkTheme } from '../../../constants';
 
-export default function RegisterScreen() {
+// console.log(props.theme)
+const RegisterScreen = function(props) {
+  var theme;
+  if (props.theme) {
+    theme = lightTheme;
+  } else {
+    theme = darkTheme;
+  }
+
   return (
-    <View style={[{ backgroundColor: `${colorTheme1.pageColor}` }, styles.container]}>
+    <View style={[{ backgroundColor: theme.pageColor }, styles.container]}>
       <View>
         <Text>Login and Register Container Here</Text>
       </View>
       <AccountInput />
     </View>
   )
-
 }
+
+const mapStateToProps = (state) => ({
+  theme: state.theme
+})
+
+export default connect(mapStateToProps, null)(RegisterScreen);
