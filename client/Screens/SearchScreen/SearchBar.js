@@ -6,7 +6,8 @@ import axios from "axios";
 
 //Internal Dependencies
 import { SearchBar as styles } from "./Styles";
-import { colorTheme1, API_IP } from "../../constants";
+import { palette } from '../../Utils/ColorScheme';
+import { API_IP } from "../../constants";
 import { getLocally, removeLocally } from "../../LocalStorage";
 
 //Components
@@ -23,6 +24,7 @@ const userExistsEndpoint = `http://${API_IP}/user/getUserMeta/`;
 
 export default function SearchBar({ navigation }) {
   //STATE MANAGEMENT
+  const state = useSelector(state => state);
   const user = useSelector(state => state.user);
   //User's following list, which will be suggested users without querying database
   const reduxData = user.userInfo.following;
@@ -129,7 +131,7 @@ export default function SearchBar({ navigation }) {
 
   return (
     <View
-      style={[styles.container, { backgroundColor: colorTheme1.pageColor }]}
+      style={[styles.container, { backgroundColor: palette(state.theme).pageColor }]}
     >
       <TextInput
         style={styles.bar}
