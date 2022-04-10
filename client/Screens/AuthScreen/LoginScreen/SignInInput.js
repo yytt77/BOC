@@ -22,8 +22,6 @@ export default function SignInScreen() {
       <PasswordInput />
      <Text>Forgot password?</Text>
       <ContinueButton onPress = {onPressSignInButton} />
-      <Text>Don't have an account?</Text>
-      <Text>Sign Up</Text>
     </View>
   );
 }//
