@@ -1,13 +1,19 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, Button, Image, Text, View, Platform, TouchableOpacity, TextInput} from 'react-native';
+import { useSelector } from 'react-redux';
+
 import Checkbox from 'expo-checkbox';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { FontAwesome } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 
+import { palette } from './Utils/ColorScheme';
+
 
 export default function Upload() {
+  const state = useSelector(state => state);
+
   const [image, setImage] = useState(null);
   const [text, setText] = useState('');
   const [location, setLocation] = useState(null);
@@ -89,16 +95,43 @@ export default function Upload() {
   }
 
 return (
-  <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#84C0FB' }}>
-    <Text style={styles.header}> Post Your Pets</Text>
-    <TouchableOpacity style={styles.button} onPress={pickImage}>
-      {image === null ? <FontAwesome name="image" style={styles.icon} size={100} /> : <Image source={{ uri: image }} style={{ width: 300, height: 200 }} />}
+  <View style={{ flex: 1, alignItems: 'center', backgroundColor: palette(state.theme).pageColor }}>
+    <Text style={[
+      styles.header,
+      {
+        color: palette(state.theme).buttonText,
+      }
+      ]}> Post Your Pets</Text>
+    <TouchableOpacity style={[
+      styles.button,
+      {
+        backgroundColor: palette(state.theme).buttonColor,
+        borderColor: palette(state.theme).buttonBorderColor,
+        shadowColor: palette(state.theme).shadowColor
+      }
+      ]} onPress={pickImage}>
+      {image === null ? <FontAwesome name="image" style={[
+        styles.icon,
+        {
+          color: palette(state.theme).iconColor
+        }
+        ]} size={100} /> : <Image source={{ uri: image }} style={{ width: 300, height: 200 }} />}
     </TouchableOpacity>
     <View style={styles.section}>
-      <Text style={styles.caption}>Caption </Text>
-
+      <Text style={[
+        styles.caption,
+        {
+          color: palette(state.theme).buttonText
+        }
+        ]}>Caption </Text>
       <TextInput
-        style={styles.input}
+        style={[
+          styles.input,
+          {
+            backgroundColor: palette(state.theme).inputColor,
+            borderColor: palette(state.theme).borderColor
+          }
+        ]}
         // style={{ height: 150, width: 300, backgroundColor: 'azure', fontSize: 15 }}
         placeholder="Say something about your pet!"
         onChangeText={(text) => setText({ text })}
@@ -108,16 +141,37 @@ return (
       <Checkbox
         value={isSelected}
         onValueChange={setSelection}
-        style={styles.checkbox}
-        color={isSelected? '#4630EB' : undefined}
+        style={[
+          styles.checkbox,
+          {
+            backgroundColor: palette(state.theme).iconColor
+          }
+        ]}
+        color={isSelected? palette(state.theme).selectedColor : undefined}
       />
-      <Text style={styles.caption}>Share Location</Text>
+      <Text style={[
+        styles.caption,
+        {
+          color: palette(state.theme).buttonText
+        }
+        ]}>Share Location</Text>
     </View>
     <TouchableOpacity
-          style={styles.postButton}
+          style={[
+            styles.postButton,
+            {
+              backgroundColor: palette(state.theme).buttonColor,
+              borderColor: palette(state.theme).buttonBorderColor
+            }
+          ]}
           // onPress={() => navigate('HomeScreen')}
           underlayColor='#fff'>
-          <Text style={styles.post}>Post</Text>
+          <Text style={[
+            styles.post,
+            {
+              color: palette(state.theme).buttonText
+            }
+            ]}>Post</Text>
     </TouchableOpacity>
   </View>
 );
@@ -125,35 +179,27 @@ return (
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#57D785',
     // borderRadius: 20,
     // padding: 10,
     // marginBottom: 20,
-    shadowColor: '#303838',
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
     shadowOpacity: 0.35,
     width: 300,
     height: 200,
     borderRadius:10,
-    borderColor: '#6E96BD'
-
   },
   icon: {
-    color: '#D6F7D6',
   },
   header: {
-    color: '#FFFFFF',
     fontSize: 25
   },
   caption: {
-    color: '#FFFFFF',
     fontSize: 15,
     padding: 10,
   },
   checkbox: {
     margin: 8,
-    backgroundColor: '#D6F7D6',
     borderWidth: 1,
   },
   section: {
@@ -170,13 +216,10 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    backgroundColor: 'azure',
     fontSize: 15,
     borderRadius:10,
-    borderColor: '#6E96BD'
   },
   post: {
-    color:'#D6F7D6',
     textAlign:'center',
     marginTop:5,
     paddingLeft : 10,
@@ -191,9 +234,6 @@ const styles = StyleSheet.create({
     marginTop:10,
     paddingTop:10,
     paddingBottom:10,
-    backgroundColor:'#57D785',
     borderRadius:10,
-    borderWidth: 1,
-    borderColor: '#6E96BD'
   }
 });

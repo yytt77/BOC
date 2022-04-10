@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
-import uploadProfilePictureReducer from './uploadProfilePictureReducer';
 import userReducer from './user';
+import uploadProfilePictureReducer from './uploadProfilePictureReducer';
+import updateColorSchemeReducer from './updateColorSchemeReducer'
 
 const reducers = combineReducers({
-  uploadProfilePictureClickCount: uploadProfilePictureReducer,
-  user: userReducer
+  user: userReducer,
+  theme: updateColorSchemeReducer
 });
 
 export default reducers;

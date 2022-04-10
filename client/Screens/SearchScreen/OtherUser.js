@@ -1,9 +1,10 @@
 import { Text, TouchableOpacity, View, Image } from "react-native";
 import { useState, useEffect } from "react";
 import { OtherUser as styles } from "./Styles";
-import FeedTemplate from "../../Templates/FeedTemplate";
-import HeaderTemplate from "../../Templates/HeaderTemplate";
-import { colorTheme1, API_IP } from "../../constants";
+import FeedTemplate from '../../Templates/FeedTemplate'
+import HeaderTemplate from '../../Templates/HeaderTemplate'
+import { palette } from '../../Utils/ColorScheme';
+import { API_IP } from "../../constants";
 import axios from "axios";
 const userEndpoint = `http://${API_IP}/user/getUser/`;
 const followEndpoint = `http://${API_IP}/user/followUser`;
@@ -13,6 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../../Redux/actions";
 
 export default function OtherUser({ route, navigation }) {
+
+  const state = useSelector((state) => state);
   const [userData, setUserData] = useState(route.params);
   const user = useSelector((state) => state.user);
   const [blocked, setBlocked] = useState(true);
@@ -80,7 +83,7 @@ export default function OtherUser({ route, navigation }) {
   return (
     <View
       style={[
-        { backgroundColor: `${colorTheme1.pageColor}` },
+        { backgroundColor: palette(state.theme).pageColor },
         styles.container,
       ]}
     >
