@@ -3,7 +3,7 @@ var userData = {
     'id': '51223421bb1234412dj12jkc5512',
     'username': 'Ash',
     'password': 'secret',
-    'profPhoto': 'https://placeimg.com/100/100/animals',
+    'profPhoto': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ99rViO5rDU_pgzoAlV6gM6GoT5qwAXt008Q&usqp=CAU',
     'following': [
       {
         followedUser: 'Joe',

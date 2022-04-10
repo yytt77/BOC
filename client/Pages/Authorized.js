@@ -11,7 +11,10 @@ import SettingsScreen from "../Screens/SettingsScreen";
 import UserScreen from "../Screens/UserScreen";
 import SearchScreen from "../Screens/SearchScreen";
 import Upload from "../Upload";
-import { colorTheme1, API_IP } from "../constants";
+import { API_IP } from "../constants";
+
+//Colors
+import { palette } from '../Utils/ColorScheme';
 
 import axios from "axios";
 const userEndpoint = `http://${API_IP}/user/getUser/`;
@@ -22,13 +25,17 @@ import { FontAwesome5, Entypo } from "@expo/vector-icons";
 import plus from "../assets/plus.png";
 
 //Redux
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { updateUser } from "../Redux/actions";
 
 const Tab = createBottomTabNavigator();
 
 export default function Authorized() {
+
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const currUser = useSelector(state => state.user);
+  // console.log(currUser);
   const getUser = async () => {
     //for now hardcoded, but later get current logged in user from redux store (Dominic puts in there from login screen)
     const currentUser = "joe"
@@ -58,14 +65,14 @@ export default function Authorized() {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          headerStyle: { height: 50, backgroundColor: colorTheme1.navColor },
+          headerStyle: { height: 50, backgroundColor: palette(state.theme).navColor },
           tabBarShowLabel: true,
           tabBarStyle: {
             ...styles.tabBarStyle,
-            backgroundColor: colorTheme1.navColor,
+            backgroundColor: palette(state.theme).navColor,
           },
-          tabBarActiveTintColor: colorTheme1.pageColor,
-          tabBarInactiveTintColor: colorTheme1.buttonColor,
+          tabBarActiveTintColor: palette(state.theme).tabIconActive,
+          tabBarInactiveTintColor: palette(state.theme).tabIconInactive,
         })}
       >
         <Tab.Screen
@@ -78,7 +85,7 @@ export default function Authorized() {
                   name="home"
                   size={20}
                   color={
-                    focused ? colorTheme1.pageColor : colorTheme1.buttonColor
+                    focused ? palette(state.theme).tabIconActive : palette(state.theme).tabIconInactive
                   }
                 ></FontAwesome5>
               </View>
@@ -95,7 +102,7 @@ export default function Authorized() {
                   name="search"
                   size={20}
                   color={
-                    focused ? colorTheme1.pageColor : colorTheme1.buttonColor
+                    focused ? palette(state.theme).tabIconActive : palette(state.theme).tabIconInactive
                   }
                 ></FontAwesome5>
               </View>
@@ -110,12 +117,12 @@ export default function Authorized() {
               <View
                 style={[
                   styles.uploadCircle,
-                  { backgroundColor: colorTheme1.buttonColor },
+                  { backgroundColor: palette(state.theme).tabIconInactive },
                 ]}
               >
                 <Image
                   source={plus}
-                  style={[styles.plus, { tintColor: colorTheme1.navColor }]}
+                  style={[styles.plus, { tintColor: palette(state.theme).navColor }]}
                 ></Image>
               </View>
             ),
@@ -131,7 +138,7 @@ export default function Authorized() {
                   name="dots-three-horizontal"
                   size={24}
                   color={
-                    focused ? colorTheme1.pageColor : colorTheme1.buttonColor
+                    focused ? palette(state.theme).tabIconActive : palette(state.theme).tabIconInactive
                   }
                 />
               </View>
@@ -148,7 +155,7 @@ export default function Authorized() {
                   name="user-alt"
                   size={20}
                   color={
-                    focused ? colorTheme1.pageColor : colorTheme1.buttonColor
+                    focused ? palette(state.theme).tabIconActive : palette(state.theme).tabIconInactive
                   }
                 ></FontAwesome5>
               </View>

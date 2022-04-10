@@ -1,21 +1,3 @@
-export const increment = (amount) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'increment',
-      payload: amount
-    });
-  }
-}
-
-export const decrement = (amount) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'decrement',
-      payload: amount
-    });
-  }
-}
-
 export const updateUser = (userData) => {
   return {
     type: 'UPDATE',
@@ -37,6 +19,14 @@ export const logout = () => {
     dispatch({
       type: 'unauthorized',
       payload: user
+    })
+  }
+}
+
+export const updateColorScheme = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'CHANGE_COLOR_SCHEME',
     })
   }
 }
