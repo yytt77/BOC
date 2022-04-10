@@ -22,8 +22,8 @@ export default function OtherUser({ route, navigation }) {
     let targetUser = userData.userInfo.username;
     let userFollowing = user.userInfo.following;
     if (targetUser === user.userInfo.username) setBlocked(false);
-    for (let { followedUser } of userFollowing) {
-      if (targetUser === followedUser) {
+    for (let { username } of userFollowing) {
+      if (targetUser === username) {
         setBlocked(false);
         return;
       }
@@ -59,10 +59,8 @@ export default function OtherUser({ route, navigation }) {
   const follow = async () => {
     try {
       const followData = {
-        username: user.userInfo.username,
-        userProfPic: user.userInfo.profPhoto,
-        followedUser: userData.userInfo.username,
-        followedProfPic: userData.userInfo.profPhoto,
+        currentUserID: user.userInfo._id,
+        otherID: userData.userInfo._id,
       };
       const response = await axios.post(followEndpoint, followData);
       if (response.data === "succesfully followed") setBlocked(false);
@@ -91,7 +89,10 @@ export default function OtherUser({ route, navigation }) {
         follow={follow}
         blockedUser={userData.userInfo.username}
       />
-      <TouchableOpacity style={styles.back} onPress={() => navigation.navigate("SearchBar")}>
+      <TouchableOpacity
+        style={styles.back}
+        onPress={() => navigation.navigate("SearchBar")}
+      >
         <Image
           source={require("../../assets/back.png")}
           fadeDuration={0}
