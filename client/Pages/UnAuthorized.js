@@ -7,7 +7,9 @@ const UnAuthorized = () => {
   const [screen, setScreen] = useState('home')
 
   return (
-    screen === 'auth' ? (
+    // Set home to auth to view home screen after login pressed
+    // until back button is implemented
+    screen === 'home' ? (
       <View style={{flex: 1, justifyContent: 'center'}}>
         <Text>Discovery Feed Here</Text>
         <Button title={'Login Icon Here'} onPress={() => setScreen('auth')}></Button>
