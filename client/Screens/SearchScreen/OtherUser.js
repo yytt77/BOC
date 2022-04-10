@@ -100,7 +100,7 @@ export default function OtherUser({ route, navigation }) {
         />
       </TouchableOpacity>
       <View styles={styles.headerContainer}>
-        <HeaderTemplate userData={userData}></HeaderTemplate>
+        <HeaderTemplate userData={userData} showUserDisplay={true}></HeaderTemplate>
       </View>
       <View styles={styles.feedContainer}>
         <FeedTemplate
