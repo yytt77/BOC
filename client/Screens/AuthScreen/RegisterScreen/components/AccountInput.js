@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import axios from 'axios';
 
-import { Register as styles } from './Styles'
+import { Register as styles } from '../Styles';
+import { API_IP } from '../../../../constants.js';
+
+const registrationEndpoint = `http://${API_IP}/user/addNewUser`;
 
 export default function AccountInput() {
   const [username, setUsername] = useState('');
@@ -10,32 +13,43 @@ export default function AccountInput() {
   const [password, setPassword] = useState('');
   const [confirmPw, setConfirmPw] = useState('');
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     let validatedUsername = validUsername(username);
     let validatedPasswords = matchingPasswords(password, confirmPw);
+
     if (validatedUsername && validatedPasswords) {
-      // validate through Passport
-    } else {
-      // render pw error message
+      try {
+        // Must use HTTPS when deployed in order to keep pw safe
+        const register = await axios.post(registrationEndpoint, {
+          username: username,
+          email: email,
+          password: password
+        })
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 
   const validUsername = (username) => {
     let letters = username.split('');
-    letters.every(letter => {
-      // Uppercase ASCII values
-      letter >= 65 || letter <= 90 ? false : true;
+    const valid = letters.every(letter => {
+      return letter === letter.toLowerCase();
     })
 
-    letters && !existingUser(username) ? true : false;
+    if (valid) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   const matchingPasswords = (pw1, pw2) => {
-    pw1 !== pw2 ? false : true;
-  }
-
-  const existingUser = () => {
-    // check db
+    if (pw1 !== pw2) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   return (
@@ -60,7 +74,7 @@ export default function AccountInput() {
         style={styles.field}
         onChangeText={text => setConfirmPw(text)}
       />
-      <Button title={'Sign Up'}>Sign Up</Button>
+      <Button title={'Sign Up'} onPress={() => {handleSignUp()}}>Sign Up</Button>
     </View>
   )
 }
