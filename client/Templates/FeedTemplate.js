@@ -41,14 +41,6 @@ const FeedTemplate = (props) => {
             }}/>
           </TouchableOpacity>
       </Modal>
-      {/* <View
-        style={styles.headerContainer}
-      >
-        <Image
-          style={styles.logoImage}
-          source={require('../assets/petpixLogoSmall.png')}
-        />
-      </View> */}
       <ScrollView
         style={styles.scrollcontainer}
         refreshControl={
@@ -71,19 +63,14 @@ const FeedTemplate = (props) => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    padding: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 5,
     width: width,
     height: safeHeight,
     flexDirection: 'column',
   },
-  headerContainer: {
-    // flex: 1,
-    paddingBottom: 10,
-    // backgroundColor: 'red',
-  },
   scrollcontainer: {
-    // flexGrow: 5,
-    // paddingTop: 10,
   },
   imageModal: {
     width: width,

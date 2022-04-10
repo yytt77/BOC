@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, Modal, Dimensions, ScrollView, StyleSheet, Image, TouchableOpacity, RefreshControl } from 'react-native';
-
-// import userData from './sampleData';
+import { Text, View, Dimensions, StyleSheet, Image } from 'react-native';
 
 
-const userInfo = (props) => {
-  // console.log('props', props.userData.userInfo.profPhoto);
+const UserInfo = (props) => {
   return (
     <View
-      style={styles.headerContainer}
-    >
+      style={styles.userInfoContainer}>
       <View
         style={styles.textContainer}>
         <Text
@@ -36,23 +31,18 @@ const userInfo = (props) => {
 };
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    right: 10,
+  userInfoContainer: {
     flexDirection: 'row',
-    // backgroundColor: 'green',
+    alignItems: 'center',
   },
   textContainer: {
-    flex: 6,
+    paddingRight: 5,
   },
   profileContainer: {
-    flex: 1,
-    alignItems: 'flex-end',
   },
   profilePicture: {
-    height: 50,
-    width: 50,
+    height: 45,
+    width: 45,
     borderRadius: 50,
   },
   usernameText: {
@@ -69,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default userInfo;
+export default UserInfo;
