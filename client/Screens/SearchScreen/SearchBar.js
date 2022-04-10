@@ -67,7 +67,7 @@ export default function SearchBar({ navigation }) {
 
   const matchFollowing = (searchParam) => {
     const res = reduxData.filter((item) =>
-      item.followedUser.toLowerCase().startsWith(searchParam.toLowerCase())
+      item.username.toLowerCase().startsWith(searchParam.toLowerCase())
     );
     return res.length ? res : false;
   };
@@ -82,8 +82,9 @@ export default function SearchBar({ navigation }) {
         if (user.data.username) {
           queriedItem = [
             {
-              followedUser: user.data.username,
-              followedProfPic: user.data.profPhoto,
+              _id: user.data._id,
+              username: user.data.username,
+              profPhoto: user.data.profPhoto,
             },
           ];
         } else {

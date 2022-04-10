@@ -26,10 +26,11 @@ export default (
 ) => {
   const onUserPress = async (username) => {
     try {
-      const user = await axios.get(`${userEndpoint}${item.followedUser}`);
+      const user = await axios.get(`${userEndpoint}${item.username}`);
       const userMeta = {
-        followedUser: user.data.userInfo.username,
-        followedProfPic: user.data.userInfo.profPhoto,
+        _id: user.data.userInfo._id,
+        username: user.data.userInfo.username,
+        profPhoto: user.data.userInfo?.profPhoto || null,
       };
       const history = await getLocally("searchHistory");
       let newHistory = history ? [...JSON.parse(history)] : [];
@@ -61,17 +62,17 @@ export default (
   if (item === emptyHistory || item === emptyQuery || item === failedConnection)
     return <Text style={styles.historyLabel}>{item}</Text>;
   return (
-    <TouchableOpacity onPress={() => onUserPress(item.followedUser)}>
+    <TouchableOpacity onPress={() => onUserPress(item.username)}>
       <View>
         <View style={styles.item}>
-          <Image
+          {item.profPhoto ? <Image
             style={styles.profileImage}
             resizeMode="cover"
             source={{
-              uri: `${item.followedProfPic}`,
+              uri: `${item.profPhoto}`,
             }}
-          />
-          <Text style={styles.comicText}>{item.followedUser}</Text>
+          />: <Text>Placeholder Photo</Text>}
+          <Text style={styles.comicText}>{item.username}</Text>
         </View>
       </View>
     </TouchableOpacity>
