@@ -1,11 +1,18 @@
+import { useState, getState } from 'react';
 import { Text, View } from 'react-native';
-import Authenticate from './AuthScreen';
+
+import SignInScreen from './LoginScreen/SignIn';
+import RegisterScreen from './RegisterScreen/Register';
 
 export default function AuthScreen() {
+  // login will be default once implemented
+  const [screen, setScreen] = useState('register');
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Random Feed Here</Text>
-      <Authenticate />
-    </View>
+    screen === 'login' ? (
+      <SignInScreen />
+    ) : (
+      <RegisterScreen />
+    )
   );
 }
