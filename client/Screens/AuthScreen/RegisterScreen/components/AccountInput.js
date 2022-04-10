@@ -40,6 +40,8 @@ export default function AccountInput() {
     if (valid) {
       return true;
     } else {
+      // Will be replaced w/ rendered msg and a more specific msg
+      console.log('Invalid Username');
       return false;
     }
   }
