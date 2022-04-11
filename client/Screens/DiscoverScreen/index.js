@@ -35,7 +35,5 @@ export default function DiscoverScreen() {
 const styles = StyleSheet.create({
   discoverScreenContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 });
