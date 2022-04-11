@@ -14,6 +14,7 @@ import FeedTemplate from '../../Templates/FeedTemplate';
 import axios from 'axios';
 import styles from '../UploadScreen/Styles';
 import { CLOUDINARY_API, upload_preset } from '@env';
+import Constants from "expo-constants";
 
 export default function Upload() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,8 +27,9 @@ export default function Upload() {
   const [imgURL, setImgURL] = useState(null);
   const [latitude, setLatitude] = useState(undefined);
   const [longitude, setLongitude] = useState(undefined);
+  const { manifest } = Constants;
 
-  console.log(CLOUDINARY_API, upload_preset);
+  // console.log('wat is ', manifest);
 
   const CameraAccess = () => {
     async function camera() {
@@ -138,17 +140,28 @@ export default function Upload() {
     }
     console.log('info', uploadInfo);
     // removeLocally("image")
-    axios({
-      method: 'POST',
-      url: 'http://localhost:3000/post/uploadPost',
-      data: uploadInfo,
-    }).then(function(res) {
-      console.log('data sent', res)
-    })
-    .catch((err) => {
-      console.log('not send', err);
-    })
-
+    // fetch('http://172.17.55.224:3000/post/uploadPost', {
+    //   method: 'POST', //Request Type
+    //   body: JSON.stringify(uploadInfo), //post body
+    //   headers: {
+    //     //Header Defination
+    //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    //   },
+    // })
+    // axios({
+    //   method: 'POST',
+    //   url: 'http://172.17.55.224:3000/post/uploadPost',
+    //   data: JSON.stringify(uploadInfo),
+    // })
+    // .then(res => res.json())
+    // .then(data => {
+    //   console.log(data)
+    // })
+    // .catch((err) => {
+    //   console.log('not send', err);
+    // })
+     fetch('http://172.17.55.224:3000/post/discover',{  method:'get'})
+       .then(data=>{  console.log('sent', data); });
   }
 
   return (
