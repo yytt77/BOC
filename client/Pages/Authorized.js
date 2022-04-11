@@ -10,7 +10,7 @@ import DiscoverScreen from "../Screens/DiscoverScreen";
 import SettingsScreen from "../Screens/SettingsScreen";
 import UserScreen from "../Screens/UserScreen";
 import SearchScreen from "../Screens/SearchScreen";
-import Upload from "../Upload";
+import Upload from "../Screens/UploadScreen/Upload";
 import { API_IP } from "../constants";
 
 //Colors

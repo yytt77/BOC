@@ -15,6 +15,9 @@ import axios from 'axios';
 import styles from '../UploadScreen/Styles';
 import { CLOUDINARY_API, upload_preset } from '@env';
 import Constants from "expo-constants";
+import { palette } from '../../Utils/ColorScheme';
+import { useSelector } from 'react-redux';
+import HeaderTemplate from '../../Templates/HeaderTemplate';
 
 export default function Upload() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -28,7 +31,8 @@ export default function Upload() {
   const [latitude, setLatitude] = useState(undefined);
   const [longitude, setLongitude] = useState(undefined);
   const { manifest } = Constants;
-
+  const state = useSelector(state => state);
+  const userData = useSelector(state => state.user);
   // console.log('wat is ', manifest);
 
   const CameraAccess = () => {
@@ -85,6 +89,9 @@ export default function Upload() {
     //  fetch(CLOUDINARY_API,{  method:'post',body:data})
     //    .then(res=>res.json())
     //    .then(data=>{  setImgURL(data.url); });
+       fetch('http://127.0.0.1:3000/post/discover',{  method:'post',body:data})
+       .then(res=>res.json())
+       .then(data=>{  console.log('good'); });
   }
 
   useEffect(() => {
@@ -115,7 +122,6 @@ export default function Upload() {
         accuracy: Location.Accuracy.Lowest,
       });
 
-      console.log('where is ', latitudeCord, 'and ', longitudeCord);
       let gps = await Location.reverseGeocodeAsync({
         latitude : latitude === undefined ? location.coords.latitude : latitudeCord,
         longitude : longitude === undefined ? location.coords.longitude : longitudeCord,
@@ -148,40 +154,35 @@ export default function Upload() {
     //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     //   },
     // })
-    // axios({
-    //   method: 'POST',
-    //   url: 'http://172.17.55.224:3000/post/uploadPost',
-    //   data: JSON.stringify(uploadInfo),
-    // })
-    // .then(res => res.json())
-    // .then(data => {
-    //   console.log(data)
-    // })
-    // .catch((err) => {
-    //   console.log('not send', err);
-    // })
-     fetch('http://172.17.55.224:3000/post/discover',{  method:'get'})
-       .then(data=>{  console.log('sent', data); });
+    axios({
+      method: 'GET',
+      url: 'http://172.17.55.224:3000/post/discover'
+    })
+    .then(data => {
+      console.log(data)
+    })
+    .catch((err) => {
+      console.log('not send', err);
+    })
+    //  fetch('http://172.17.55.224:3000/post/discover',{  method:'get'})
+    //    .then(data=>{  console.log('sent', data); });
   }
 
   return (
-    <ScrollView style={styles.centeredView}>
-        <Image
-          style={styles.logoImage}
-          source={require('../../assets/petpixLogoSmall.png')}
-        />
+    <ScrollView style={[styles.centeredView, , { backgroundColor: palette(state.theme).pageColor }]}>
+      <HeaderTemplate userData={null} showUserDisplay={true}></HeaderTemplate>
           <View style={styles.container}>
-          <Text style={styles.header}> Post Your Pets</Text>
+          <Text style={[styles.header,{color: palette(state.theme).buttonText}]}> Post Your Pets</Text>
           <Pressable
-            style={styles.button}
+            style={[styles.button, {backgroundColor: palette(state.theme).buttonColor, borderColor: palette(state.theme).buttonBorderColor}]}
             onPress={() => setModalVisible(true)}
           >
-            {image === null ? <FontAwesome name="image" style={styles.icon} size={100} /> : <Image source={{ uri: image }} style={{ width: 300, height: 200 }} />}
+            {image === null ? <FontAwesome name="image" style={[styles.icon, {color: palette(state.theme).iconColor}]} size={100} /> : <Image source={{ uri: image }} style={{ width: 300, height: 200}} />}
           </Pressable>
-          <Text style={styles.caption}>Caption </Text>
+          <Text style={[styles.caption, {color: palette(state.theme).buttonText}]}>Caption </Text>
 
             <TextInput
-              style={styles.inputBox}
+              style={[styles.inputBox, {borderColor: palette(state.theme).buttonBorderColor,}]}
               // style={{ height: 150, width: 300, backgroundColor: 'azure', fontSize: 15 }}
               placeholder="Say something about your pet!"
               onChangeText={(text) => setText({ text })}
@@ -191,17 +192,23 @@ export default function Upload() {
             <Checkbox
               value={isSelected}
               onValueChange={() => {setSelection(!isSelected);locationPicker(latitude, longitude);}}
-              style={styles.checkbox}
+              style={[styles.checkbox, {backgroundColor: palette(state.theme).iconColor}]}
               color={isSelected? '#4630EB' : undefined}
             />
             <Text style={styles.locationCaption}>Share Location</Text>
           </View>
           <TouchableOpacity
-                style={styles.postButton}
+                style={[
+                  styles.postButton,
+                  {
+                    backgroundColor: palette(state.theme).buttonColor,
+                    borderColor: palette(state.theme).buttonBorderColor
+                  }
+                ]}
                 // onPress={() => navigate('HomeScreen')}
                 onPress={() => postData()}
                 underlayColor='#fff'>
-                <Text style={styles.post}>Post</Text>
+                <Text style={[styles.post, {color: palette(state.theme).iconColor}]}>Post</Text>
           </TouchableOpacity>
           </View>
         <Modal
@@ -214,19 +221,27 @@ export default function Upload() {
           }}
         >
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>
+            <View style={[styles.modalView, {shadowColor: palette(state.theme).shadowColor, backgroundColor: palette(state.theme).pageColor}]}>
               <Pressable
-                style={[styles.button, styles.buttonClose]}
+                style={[styles.button, {
+                  backgroundColor: palette(state.theme).buttonColor,
+                  borderColor: palette(state.theme).buttonBorderColor,
+                  shadowColor: palette(state.theme).shadowColor
+                }]}
                 onPress={() => {GalleryAccess()}}
               >
-              <Text style={styles.textStyle}>Pick From Photos Gallary</Text>
+              <Text style={[styles.textStyle, {color: palette(state.theme).buttonText}]}>Pick From Photos Gallary</Text>
               </Pressable>
 
               <Pressable
-                style={[styles.button, styles.buttonClose]}
+                style={[styles.button, {
+                  backgroundColor: palette(state.theme).buttonColor,
+                  borderColor: palette(state.theme).buttonBorderColor,
+                  shadowColor: palette(state.theme).shadowColor
+                }]}
                 onPress={() => {CameraAccess()}}
               >
-              <Text style={styles.textStyle}>Pick From Camera roll</Text>
+              <Text style={[styles.textStyle, {color: palette(state.theme).buttonText}]}>Pick From Camera roll</Text>
               </Pressable>
             </View>
           </View>
