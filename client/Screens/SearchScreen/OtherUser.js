@@ -1,9 +1,10 @@
 import { Text, TouchableOpacity, View, Image } from "react-native";
 import { useState, useEffect } from "react";
 import { OtherUser as styles } from "./Styles";
-import FeedTemplate from "../../Templates/FeedTemplate";
-import HeaderTemplate from "../../Templates/HeaderTemplate";
-import { colorTheme1, API_IP } from "../../constants";
+import FeedTemplate from '../../Templates/FeedTemplate'
+import HeaderTemplate from '../../Templates/HeaderTemplate'
+import { palette } from '../../Utils/ColorScheme';
+import { API_IP } from "../../constants";
 import axios from "axios";
 const userEndpoint = `http://${API_IP}/user/getUser/`;
 const followEndpoint = `http://${API_IP}/user/followUser`;
@@ -13,6 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../../Redux/actions";
 
 export default function OtherUser({ route, navigation }) {
+
+  const state = useSelector((state) => state);
   const [userData, setUserData] = useState(route.params);
   const user = useSelector((state) => state.user);
   const [blocked, setBlocked] = useState(true);
@@ -22,8 +25,8 @@ export default function OtherUser({ route, navigation }) {
     let targetUser = userData.userInfo.username;
     let userFollowing = user.userInfo.following;
     if (targetUser === user.userInfo.username) setBlocked(false);
-    for (let { followedUser } of userFollowing) {
-      if (targetUser === followedUser) {
+    for (let { username } of userFollowing) {
+      if (targetUser === username) {
         setBlocked(false);
         return;
       }
@@ -59,10 +62,8 @@ export default function OtherUser({ route, navigation }) {
   const follow = async () => {
     try {
       const followData = {
-        username: user.userInfo.username,
-        userProfPic: user.userInfo.profPhoto,
-        followedUser: userData.userInfo.username,
-        followedProfPic: userData.userInfo.profPhoto,
+        currentUserID: user.userInfo._id,
+        otherID: userData.userInfo._id,
       };
       const response = await axios.post(followEndpoint, followData);
       if (response.data === "succesfully followed") setBlocked(false);
@@ -80,7 +81,7 @@ export default function OtherUser({ route, navigation }) {
   return (
     <View
       style={[
-        { backgroundColor: `${colorTheme1.pageColor}` },
+        { backgroundColor: palette(state.theme).pageColor },
         styles.container,
       ]}
     >
@@ -91,7 +92,10 @@ export default function OtherUser({ route, navigation }) {
         follow={follow}
         blockedUser={userData.userInfo.username}
       />
-      <TouchableOpacity style={styles.back} onPress={() => navigation.navigate("SearchBar")}>
+      <TouchableOpacity
+        style={styles.back}
+        onPress={() => navigation.navigate("SearchBar")}
+      >
         <Image
           source={require("../../assets/back.png")}
           fadeDuration={0}
@@ -99,7 +103,7 @@ export default function OtherUser({ route, navigation }) {
         />
       </TouchableOpacity>
       <View styles={styles.headerContainer}>
-        <HeaderTemplate userData={userData}></HeaderTemplate>
+        <HeaderTemplate userData={userData} showUserDisplay={true}></HeaderTemplate>
       </View>
       <View styles={styles.feedContainer}>
         <FeedTemplate

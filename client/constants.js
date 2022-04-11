@@ -1,10 +1,29 @@
-export const colorTheme1 = {
-  pageColor: "#8FBDEB",
-  navColor: "#57D785",
-  buttonColor: "#FEFB9F",
+export const lightTheme = {
+  pageColor: "#84C0FB",
+  navColor: "#57D789",
+  tabIconInactive: "#FEFB9F",
+  tabIconActive: "#84C0FB",
+  buttonColor: "#57D789",
+  buttonText: "#FEFB9F",
+  buttonBorderColor: "#6E96BD",
+  shadowColor: "#303838",
+  iconColor: "#D6F7D6",
+  selectedColor: "#4630EB",
+  inputColor: "azure"
 };
 
-export const API_IP = "localhost:3000"
+export const darkTheme = {
+  pageColor: "#091034",
+  navColor: "#744FC6",
+  tabIconInactive: "#FFFFFF",
+  tabIconActive: "#091034",
+  buttonColor: "#744FC6",
+  buttonText: "#FFFFFF",
+  buttonBorderColor: "#FFFFFF",
+  shadowColor: "#303838",
+  iconColor: "#D6F7D6",
+  selectedColor: "#4630EB",
+  inputColor: "azure"
+}
 
-export const AUTH_DOMAIN = "https://dev-cqov0ztk.us.auth0.com"
-export const AUTH_CLIENT_ID = "Omq0hiqzBh0E7pWAQirdAc9yhlNfLR67"
+export const API_IP = "localhost:3000"
