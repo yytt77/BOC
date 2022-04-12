@@ -3,7 +3,7 @@ import { Button, Text, View } from "react-native";
 import { connect, useSelector, useDispatch } from 'react-redux';
 
 import AuthScreen from '../Screens/AuthScreen/index';
-import { guestHome, guestAuth } from '../Redux/actions';
+import { guestAuth } from '../Redux/actions';
 
 const UnAuthorized = (props) => {
   const state = useSelector(state => state);
