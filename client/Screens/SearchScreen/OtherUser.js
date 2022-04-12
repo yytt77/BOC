@@ -93,7 +93,6 @@ export default function OtherUser({ route, navigation }) {
         blockedUser={userData.userInfo.username}
       />
       <TouchableOpacity
-        style={styles.back}
         onPress={() => navigation.navigate("SearchBar")}
       >
         <Image

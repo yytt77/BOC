@@ -9,7 +9,9 @@ export const lightTheme = {
   shadowColor: "#303838",
   iconColor: "#D6F7D6",
   selectedColor: "#4630EB",
-  inputColor: "azure"
+  inputColor: "azure",
+  searchBarColor: "rgba(255,255,255,0.3)",
+  searchText: "black",
 };
 
 export const darkTheme = {
@@ -23,7 +25,9 @@ export const darkTheme = {
   shadowColor: "#303838",
   iconColor: "#D6F7D6",
   selectedColor: "#4630EB",
-  inputColor: "azure"
-}
+  inputColor: "azure",
+  searchBarColor: "rgba(0,0,0,0.3)",
+  searchText: "white",
+};
 
-export const API_IP = "localhost:3000"
+export const API_IP = "localhost:3000";
