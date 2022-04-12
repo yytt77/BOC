@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { Register as styles } from '../Styles';
 import { API_IP } from '../../../../constants.js';
+import { containsUpperCase, containsNumber, containsSpecial } from '../registerHelpers';
 
 const registrationEndpoint = `http://${API_IP}/user/addNewUser`;
 
@@ -15,13 +16,18 @@ export default function AccountInput() {
   const [invalidUsername, setInvalidUsername] = useState(<></>);
   const [invalidEmail, setInvalidEmail] = useState(<></>);
   const [invalidPassword, setInvalidPassword] = useState(<></>);
+  const [passwordLength, setPasswordLength] = useState(<></>);
+  const [passwordCaptial, setPasswordCapital] = useState(<></>);
+  const [passwordNum, setPasswordNum] = useState(<></>);
+  const [passwordSpecial, setPasswordSpecial] = useState(<></>);
 
   const handleSignUp = async () => {
     let validatedUsername = validUsername(username);
     let validatedEmail = validEmail(email);
     let validatedPasswords = validPassword(password, confirmPw);
+    let validatedPwStrength = strongPassword(password);
 
-    if (validatedUsername && validatedEmail && validatedPasswords) {
+    if (validatedUsername && validatedEmail && validatedPasswords && validatedPwStrength) {
       try {
         // Must use HTTPS when deployed in order to keep pw safe
         const register = await axios.post(registrationEndpoint, {
@@ -29,7 +35,6 @@ export default function AccountInput() {
           email: email,
           password: password
         })
-        console.log('REGISTER ', register.data);
       } catch (err) {
         console.log(err);
       }
@@ -79,11 +84,30 @@ export default function AccountInput() {
     }
   }
 
-  const passwordStrength = (pw) => {
-    // if pw length is less than 8
-    // doesn't contain an uppercase letter
-    // contain a number
-    // contain special char ?
+  const strongPassword = (pw) => {
+    if (pw.length < 8) {
+      setPasswordLength(<Text>Password must contain at least 8 characters.</Text>);
+    } else {
+      setPasswordLength(<></>);
+    }
+
+    if (!containsUpperCase(pw)) {
+      setPasswordCapital(<Text>Password must contain at least 1 capital letter.</Text>);
+    } else {
+      setPasswordCapital(<></>);
+    }
+
+    if (!containsNumber(pw)) {
+      setPasswordNum(<Text>Password must contain at least 1 number.</Text>);
+    } else {
+      setPasswordNum(<></>);
+    }
+
+    if (!containsSpecial(pw)) {
+      setPasswordSpecial(<Text>Password must contain at least 1 special character.</Text>);
+    } else {
+      setPasswordSpecial(<></>);
+    }
   }
 
   return (
@@ -93,13 +117,11 @@ export default function AccountInput() {
         style={styles.field}
         onChangeText={text => setUsername(text)}
       />
-      {invalidUsername}
       <Text>Email Address</Text>
       <TextInput
         style={styles.field}
         onChangeText={text => setEmail(text)}
       />
-      {invalidEmail}
       <Text>Password</Text>
       <TextInput
         style={styles.field}
@@ -110,8 +132,14 @@ export default function AccountInput() {
         style={styles.field}
         onChangeText={text => setConfirmPw(text)}
       />
+      <Button title={'Sign Up'} onPress={() => { handleSignUp() }}>Sign Up</Button>
+      {invalidUsername}
+      {invalidEmail}
+      {passwordLength}
+      {passwordCaptial}
+      {passwordNum}
+      {passwordSpecial}
       {invalidPassword}
-      <Button title={'Sign Up'} onPress={() => {handleSignUp()}}>Sign Up</Button>
     </View>
   )
 }
