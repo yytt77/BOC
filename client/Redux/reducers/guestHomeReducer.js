@@ -1,4 +1,4 @@
-const unauthorizedHomeReducer = (state = 'home', action) => {
+const guestHomeReducer = (state = 'home', action) => {
   switch (action.type) {
     case 'home':
       return 'home'
@@ -9,4 +9,4 @@ const unauthorizedHomeReducer = (state = 'home', action) => {
   }
 }
 
-export default unauthorizedHomeReducer;
+export default guestHomeReducer;
