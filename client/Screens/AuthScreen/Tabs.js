@@ -8,23 +8,10 @@ export default function Tabs() {
   const dispatch = useDispatch();
   const screen = useSelector(state => state.authScreen);
 
-  console.log('ST ', state);
-  console.log('ASDF ', screen);
-
-  const login = () => {
-    dispatch(authLog());
-    console.log('STATE ', state);
-  }
-
-  const register = () => {
-    dispatch(authReg());
-    console.log('STATE REG ', state);
-  }
-
   return (
     <View>
-      <Text onPress={() => {login()}}>Log In</Text>
-      <Text onPress={() => {register()}}>Register</Text>
+      <Text onPress={ () => { dispatch(authLog()) }}>Log In</Text>
+      <Text onPress={ () => { dispatch(authReg()) }}>Register</Text>
     </View>
   )
 }
