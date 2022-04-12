@@ -9,7 +9,6 @@ const UnAuthorized = (props) => {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
   const screen = useSelector(state => state.guestHome);
-  console.log('YO ', state);
 
   // home will be default once implemented
   return (
