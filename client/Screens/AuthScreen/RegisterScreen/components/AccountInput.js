@@ -15,16 +15,18 @@ export default function AccountInput() {
 
   const handleSignUp = async () => {
     let validatedUsername = validUsername(username);
-    let validatedPasswords = matchingPasswords(password, confirmPw);
+    let validatedEmail = validEmail(email);
+    let validatedPasswords = validPassword(password, confirmPw);
 
-    if (validatedUsername && validatedPasswords) {
+    if (validatedUsername && validatedEmail && validatedPasswords) {
       try {
         // Must use HTTPS when deployed in order to keep pw safe
         const register = await axios.post(registrationEndpoint, {
-          username: username,
+          username: username.toLowerCase(),
           email: email,
           password: password
         })
+        console.log('REGISTER ', register.data);
       } catch (err) {
         console.log(err);
       }
@@ -33,25 +35,44 @@ export default function AccountInput() {
 
   const validUsername = (username) => {
     let letters = username.split('');
-    const valid = letters.every(letter => {
-      return letter === letter.toLowerCase();
-    })
 
-    if (valid) {
+    if (username.length >= 2 && username.length <= 16) {
       return true;
     } else {
-      // Will be replaced w/ rendered msg and a more specific msg
-      console.log('Invalid Username');
+      // Will be replaced w/ rendered msg
+      console.log('Username must be between 2 and 16 characters long.');
       return false;
     }
   }
 
-  const matchingPasswords = (pw1, pw2) => {
-    if (pw1 !== pw2) {
-      return false;
-    } else {
+  const validEmail = (email) => {
+    let splitEmail = email.split('@');
+    let left = splitEmail[0].split('.').length;
+    let right = splitEmail[1].split('.').length;
+
+    let leftMatch = left <= 2 && left > 0;
+    let rightMatch = right <= 2 && right > 0;
+    if (leftMatch && rightMatch) {
       return true;
+    } else {
+      // Will be replaced w/ rendered msg
+      console.log('Invalid email format.')
+      return false;
     }
+  }
+
+  const validPassword = (pw1, pw2) => {
+    if (pw1 === pw2) {
+      return true;
+    } else {
+      // Will be replaced w/ rendered msg
+      console.log('Passwords do not match.')
+      return false;
+    }
+  }
+
+  const passwordStrength = (pw) => {
+
   }
 
   return (
