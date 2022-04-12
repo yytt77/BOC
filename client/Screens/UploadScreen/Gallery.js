@@ -21,8 +21,6 @@ export default function Gallery() {
     if (!result.cancelled) {
       let url = result.uri;
       let GPS = [];
-      console.log('gps info', result);
-      console.log('this is the info', result.exif.GPSLatitude, 'and', result.exif.GPSLongitude);
       const onUserPress = async (url) => {
         // Save image to local storage;
         const uploadImage = await getLocally("image");
