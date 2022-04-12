@@ -12,6 +12,9 @@ export default function AccountInput() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPw, setConfirmPw] = useState('');
+  const [invalidUsername, setInvalidUsername] = useState(<></>);
+  const [invalidEmail, setInvalidEmail] = useState(<></>);
+  const [invalidPassword, setInvalidPassword] = useState(<></>);
 
   const handleSignUp = async () => {
     let validatedUsername = validUsername(username);
@@ -37,10 +40,10 @@ export default function AccountInput() {
     let letters = username.split('');
 
     if (username.length >= 2 && username.length <= 16) {
+      setInvalidUsername(<></>);
       return true;
     } else {
-      // Will be replaced w/ rendered msg
-      console.log('Username must be between 2 and 16 characters long.');
+      setInvalidUsername(<Text>Username must be between 2 and 16 characters long.</Text>);
       return false;
     }
   }
@@ -54,23 +57,24 @@ export default function AccountInput() {
       let rightMatch = right <= 2 && right > 0;
 
       if (leftMatch && rightMatch) {
+        setInvalidEmail(<></>);
         return true;
       } else {
+        setInvalidEmail(<Text>Invalid email format.</Text>);
         return false;
       }
     } else {
-      // Will be replaced w/ rendered msg
-      console.log('Invalid email format.')
+      setInvalidEmail(<Text>Invalid email format.</Text>);
       return false;
     }
   }
 
   const validPassword = (pw1, pw2) => {
     if (pw1 === pw2) {
+      setInvalidPassword(<></>)
       return true;
     } else {
-      // Will be replaced w/ rendered msg
-      console.log('Passwords do not match.')
+      setInvalidPassword(<Text>Passwords do not match.</Text>)
       return false;
     }
   }
@@ -89,11 +93,13 @@ export default function AccountInput() {
         style={styles.field}
         onChangeText={text => setUsername(text)}
       />
+      {invalidUsername}
       <Text>Email Address</Text>
       <TextInput
         style={styles.field}
         onChangeText={text => setEmail(text)}
       />
+      {invalidEmail}
       <Text>Password</Text>
       <TextInput
         style={styles.field}
@@ -104,6 +110,7 @@ export default function AccountInput() {
         style={styles.field}
         onChangeText={text => setConfirmPw(text)}
       />
+      {invalidPassword}
       <Button title={'Sign Up'} onPress={() => {handleSignUp()}}>Sign Up</Button>
     </View>
   )
