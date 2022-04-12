@@ -146,13 +146,15 @@ export default function AccountInput() {
       <TextInput
         style={styles.field}
         onChangeText={text => setPassword(text)}
-        secureTextEntry="true"
+        secureTextEntry={true}
+        textContentType="oneTimeCode"
       />
       <Text>Password Again</Text>
       <TextInput
         style={styles.field}
         onChangeText={text => setConfirmPw(text)}
-        secureTextEntry="true"
+        secureTextEntry={true}
+        textContentType="oneTimeCode"
       />
       <Button title={'Sign Up'} onPress={() => handleSignUp()}>Sign Up</Button>
       {invalidUsername}
