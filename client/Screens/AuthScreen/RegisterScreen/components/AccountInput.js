@@ -134,11 +134,13 @@ export default function AccountInput() {
       <TextInput
         style={styles.field}
         onChangeText={text => setUsername(text)}
+        autoCapitalize="none"
       />
       <Text>Email Address</Text>
       <TextInput
         style={styles.field}
         onChangeText={text => setEmail(text)}
+        autoCapitalize="none"
       />
       <Text>Password</Text>
       <TextInput
