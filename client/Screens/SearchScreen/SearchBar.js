@@ -65,6 +65,10 @@ export default function SearchBar({ navigation }) {
     navigation.navigate("OtherUser", userData);
   };
 
+  const openChat = (userData) => {
+    navigation.navigate("Chat", userData);
+  };
+
   const matchFollowing = (searchParam) => {
     const res = reduxData.filter((item) =>
       item.username.toLowerCase().startsWith(searchParam.toLowerCase())
@@ -134,9 +138,10 @@ export default function SearchBar({ navigation }) {
       style={[styles.container, { backgroundColor: palette(state.theme).pageColor }]}
     >
       <TextInput
-        style={styles.bar}
+        style={[styles.bar, {backgroundColor: palette(state.theme).searchBarColor}]}
         value={search}
         placeholder="Search people you follow"
+        placeholderTextColor={palette(state.theme).searchText}
         underlineColorAndroid="transparent"
         onChangeText={(text) => searchFilter(text)}
         autoCapitalize="none"
@@ -146,10 +151,10 @@ export default function SearchBar({ navigation }) {
           keyExtractor={(item) => JSON.stringify(item)}
           ItemSeparatorComponent={ItemSeparator}
           data={filteredData}
-          renderItem={(item) => Item(item, deleteHistory, openOtherUser, recentSearches, setRecentSearches)}
+          renderItem={(item) => Item(item, deleteHistory, openOtherUser, openChat, recentSearches, setRecentSearches, palette(state.theme).searchText, palette(state.theme).searchBarColor)}
         />
       ) : (
-        <Loading search={search} />
+        <Loading search={search} textColor={palette(state.theme).searchText}/>
       )}
     </View>
   );

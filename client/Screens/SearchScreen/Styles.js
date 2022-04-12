@@ -20,11 +20,6 @@ const OtherUser = StyleSheet.create({
   container: {
     flex: 1,
   },
-  back: {
-    // position: 'absolute',
-    // left: 100,
-    // top: 16
-  }
 });
 
 const BlockContent = StyleSheet.create({
@@ -58,8 +53,8 @@ const BlockContent = StyleSheet.create({
   },
   text: {
     fontFamily: "comicSans",
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
 });
 
 const Item = StyleSheet.create({
@@ -69,6 +64,7 @@ const Item = StyleSheet.create({
     fontWeight: "100",
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingHorizontal: 40,
   },
   clear: {
     color: "red",
@@ -79,6 +75,7 @@ const Item = StyleSheet.create({
     fontWeight: "100",
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingHorizontal: 40,
   },
   historyItem: {
     padding: 15,
@@ -90,13 +87,39 @@ const Item = StyleSheet.create({
     height: 40,
     borderRadius: 50,
   },
+  noProfileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   comicText: {
     fontFamily: "comicSans",
+  },
+  username: {
+    fontSize: 18,
+    paddingLeft: 10
+  },
+  right: {
+    width: 80,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
 });
 
 const ItemSeparator = StyleSheet.create({
-  line: { height: 1, width: 500, backgroundColor: "white" },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  line: {
+    height: 1,
+    width: 300,
+    backgroundColor: "rgba(255,255,255,0.3)",
+  },
 });
 
 const Loading = StyleSheet.create({
@@ -109,4 +132,20 @@ const Loading = StyleSheet.create({
   },
 });
 
-export { SearchBar, OtherUser, Item, ItemSeparator, Loading, BlockContent };
+const Chat = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  chatError: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorMessage: {
+    color: 'red',
+    fontSize: 20,
+    fontFamily: "comicSans",
+  }
+});
+
+export { SearchBar, OtherUser, Item, ItemSeparator, Loading, BlockContent, Chat };
