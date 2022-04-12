@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 
+// import HeaderTemplate from '../../../Templates/HeaderTemplate';
+import PetPixLogo from '../../../Templates/PetPixLogo';
+import Tabs from '../Tabs';
 import AccountInput from './components/AccountInput';
 import { Register as styles } from './Styles'
 import { lightTheme, darkTheme } from '../../../constants';
@@ -17,9 +20,8 @@ const RegisterScreen = function(props) {
 
   return (
     <View style={[{ backgroundColor: theme.pageColor }, styles.container]}>
-      <View>
-        <Text>Login and Register Container Here</Text>
-      </View>
+      <PetPixLogo />
+      <Tabs />
       <AccountInput />
     </View>
   )

@@ -23,6 +23,24 @@ export const logout = () => {
   }
 }
 
+export const authLog = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'authLog',
+      payload: 'login'
+    })
+  }
+}
+
+export const authReg = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'authReg',
+      payload: 'register'
+    })
+  }
+}
+
 export const updateColorScheme = () => {
   return (dispatch) => {
     dispatch({
