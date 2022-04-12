@@ -46,14 +46,18 @@ export default function AccountInput() {
   }
 
   const validEmail = (email) => {
-    let splitEmail = email.split('@');
-    let left = splitEmail[0].split('.').length;
-    let right = splitEmail[1].split('.').length;
+    if (email.split('@').length === 2) {
+      let splitEmail = email.split('@');
+      let left = splitEmail[0].split('.').length;
+      let right = splitEmail[1].split('.').length;
+      let leftMatch = left <= 2 && left > 0;
+      let rightMatch = right <= 2 && right > 0;
 
-    let leftMatch = left <= 2 && left > 0;
-    let rightMatch = right <= 2 && right > 0;
-    if (leftMatch && rightMatch) {
-      return true;
+      if (leftMatch && rightMatch) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       // Will be replaced w/ rendered msg
       console.log('Invalid email format.')
@@ -72,7 +76,10 @@ export default function AccountInput() {
   }
 
   const passwordStrength = (pw) => {
-
+    // if pw length is less than 8
+    // doesn't contain an uppercase letter
+    // contain a number
+    // contain special char ?
   }
 
   return (
