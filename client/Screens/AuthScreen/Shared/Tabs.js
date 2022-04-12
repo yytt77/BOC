@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { authLog, authReg } from '../../Redux/actions';
+import { authLog, authReg } from '../../../Redux/actions';
 
 export default function Tabs() {
   const state = useSelector(state => state);
@@ -10,8 +10,8 @@ export default function Tabs() {
 
   return (
     <View>
-      <Text onPress={ () => { dispatch(authLog()) }}>Log In</Text>
-      <Text onPress={ () => { dispatch(authReg()) }}>Register</Text>
+      <Text onPress={() => dispatch(authLog())}>Log In</Text>
+      <Text onPress={() => dispatch(authReg())}>Register</Text>
     </View>
   )
 }

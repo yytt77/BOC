@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 // import HeaderTemplate from '../../../Templates/HeaderTemplate';
 import PetPixLogo from '../../../Templates/PetPixLogo';
-import Tabs from '../Tabs';
+import Tabs from '../Shared/Tabs';
 import AccountInput from './components/AccountInput';
 import { Register as styles } from './Styles'
 import { lightTheme, darkTheme } from '../../../constants';

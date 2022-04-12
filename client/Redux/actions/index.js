@@ -41,6 +41,24 @@ export const authReg = () => {
   }
 }
 
+export const guestHome = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'home',
+      payload: 'home'
+    })
+  }
+}
+
+export const guestAuth = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'auth',
+      payload: 'auth'
+    })
+  }
+}
+
 export const updateColorScheme = () => {
   return (dispatch) => {
     dispatch({

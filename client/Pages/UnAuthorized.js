@@ -1,22 +1,32 @@
-import { useState } from 'react';
+import { useState, getState } from 'react';
 import { Button, Text, View } from "react-native";
+import { connect, useSelector, useDispatch } from 'react-redux';
 
-import AuthScreen from "../Screens/AuthScreen/index";
+import AuthScreen from '../Screens/AuthScreen/index';
+import { guestHome, guestAuth } from '../Redux/actions';
 
-const UnAuthorized = () => {
+const UnAuthorized = (props) => {
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
+  const screen = useSelector(state => state.guestHome);
+  console.log('YO ', state);
+
   // home will be default once implemented
-  const [screen, setScreen] = useState('auth')
-
   return (
-    screen === 'home' ? (
+    props.guestHome === 'home' ? (
       <View style={{flex: 1, justifyContent: 'center'}}>
         <Text>Discovery Feed Here</Text>
-        <Button title={'Login Icon Here'} onPress={() => setScreen('auth')}></Button>
+        <Button title={'Login Icon Here'} onPress={() => dispatch(guestAuth())}></Button>
       </View>
     ) : (
       <AuthScreen />
     )
+
   )
 };
 
-export default UnAuthorized;
+const mapStateToProps = (state) => ({
+  guestHome: state.guestHome
+})
+
+export default connect(mapStateToProps, null)(UnAuthorized);
