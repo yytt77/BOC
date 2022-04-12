@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import { Register as styles } from '../Styles';
 import { API_IP } from '../../../../constants.js';
 import { containsUpperCase, containsNumber, containsSpecial } from '../registerHelpers';
+import { authLog } from '../../../../Redux/actions';
 
 const registrationEndpoint = `http://${API_IP}/user/addNewUser`;
 
 export default function AccountInput() {
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
+  const screen = useSelector(state => state.authScreen);
+
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,6 +28,7 @@ export default function AccountInput() {
   const [passwordSpecial, setPasswordSpecial] = useState(<></>);
 
   const handleSignUp = async () => {
+
     let validatedUsername = validUsername(username);
     let validatedEmail = validEmail(email);
     let validatedPasswords = validPassword(password, confirmPw);
@@ -35,6 +42,8 @@ export default function AccountInput() {
           email: email,
           password: password
         })
+
+        dispatch(authLog());
       } catch (err) {
         console.log(err);
       }
@@ -85,28 +94,37 @@ export default function AccountInput() {
   }
 
   const strongPassword = (pw) => {
-    if (pw.length < 8) {
+    let length = pw.length >= 8;
+    let capital = containsUpperCase(pw);
+    let num = containsNumber(pw);
+    let special = containsSpecial(pw);
+
+    if (!length) {
       setPasswordLength(<Text>Password must contain at least 8 characters.</Text>);
     } else {
       setPasswordLength(<></>);
     }
 
-    if (!containsUpperCase(pw)) {
+    if (!capital) {
       setPasswordCapital(<Text>Password must contain at least 1 capital letter.</Text>);
     } else {
       setPasswordCapital(<></>);
     }
 
-    if (!containsNumber(pw)) {
+    if (!num) {
       setPasswordNum(<Text>Password must contain at least 1 number.</Text>);
     } else {
       setPasswordNum(<></>);
     }
 
-    if (!containsSpecial(pw)) {
+    if (!special) {
       setPasswordSpecial(<Text>Password must contain at least 1 special character.</Text>);
     } else {
       setPasswordSpecial(<></>);
+    }
+
+    if (length && capital && num && special) {
+      return true;
     }
   }
 
@@ -132,7 +150,7 @@ export default function AccountInput() {
         style={styles.field}
         onChangeText={text => setConfirmPw(text)}
       />
-      <Button title={'Sign Up'} onPress={() => { handleSignUp() }}>Sign Up</Button>
+      <Button title={'Sign Up'} onPress={() => handleSignUp()}>Sign Up</Button>
       {invalidUsername}
       {invalidEmail}
       {passwordLength}
