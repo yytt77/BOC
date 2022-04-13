@@ -43,6 +43,7 @@ export default function AccountInput() {
           password: password
         })
 
+        
         dispatch(authLog());
       } catch (err) {
         console.log(err);
