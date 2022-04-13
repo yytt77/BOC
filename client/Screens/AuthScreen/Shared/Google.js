@@ -5,11 +5,11 @@ import { API_IP } from '../../../constants.js';
 
 const googleRegEndpoint = `http://${API_IP}/user/googleUser`;
 
-export default function Twitter() {
+export default function Google() {
   const googleReg = async () => {
     try {
-      const register = await axios.post(googleRegEndpoint, {});
-      console.log('G ', register.data);
+      const register = await axios.get(googleRegEndpoint);
+      console.log('G ', register);
     } catch (err) {
       console.log(err);
     }

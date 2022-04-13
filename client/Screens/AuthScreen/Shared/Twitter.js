@@ -8,7 +8,7 @@ const twitterRegEndpoint = `http://${API_IP}/user/twitterUser`;
 export default function Twitter() {
   const twitterReg = async () => {
     try {
-      const register = await axios.post(twitterRegEndpoint, {});
+      const register = await axios.get(twitterRegEndpoint);
       console.log('T ', register.data);
     } catch (err) {
       console.log(err);
