@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { API_IP } from '../../../constants.js';
 
-const googleRegEndpoint = `http://${API_IP}/user/googleUser`;
+const googleRegEndpoint = `http://${API_IP}/user/auth/google`;
 
 export default function Google() {
   const googleReg = async () => {
