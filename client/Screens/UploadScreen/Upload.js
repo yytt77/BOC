@@ -1,3 +1,4 @@
+//External Libraries
 import { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Button, Image, Text, View, Platform, TouchableOpacity, TextInput, Alert, Modal, Pressable, ScrollView} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
@@ -9,28 +10,31 @@ import { useSelector } from 'react-redux';
 import Constants from "expo-constants";
 import { Cloudinary } from '@cloudinary/url-gen';
 import axios from 'axios';
+import { CLOUDINARY_API, upload_preset } from '@env';
+
+//Internal Dependencies
 import { getLocally, storeLocally, removeLocally } from '../../LocalStorage/index';
-import  CameraRoll  from '../UploadScreen/CameraRoll';
-import  Gallery  from '../UploadScreen/Gallery';
-import { colorTheme1 } from '../../constants';
+
+//Components
+import CameraRoll  from '../UploadScreen/CameraRoll';
+import Gallery  from '../UploadScreen/Gallery';
 import FeedTemplate from '../../Templates/FeedTemplate';
 import styles from '../UploadScreen/Styles';
-import { CLOUDINARY_API, upload_preset } from '@env';
-import { palette } from '../../Utils/ColorScheme';
 import HeaderTemplate from '../../Templates/HeaderTemplate';
+import { colorTheme1 } from '../../constants';
+import { palette } from '../../Utils/ColorScheme';
 
-export default function Upload() {
+export default function Upload({navigation}) {
+  const didMount = useRef(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [image, setImage] = useState(null);
   const [text, setText] = useState('');
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isSelected, setSelection] = useState(false);
-  const didMount = useRef(false);
   const [imgURL, setImgURL] = useState(null);
   const [latitude, setLatitude] = useState(undefined);
   const [longitude, setLongitude] = useState(undefined);
-  const { manifest } = Constants;
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
   // console.log('wat is ', manifest);
@@ -43,9 +47,10 @@ export default function Upload() {
       return getLocally("image");
     })
     .then((res) => {
-      let img = JSON.parse(res);
-      setImage(img[img.length - 1]);
-      setModalVisible(!modalVisible);
+      console.log('this is the res', res)
+        let img = JSON.parse(res);
+        setImage(img[img.length - 1]);
+        setModalVisible(!modalVisible);
     })
     .catch((err) => console.error(err));
   }
@@ -95,13 +100,16 @@ export default function Upload() {
     }
     // if (image !== null) {
       console.log('let mesee', image);
-      let newFile = {
-        uri:image,
-        type:`test/${image.split(".")[1]}`,
-        name:`test.${image.split(".")[1]}`
-      };
-    // }
-    handleUpload(newFile);
+      if (image !== null) {
+
+        let newFile = {
+          uri:image,
+          type:`test/${image.split(".")[1]}`,
+          name:`test.${image.split(".")[1]}`
+        };
+      // }
+      handleUpload(newFile);
+      }
     // console.log('Do something after counter has changed', newFile);
   }, [image]);
 
@@ -156,6 +164,7 @@ export default function Upload() {
       console.log('Success:', data);
       removeLocally("image");
       removeLocally("imageGPS");
+      navigation.goBack()
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -186,8 +195,27 @@ export default function Upload() {
             }
           ]}
           onPress={() => setModalVisible(true)}>
-          {image === null ? <FontAwesome name="image" style={[styles.icon, {color: palette(state.theme).iconColor}]} size={100} />
-            : <Image source={{ uri: image }} style={{ width: 300, height: 200, borderColor: palette(state.theme).buttonBorderColor, borderWidth: 1 }} />}
+          {image === null ?
+            <FontAwesome
+              name="image"
+              style={[
+                styles.icon,
+                {
+                  color: palette(state.theme).iconColor
+                }
+              ]}
+              size={100}
+            />
+            :
+            <Image
+              source={{ uri: image }} style={{
+                width: 300,
+                height: 200,
+                borderColor: palette(state.theme).buttonBorderColor,
+                borderWidth: 1
+                }}
+            />
+          }
         </Pressable>
         <Text style={[
           styles.caption,
@@ -209,11 +237,12 @@ export default function Upload() {
         <View style={styles.checkBoxSection}>
           <Checkbox
             value={isSelected}
-            onValueChange={() => {
-                                    setSelection(!isSelected);
-                                    locationPicker(latitude, longitude);
-                                  }
-                          }
+            onValueChange={
+              () => {
+                setSelection(!isSelected);
+                locationPicker(latitude, longitude);
+              }
+            }
             style={[
               styles.checkbox,
               {
@@ -254,7 +283,8 @@ export default function Upload() {
           }
         }
       >
-        <View style={styles.centeredView}>
+        <View style={styles.centeredView} >
+
           <View style={[
             styles.modalView,
             {
@@ -262,6 +292,13 @@ export default function Upload() {
               backgroundColor: palette(state.theme).pageColor,
             }
           ]}>
+            <Pressable onPress={() => {setModalVisible(!modalVisible);}}>
+              <Image
+                source={require("../../assets/back.png")}
+                fadeDuration={0}
+                style={{ width: 10, height: 30, marginLeft: 10 }}
+              />
+            </Pressable>
             <Pressable
               style={[
                 styles.button,
@@ -273,12 +310,12 @@ export default function Upload() {
               ]}
               onPress={() => {GalleryAccess()}}
             >
-            <Text style={[
-              styles.textStyle,
-              {
-                color: palette(state.theme).buttonText
-              }
-            ]}>Pick From Photos Gallary</Text>
+              <Text style={[
+                styles.textStyle,
+                {
+                  color: palette(state.theme).buttonText
+                }
+              ]}>Pick From Photos Gallary</Text>
             </Pressable>
             <Pressable
               style={[
@@ -291,12 +328,12 @@ export default function Upload() {
               ]}
               onPress={() => {CameraAccess()}}
             >
-            <Text style={[
-              styles.textStyle,
-              {
-                color: palette(state.theme).buttonText
-              }
-            ]}>Pick From Camera roll</Text>
+              <Text style={[
+                styles.textStyle,
+                {
+                  color: palette(state.theme).buttonText,
+                }
+              ]}>Pick From Camera roll</Text>
             </Pressable>
           </View>
         </View>

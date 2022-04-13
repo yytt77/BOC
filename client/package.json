@@ -13,6 +13,7 @@
   "dependencies": {
     "@cloudinary/react": "^1.2.2",
     "@cloudinary/url-gen": "^1.7.0",
+    "@expo/ngrok": "^4.1.0",
     "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/native": "^6.0.8",
@@ -28,6 +29,7 @@
     "expo-location": "~14.0.1",
     "expo-permissions": "~13.1.0",
     "expo-random": "^12.1.2",
+    "expo-screen-capture": "^4.1.1",
     "expo-status-bar": "~1.2.0",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.2",
@@ -41,7 +43,8 @@
     "react-redux": "^7.2.8",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
-    "socket.io-client": "^4.4.1"
+    "socket.io-client": "^4.4.1",
+    "expo-media-library": "~14.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
