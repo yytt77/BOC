@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { API_IP } from '../../../constants.js';
 
-const twitterRegEndpoint = `http://${API_IP}/user/twitterUser`;
+const twitterRegEndpoint = `http://${API_IP}/user/auth/twitter`;
 
 export default function Twitter() {
   const twitterReg = async () => {
