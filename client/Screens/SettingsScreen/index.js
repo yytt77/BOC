@@ -1,5 +1,8 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text, Alert } from 'react-native';
+import axios from 'axios';
+
+import * as ImagePicker from 'expo-image-picker';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,7 +14,42 @@ export default function SettingsScreen() {
 
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { updateColorScheme } = bindActionCreators(actions, dispatch);
+  const { updateProfilePhoto, updateColorScheme, logout } = bindActionCreators(actions, dispatch);
+
+  const choosePhotoAndUpdate = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      Alert.alert("You have not granted PetPix permission to access your photos.");
+      return;
+    }
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      exif: true,
+    });
+
+    if (!result.cancelled) {
+      let url = result.uri;
+      updateProfilePhoto(url);
+      axios({
+        method: 'patch',
+        baseURL: 'http://localhost:3000',
+        url: '/user/profPhoto',
+        data: {
+          username: 'test',
+          profPhoto: url
+        }
+      }).then(result => {
+        console.log('Success: ', result.status);
+      }).catch(err => {
+        console.log(`Error updating profile photo: ${err}`);
+      })
+    }
+    // console.log('profPhotoUrl out', state.user.userInfo.profPhoto);
+    // console.log('state out', state);
+  }
 
   return (
     <SafeAreaView style={[
@@ -26,7 +64,9 @@ export default function SettingsScreen() {
               borderColor: palette(state.theme).buttonBorderColor
             }
           ]}
-          onPress={() => Alert.alert('Upload Profile Picture Button Pressed')}
+          onPress={() => {
+            choosePhotoAndUpdate();
+          }}
           underlayColor='#FFF'>
         <Text style={[
           styles.buttonText,
@@ -42,7 +82,7 @@ export default function SettingsScreen() {
             }
           ]}
           onPress={() => {
-            updateColorScheme();
+            choosePhotoAndUpdate();
           }}
           underlayColor='#FFF'>
         <Text style={[
@@ -60,7 +100,9 @@ export default function SettingsScreen() {
               borderColor: palette(state.theme).buttonBorderColor
             }
           ]}
-          onPress={() => Alert.alert('Log Out Button Pressed')}
+          onPress={() => {
+            logout();
+          }}
           underlayColor='#FFF'>
         <Text style={[
           styles.logOutButtonText,

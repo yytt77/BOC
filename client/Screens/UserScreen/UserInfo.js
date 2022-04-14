@@ -1,20 +1,25 @@
 import { Text, View, Dimensions, StyleSheet, Image } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { palette } from '../../Utils/ColorScheme';
 
 const UserInfo = (props) => {
+
+  const state = useSelector((state) => state);
+
   return (
     <View
       style={styles.userInfoContainer}>
       <View
         style={styles.textContainer}>
         <Text
-          style={styles.usernameText}>
+          style={[styles.usernameText, {color: palette(state.theme).buttonText}]}>
           {props.userData.userInfo.username} </Text>
           <Text
-          style={styles.followersText}>
+          style={[styles.followersText, {color: palette(state.theme).buttonText}]}>
           {props.userData.userInfo.followers.length} Followers</Text>
           <Text
-          style={styles.followingText}>
+          style={[styles.followingText, {color: palette(state.theme).buttonText}]}>
           {props.userData.userInfo.following.length} Following</Text>
       </View>
       <View

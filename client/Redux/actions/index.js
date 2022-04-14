@@ -5,10 +5,17 @@ export const updateUser = (userData) => {
   }
 }
 
+export const updateProfilePhoto = (profilePhotoUrl) => {
+  return {
+    type: 'UPDATE_PROF_PHOTO',
+    payload: profilePhotoUrl
+  }
+}
+
 export const login = (user) => {
   return (dispatch) => {
     dispatch({
-      type: 'authorized',
+      type: 'AUTHORIZED',
       payload: user
     })
   }
@@ -17,7 +24,7 @@ export const login = (user) => {
 export const logout = () => {
   return (dispatch) => {
     dispatch({
-      type: 'unauthorized',
+      type: 'UNAUTHORIZED',
       payload: user
     })
   }
