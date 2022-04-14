@@ -12,10 +12,13 @@ var safeHeight = height - statusBarHeight - 80;
 const FeedTemplate = (props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [displayedPhoto, setDisplayedPhoto] = useState();
+  const [toUser, settoUser] = useState();
 
-  const displayModal = (show, url) => {
+  // add toUser(person clicked the image);
+  const displayModal = (show, url, toUser) => {
     setIsVisible(show);
     setDisplayedPhoto(url);
+    settoUser(toUser);
   }
 
   return (

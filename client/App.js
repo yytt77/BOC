@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 
 import { store } from './Redux/store';
 import App from "./Pages/index";
-import ScreenCapture from "./ScreenShotDetector"
+import ScreenCapture from "./Utils/ScreenShotDetector"
 export default function AppWrapper() {
   return(
     <Provider store={store}>

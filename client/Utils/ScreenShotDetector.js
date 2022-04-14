@@ -10,7 +10,7 @@ export default class ScreenShotDetector extends React.Component {
     const { status } = await MediaLibrary.requestPermissionsAsync();
     if (status === 'granted') {
       ScreenCapture.addScreenshotListener(() => {
-        alert('Thanks for screenshotting my beautiful app 😊');
+        alert('Thanks for screenshotting PetPix 😊');
       });
     }
   }

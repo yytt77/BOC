@@ -99,7 +99,7 @@ export default function Upload({navigation}) {
       return didMount.current = true;
     }
     // if (image !== null) {
-      console.log('let mesee', image);
+      // console.log('let mesee', image);
       if (image !== null) {
 
         let newFile = {
@@ -164,7 +164,11 @@ export default function Upload({navigation}) {
       console.log('Success:', data);
       removeLocally("image");
       removeLocally("imageGPS");
-      navigation.goBack()
+      if (image) {
+        navigation.goBack()
+      } else {
+        alert('You forgot to add your lovely pet picture 😊');
+      }
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -294,9 +298,9 @@ export default function Upload({navigation}) {
           ]}>
             <Pressable onPress={() => {setModalVisible(!modalVisible);}}>
               <Image
-                source={require("../../assets/back.png")}
+                source={require("../../assets/close.png")}
                 fadeDuration={0}
-                style={{ width: 10, height: 30, marginLeft: 10 }}
+                style={{ width: 20, height: 20, marginLeft: 300 }}
               />
             </Pressable>
             <Pressable
