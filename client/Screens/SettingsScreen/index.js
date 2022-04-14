@@ -82,7 +82,7 @@ export default function SettingsScreen() {
             }
           ]}
           onPress={() => {
-            choosePhotoAndUpdate();
+            updateColorScheme();
           }}
           underlayColor='#FFF'>
         <Text style={[
