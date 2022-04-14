@@ -41,8 +41,7 @@ export default function AccountInput() {
           username: username.toLowerCase(),
           email: email,
           password: password
-        })
-
+        });
 
         dispatch(authLog());
       } catch (err) {
