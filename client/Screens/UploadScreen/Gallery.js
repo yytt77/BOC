@@ -7,7 +7,7 @@ export default function Gallery() {
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
-      alert("You've refused to allow this appp to access your photos!");
+      alert("You have not granted PetPix permission to access your photos.");
       return;
     }
     let result = await ImagePicker.launchImageLibraryAsync({
