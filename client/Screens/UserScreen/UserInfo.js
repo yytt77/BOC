@@ -53,14 +53,17 @@ const styles = StyleSheet.create({
   usernameText: {
     textAlign: 'right',
     fontWeight: 'bold',
+    color: '#FEFB9F',
   },
   followersText: {
     textAlign: 'right',
     fontSize: 10,
+    color: '#FDFEFE',
   },
   followingText: {
     textAlign: 'right',
     fontSize: 10,
+    color: '#FDFEFE',
   },
 });
 
