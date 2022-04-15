@@ -3,6 +3,10 @@ import { Text, View, Modal, Dimensions, ScrollView, StyleSheet, Image, Touchable
 import Constants from 'expo-constants';
 import PostTemplate from './PostTemplate';
 
+//import from redux
+import { useSelector, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '../Redux/actions/index';
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -14,11 +18,17 @@ const FeedTemplate = (props) => {
   const [displayedPhoto, setDisplayedPhoto] = useState();
   const [toUser, settoUser] = useState();
 
-  // add toUser(person clicked the image);
-  const displayModal = (show, url, toUser) => {
+  // redux setup
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { notificationToUser } = bindActionCreators(actions, dispatch);
+
+  // add toUser to state and toUser, url to redux as well
+  const displayModal = (show, url, toUser, caption) => {
     setIsVisible(show);
     setDisplayedPhoto(url);
     settoUser(toUser);
+    notificationToUser(toUser, url, caption);
   }
 
   return (

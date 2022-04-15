@@ -7,7 +7,6 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import { useSelector } from 'react-redux';
-import Constants from "expo-constants";
 import { Cloudinary } from '@cloudinary/url-gen';
 import axios from 'axios';
 import { CLOUDINARY_API, upload_preset } from '@env';
@@ -24,6 +23,7 @@ import HeaderTemplate from '../../Templates/HeaderTemplate';
 import { colorTheme1 } from '../../constants';
 import { palette } from '../../Utils/ColorScheme';
 
+
 export default function Upload({navigation}) {
   const didMount = useRef(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,7 +37,6 @@ export default function Upload({navigation}) {
   const [longitude, setLongitude] = useState(undefined);
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
-  // console.log('wat is ', manifest);
 
   const CameraAccess = () => {
     async function camera() {
@@ -47,7 +46,6 @@ export default function Upload({navigation}) {
       return getLocally("image");
     })
     .then((res) => {
-      console.log('this is the res', res)
         let img = JSON.parse(res);
         setImage(img[img.length - 1]);
         setModalVisible(!modalVisible);
@@ -141,6 +139,9 @@ export default function Upload({navigation}) {
     let uploadInfo = {};
     uploadInfo['url'] = imgURL;
     uploadInfo['caption'] = text.text;
+    uploadInfo['username'] = "joe";
+    uploadInfo['profPhoto'] = "Joe's profile photo";
+
     if (isSelected) {
       if (location === "null, null") {
         uploadInfo['location'] = null;
@@ -150,8 +151,7 @@ export default function Upload({navigation}) {
     } else {
       uploadInfo['location'] = null;
     }
-    uploadInfo['username'] = "joe";
-    uploadInfo['profPhoto'] = "Joe's profile photo";
+
     fetch('http://44.201.208.58:3000/post/uploadPost', {
       method: 'POST',
       headers: {
