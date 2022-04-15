@@ -28,8 +28,8 @@ const userReducer = (state = userData, action) => {
         }
       };
     default:
-      return state
+      return state;
   }
 }
 
-export default userReducer
+export default userReducer;

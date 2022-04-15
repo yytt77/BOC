@@ -50,7 +50,7 @@ module.exports = StyleSheet.create({
 
   icon: {
     // color: '#D6F7D6',
-    
+
   },
   header: {
     // color: '#FFFFFF',
