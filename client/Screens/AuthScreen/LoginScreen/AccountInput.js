@@ -22,6 +22,10 @@ export default function AccountInput(){
     console.log('handleForgotPassword was called');
   }
 
+  const handleSignUpRedirect= async () => {
+    console.log('handleSignUpRedirect was called');
+  }
+
   return (
     <View style={styles.fields}>
     <Text>Account name</Text>
@@ -36,6 +40,8 @@ export default function AccountInput(){
     <Button title={'ForgotPassword'} onPress={() => handleForgotPassword()}>Forgot password?</Button>
 
     <Button title={'Continue'} onPress={() => handleLogin()}>Continue</Button>
+    <Text>Don't have an account?</Text>
+    <Button title={'SignUp'} onPress={() => handleSignUpRedirect()}>Sign Up</Button>
 
     </View>
   )
