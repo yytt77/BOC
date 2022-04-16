@@ -13,7 +13,6 @@ import Twitter from '../Shared/Twitter';
 
 import AccountInput from './AccountInput.js';
 import PasswordInput from './PasswordInput.js';
-import ForgotPassword from './ForgotPassword.js';
 import ContinueButton from './ContinueButton.js';
 import Logo from '../../../assets/logo_small.png';
 
@@ -21,7 +20,7 @@ import Logo from '../../../assets/logo_small.png';
 //import { Register as styles } from '..RegisterScreen/Styles'
 import { Register as styles } from '../RegisterScreen/Styles'
 
-import { lightTheme, darkTheme } from '../../../constants';
+import { lightTheme, darkTheme } from '../../../constants.js';
 
 
 const SignInScreen = function(props){
@@ -39,7 +38,6 @@ const SignInScreen = function(props){
       <BackButton />
       <Tabs />
       <AccountInput />
-      <ForgotPassword />
       <Google />
       <Twitter />
     </View>
