@@ -39,9 +39,9 @@ const SignInScreen = function(props){
       <BackButton />
       <Tabs />
       <AccountInput />
-      <PasswordInput />
-      <Text>Forgot password?</Text>
-      <ContinueButton />
+      <ForgotPassword />
+      <Google />
+      <Twitter />
     </View>
   )
 }
