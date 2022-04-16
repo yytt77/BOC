@@ -11,7 +11,7 @@ import * as actions from '../Redux/actions/index';
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 var statusBarHeight = Constants.statusBarHeight;
-var safeHeight = height - statusBarHeight - 80;
+var safeHeight = height - statusBarHeight - 160;
 
 const FeedTemplate = (props) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -34,13 +34,10 @@ const FeedTemplate = (props) => {
   return (
     <View style={styles.mainContainer}>
       <Modal
-        stlye={styles.imageModal}
+        style={styles.imageModal}
         animationType = {'slide'}
         transparent={false}
-        visible={isVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has now been closed.');
-        }}>
+        visible={isVisible}>
           <TouchableOpacity
             onPress={() => {
               displayModal(!isVisible)
@@ -67,7 +64,7 @@ const FeedTemplate = (props) => {
       >
         {props.userData.map((element, index) => {
           return <PostTemplate data={element}
-          key={index} displayModal={displayModal}></PostTemplate>
+          key={index} displayModal={displayModal} refreshData={props.refreshData}></PostTemplate>
         })}
       </ScrollView>
     </View>
@@ -84,11 +81,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   scrollcontainer: {
-  },
-  imageModal: {
-    width: width,
-    height: width,
-    backgroundColor: 'white',
   },
   modalPicture: {
     width: width,
