@@ -4,11 +4,10 @@ import { palette } from '../../Utils/ColorScheme';
 module.exports = StyleSheet.create({
   centeredView: {
     flex: 1
-    // backgroundColor: `${colorTheme1.pageColor}`,
   },
   container: {
     flex: 1,
-    marginTop: 80,
+    marginTop: 50,
   },
   modalView: {
     margin: 20,
@@ -50,7 +49,7 @@ module.exports = StyleSheet.create({
 
   icon: {
     // color: '#D6F7D6',
-    
+
   },
   header: {
     // color: '#FFFFFF',
