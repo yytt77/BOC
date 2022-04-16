@@ -1,17 +1,31 @@
 import { Text, View, Modal, StyleSheet } from 'react-native';
+import { useSelector, useStore, useDispatch } from "react-redux";
+import axios from "axios";
+
 import FeedTemplate from '../../Templates/FeedTemplate';
 import HeaderTemplate from '../../Templates/HeaderTemplate';
 import userInfo from './UserInfo.js';
 import { palette } from '../../Utils/ColorScheme';
-import { useSelector, useStore } from "react-redux";
+import { API_IP } from "../../constants";
+import { updateUser } from "../../Redux/actions";
 
 export default function UserScreen() {
 
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
-  const refreshUserData = () => {
-    console.log('this should run a get request for new account user data and save into redux store')
+  const updateReduxUser = async () => {
+    try {
+      const response = await axios.get(
+        `http://${API_IP}/user/getUser/${state.user.userInfo.username}`
+      );
+      if (response.data.userInfo) {
+        dispatch(updateUser(response.data));
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -27,7 +41,7 @@ export default function UserScreen() {
       </View>
       <View
         styles={styles.feedContainer}>
-        <FeedTemplate userData={userData.posts} refreshData={refreshUserData}></FeedTemplate>
+        <FeedTemplate userData={userData.posts} refreshData={updateReduxUser}></FeedTemplate>
       </View>
     </View>
   );

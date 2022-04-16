@@ -64,7 +64,7 @@ const FeedTemplate = (props) => {
       >
         {props.userData.map((element, index) => {
           return <PostTemplate data={element}
-          key={index} displayModal={displayModal}></PostTemplate>
+          key={index} displayModal={displayModal} refreshData={props.refreshData}></PostTemplate>
         })}
       </ScrollView>
     </View>

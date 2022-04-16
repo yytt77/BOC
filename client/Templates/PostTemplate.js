@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, ScrollView, Modal, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Button } from 'react-native';
+import { useSelector, useStore, useDispatch } from "react-redux";
 import moment from 'moment';
 import axios from "axios";
 
 import backIcon from '../assets/back.png';
 import CommentTemplate from './CommentTemplate';
-import { useSelector, useStore } from "react-redux";
+import { updateUser } from "../Redux/actions";
 import { palette } from '../Utils/ColorScheme';
 import { API_IP } from "../constants";
 
@@ -17,6 +18,7 @@ const PostTemplate = (props) => {
   // console.log('props', props);
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const [isVisible, setIsVisible] = useState(false);
   const [inputText, setInputText] = useState('');
@@ -47,6 +49,7 @@ const PostTemplate = (props) => {
     return axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        props.refreshData();
         setInputText('');
       })
       .catch(function (error) {
