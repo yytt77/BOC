@@ -1,4 +1,6 @@
-const userReducer = (state = {}, action) => {
+import { userData } from '../../Templates/sampleData';
+
+const userReducer = (state = userData, action) => {
   switch (action.type) {
     case 'UPDATE':
       return {
@@ -6,19 +8,28 @@ const userReducer = (state = {}, action) => {
         posts: action.payload.posts,
         userInfo: action.payload.userInfo
       }
-    case 'authorized':
+    case 'AUTHORIZED':
       return {
         ...state,
         username: action.payload
       };
-    case 'unauthorized':
+    case 'UNAUTHORIZED':
       return {
         ...state,
         username: null
       };
+    case 'UPDATE_PROF_PHOTO':
+      // console.log('profPhotoUrl', state.userInfo.profPhoto);
+      // console.log('action payload', action.payload);
+      return {
+        ...state,
+        userInfo: {
+          profPhoto: action.payload
+        }
+      };
     default:
-      return state
+      return state;
   }
 }
 
-export default userReducer
+export default userReducer;

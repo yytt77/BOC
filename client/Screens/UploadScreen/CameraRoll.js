@@ -23,7 +23,6 @@ export default function CameraRoll() {
 
     if (!result.cancelled) {
       let url = result.uri;
-      console.log('res',`test/${result.uri.split(".")[1]}`);
       const onUserPress = async (url) => {
         // Save image to local storage;
         const uploadImage = await getLocally("image");

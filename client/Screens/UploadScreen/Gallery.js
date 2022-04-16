@@ -7,7 +7,7 @@ export default function Gallery() {
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
-      alert("You've refused to allow this appp to access your photos!");
+      alert("You have not granted PetPix permission to access your photos.");
       return;
     }
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -21,8 +21,6 @@ export default function Gallery() {
     if (!result.cancelled) {
       let url = result.uri;
       let GPS = [];
-      console.log('gps info', result);
-      console.log('this is the info', result.exif.GPSLatitude, 'and', result.exif.GPSLongitude);
       const onUserPress = async (url) => {
         // Save image to local storage;
         const uploadImage = await getLocally("image");

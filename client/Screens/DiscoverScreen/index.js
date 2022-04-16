@@ -22,12 +22,12 @@ export default function DiscoverScreen() {
         backgroundColor: palette(state.theme).pageColor
       }
       ]}>
-      <View>
+      {/* <View>
       <HeaderTemplate userData={null} showUserDisplay={false}></HeaderTemplate>
       </View>
       <View>
         <FeedTemplate userData={randomData} refreshData={refreshRandomUserData}></FeedTemplate>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -35,7 +35,5 @@ export default function DiscoverScreen() {
 const styles = StyleSheet.create({
   discoverScreenContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 });

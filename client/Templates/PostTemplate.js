@@ -1,14 +1,125 @@
-import { Text, View, Modal, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, ScrollView, Modal, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Button } from 'react-native';
+import { useSelector, useStore, useDispatch } from "react-redux";
 import moment from 'moment';
+import axios from "axios";
 
-let width = Dimensions.get('window').width - 50;
+import backIcon from '../assets/back.png';
+import CommentTemplate from './CommentTemplate';
+import { updateUser } from "../Redux/actions";
+import { palette } from '../Utils/ColorScheme';
+import { API_IP } from "../constants";
+
+let width = Dimensions.get('window').width;
+let pictureWidth = width - 50;
 let height = Dimensions.get('window').height;
-// width -= 50;
-export default function PostTemplate(props) {
+
+const PostTemplate = (props) => {
+  // console.log('props', props);
+  const state = useSelector(state => state);
+  const userData = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
+  const [isVisible, setIsVisible] = useState(false);
+  const [inputText, setInputText] = useState('');
+  // const [selectedPostId, setSelectedPostId] = useState('');
+  const displayModal = (show) => {
+    setIsVisible(show);
+  }
+
   let date = moment(`${props.data.createdAt}`);
   date = moment(`${props.data.createdAt}`).fromNow();
+
+  var data = JSON.stringify({
+    "postID": `${props.data._id}`,
+    "username": `${state.user.userInfo.username}`,
+    "profPhoto": `${state.user.userInfo.profPhoto}`,
+    "comment": `${inputText}`
+  });
+
+  const submitComment = () => {
+    var config = {
+      method: 'POST',
+      url: `http://localhost:3000/post/comment`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+    return axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        props.refreshData();
+        setInputText('');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   return (
     <View style={styles.container}>
+      <Modal
+        style={styles.modalContainer}
+        animationType = {'slide'}
+        transparent={false}
+        visible={isVisible}>
+        <View
+        style={[styles.modalComponentContainer,
+          {
+            backgroundColor: palette(state.theme).pageColor
+          }]}>
+          <View
+          style={styles.modalHeader}>
+            <TouchableOpacity
+              onPress={() => {
+                displayModal(!isVisible)
+              }}>
+              <View
+              style={styles.backIconContainer}>
+                <Image
+                style={styles.backIcon}
+                resizeMode='contain'
+                source={backIcon}/>
+              </View>
+            </TouchableOpacity>
+            <View
+            style={styles.commentTextContainer}>
+              <Text
+              style={styles.commentText}>
+                Comments
+              </Text>
+            </View>
+          </View>
+          <View
+          style={styles.scrollViewContainer}>
+            <ScrollView
+            style={styles.modalCommentContainer}>
+              {props.data.comments.map((element, index) => {
+              return <CommentTemplate commentData={element}></CommentTemplate>
+            })}
+            </ScrollView>
+          </View>
+          <View
+          style={styles.inputTextContainer}>
+            <TextInput
+            style={styles.inputText}
+            placeholder='Type Comment Here'
+            // multiline={true}
+            onChangeText={(text) => {
+              setInputText(text);
+            }}
+            value={inputText}>
+            </TextInput>
+            <Button
+            onPress={()=> {
+              submitComment();
+            }}
+            title='Submit Comment'>
+            </Button>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.userInfoContainer}>
         <View style ={styles.profileContainer}>
           <Image
@@ -16,8 +127,7 @@ export default function PostTemplate(props) {
             resizeMode='cover'
             source={{
               uri: `${props.data.profPhoto}`,
-            }}
-          />
+            }}/>
         </View>
         <View style={styles.postInfoContainer}>
           <View style={styles.usernameContainer}>
@@ -31,7 +141,7 @@ export default function PostTemplate(props) {
       <TouchableOpacity
         style={styles.submittedPictureContainer}
         onPress={()=>{
-          props.displayModal(true, props.data.url)
+          props.displayModal(true, props.data.url, props.data.username, props.data.caption)
         }}
       >
         <Image
@@ -48,6 +158,12 @@ export default function PostTemplate(props) {
         >{props.data.caption}
         </Text>
       </View>
+      <TouchableOpacity
+        onPress={() => {
+          displayModal(!isVisible)
+      }}>
+        <Text> {props.data.comments.length} Comments</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -61,26 +177,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     backgroundColor: 'white',
-    // height: height,
   },
   userInfoContainer: {
     flex: 1,
     flexDirection: 'row',
     paddingBottom: 5,
-    // backgroundColor: 'green'
   },
   submittedPictureContainer: {
     flex: 9,
     backgroundColor: 'black',
     justifyContent: 'center',
-    // backgroundColor: '#2C3E50'
   },
   captionContainer: {
     flex: 1,
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor:'#5B2C6F'
   },
   captionText: {
   },
@@ -91,13 +203,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileContainer: {
-    // height: 50,
-    // width: 50,
     flex: 1,
-    // paddingLeft: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: '#F4D03F'
   },
   profileImage: {
     width: 25,
@@ -105,33 +213,80 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   submittedPicture: {
-    width: width,
-    height: width,
+    width: pictureWidth,
+    height: pictureWidth,
   },
   postInfoContainer: {
     flexDirection: 'row',
     flex: 7,
-    // alignItems: 'stretch',
-    // justifyContent: 'space-between'
   },
   usernameContainer: {
     flex: 3,
-    // backgroundColor: 'red',
     justifyContent: 'center',
   },
   locationDateContainer: {
     flex: 6,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    // backgroundColor: 'blue',
     paddingRight: 15
   },
   userNameText: {
     fontWeight: 'bold',
-    // justifyContent: 'center',
-    // alignItems: 'center'
   },
   locationDateText: {
     fontSize: 10,
-  }
+  },
+  // <--------------------Modal CSS--------------------->
+  modalContainer: {
+  },
+  modalComponentContainer:{
+    flex: 1,
+  },
+  modalHeader: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    paddingTop: 40,
+  },
+  backIconContainer: {
+  },
+  backIcon: {
+    width: 50,
+    height: 50,
+  },
+  commentTextContainer: {
+    position: 'absolute',
+    width: width,
+    textAlign: 'center',
+  },
+  commentText: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#FDFEFE',
+  },
+  modalCommentContainer: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    width: width,
+    height: width,
+  },
+  scrollViewContainer: {
+    flex: 12,
+  },
+  inputTextContainer: {
+    padding: 10,
+    flex: 2,
+  },
+  inputText: {
+    padding: 10,
+    borderWidth: 2,
+    borderRadius: 30,
+    // paddingTop: 20,
+    // paddingBottom: 50,
+    // width: width,
+    // height: width/2,
+    backgroundColor: '#FDFEFE',
+  },
 })
+
+export default PostTemplate;
