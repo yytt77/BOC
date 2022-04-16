@@ -31,7 +31,7 @@ export default function PostTemplate(props) {
       <TouchableOpacity
         style={styles.submittedPictureContainer}
         onPress={()=>{
-          props.displayModal(true, props.data.url)
+          props.displayModal(true, props.data.url, props.data.username, props.data.caption)
         }}
       >
         <Image

@@ -73,3 +73,15 @@ export const updateColorScheme = () => {
     })
   }
 }
+
+export const notificationToUser = (toUser, url, caption) => {
+  console.log('we have', toUser);
+  return (dispatch) => {
+    dispatch({
+      type: 'toUser',
+      payload: toUser,
+      url: url,
+      caption: caption
+    })
+  }
+}
