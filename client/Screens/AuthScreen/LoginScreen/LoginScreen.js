@@ -51,23 +51,3 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, null)(SignInScreen);
 
 
-// export default function SignInScreen() {
-
-//    const onPressSignInButton = () => {
-//      //send login and password to backend
-//      //receive answer from backend
-//    }
-
-//   return (
-//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//       <Image
-//       source = {Logo} />
-//       <BackButton />
-//       <Text>Sign in here</Text>
-//       <AccountInput />
-//       <PasswordInput />
-//      <Text>Forgot password?</Text>
-//       <ContinueButton onPress = {onPressSignInButton} />
-//     </View>
-//   );
-// }//
