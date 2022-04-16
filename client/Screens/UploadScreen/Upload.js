@@ -79,6 +79,17 @@ export default function Upload() {
     const data = new FormData();
     data.append('file',image);
     data.append('upload_preset',upload_preset);
+    axios({
+      method: 'POST',
+      url: 'http://localhost:3000/post/uploadPost',
+      data: 'data sent'
+    })
+    .then(data => {
+      console.log(data)
+    })
+    .catch((err) => {
+      console.log('not send', err);
+    })
 
     //  fetch(CLOUDINARY_API,{  method:'post',body:data})
     //    .then(res=>res.json())

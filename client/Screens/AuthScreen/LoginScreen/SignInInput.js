@@ -9,7 +9,8 @@ import BackButton from './BackButton.js';
 export default function SignInScreen() {
 
    const onPressSignInButton = () => {
-     //
+     //send login and password to backend
+     //receive answer from backend
    }
 
   return (

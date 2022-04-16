@@ -1,7 +1,7 @@
 import { useState, getState } from 'react';
 import { Text, View } from 'react-native';
 
-import SignInScreen from './LoginScreen/SignIn';
+import SignInScreen from './LoginScreen/LoginScreen.js';
 import RegisterScreen from './RegisterScreen/Register';
 
 export default function AuthScreen() {
