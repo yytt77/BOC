@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import PetPixLogo from '../../../Templates/PetPixLogo';
 import Tabs from '../Shared/Tabs';
 import BackButton from '../Shared/BackButton';
+import Google from '../Shared/Google';
+import Twitter from '../Shared/Twitter';
 import AccountInput from './components/AccountInput';
 import { Register as styles } from './Styles'
 import { lightTheme, darkTheme } from '../../../constants';
@@ -25,6 +27,8 @@ const RegisterScreen = function(props) {
       <BackButton />
       <Tabs />
       <AccountInput />
+      <Google />
+      <Twitter />
     </View>
   )
 }
