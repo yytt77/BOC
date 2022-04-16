@@ -8,7 +8,7 @@ const googleRegEndpoint = `http://${API_IP}/user/auth/google`;
 export default function Google() {
   const googleReg = async () => {
     try {
-      const register = await axios.get(googleRegEndpoint);
+      // const register = await axios.get(googleRegEndpoint);
       console.log('G ', register);
     } catch (err) {
       console.log(err);
