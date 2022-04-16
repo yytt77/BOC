@@ -3,7 +3,7 @@
     "name": "client",
     "slug": "client",
     "version": "1.0.0",
-    "scheme": "expo",
+    "scheme": "https",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
