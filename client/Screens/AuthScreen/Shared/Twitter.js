@@ -9,7 +9,6 @@ import axios from 'axios';
 import { login } from '../../../Redux/actions';
 import { API_IP } from '../../../constants.js';
 const twitterRegEndpoint = `http://${API_IP}/user/auth/twitter`;
-const twitterCbEndpoint = `http://${API_IP}/user/auth/twitter/callback`;
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -21,20 +20,18 @@ export default function Twitter() {
   const _handleRedirect = event => {
     WebBrowser.dismissBrowser();
     let data = Linking.parse(event.url);
-    console.log('DATA ', data);
     setUser(data);
   }
 
   const _openAuthSessionAsync = async () => {
     try {
-      let result = await WebBrowser.openAuthSessionAsync(twitterCbEndpoint);
+      let result = await WebBrowser.openAuthSessionAsync(twitterRegEndpoint);
       let redirectData;
       if (result.url) {
         redirectData = Linking.parse(result.url);
       }
 
       let username = redirectData.queryParams.username;
-      // let email = redirectData.queryParams.email;
       dispatch(login(username));
     } catch (err) {
       alert(err);
