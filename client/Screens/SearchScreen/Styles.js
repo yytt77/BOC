@@ -99,13 +99,13 @@ const Item = StyleSheet.create({
   },
   username: {
     fontSize: 18,
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   right: {
     width: 80,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
 });
 
@@ -134,7 +134,7 @@ const Loading = StyleSheet.create({
 
 const Chat = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   chatError: {
     flex: 1,
@@ -142,10 +142,74 @@ const Chat = StyleSheet.create({
     alignItems: "center",
   },
   errorMessage: {
-    color: 'red',
+    color: "red",
     fontSize: 20,
     fontFamily: "comicSans",
+  },
+  feed: {
+    height: 600
   }
 });
 
-export { SearchBar, OtherUser, Item, ItemSeparator, Loading, BlockContent, Chat };
+const Message = StyleSheet.create({
+  chat: {
+    flexDirection: "row",
+    backgroundColor: "blue",
+    width: 130,
+    padding: 20,
+    margin: 20,
+    borderRadius: 50,
+    justifyContent: 'center'
+  },
+  tail: {
+    width: 0,
+    height: 0,
+    backgroundColor: "transparent",
+    borderStyle: "solid",
+    borderTopWidth: 20,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    position: "absolute",
+    borderTopColor: "blue",
+    bottom: -10,
+  },
+  lTail: {
+    borderLeftWidth: 10,
+    borderRightWidth: 20,
+    left: 20
+  },
+  rTail: {
+    borderLeftWidth: 20,
+    borderRightWidth: 10,
+    right: 20
+  },
+  lProfileImage: {
+    borderRadius: 50,
+    marginLeft: 10
+  },
+  rProfileImage: {
+    borderRadius: 50,
+    alignSelf: "flex-end",
+    marginRight: 10
+  },
+  profileImage: {
+    width: 20,
+    height: 20,
+  },
+  chatText: {
+    fontFamily: "comicSans",
+    fontSize: 15,
+    color: "white"
+  }
+});
+
+export {
+  SearchBar,
+  OtherUser,
+  Item,
+  ItemSeparator,
+  Loading,
+  BlockContent,
+  Chat,
+  Message,
+};
