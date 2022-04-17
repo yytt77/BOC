@@ -30,4 +30,4 @@ export const darkTheme = {
   searchText: "white",
 };
 
-export const API_IP = "localhost:3000";
+export const API_IP = "44.201.208.58:3000";

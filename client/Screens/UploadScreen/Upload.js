@@ -22,9 +22,10 @@ import styles from '../UploadScreen/Styles';
 import HeaderTemplate from '../../Templates/HeaderTemplate';
 import { colorTheme1 } from '../../constants';
 import { palette } from '../../Utils/ColorScheme';
-
+import { API_IP } from '../../constants';
 
 export default function Upload({navigation}) {
+  //define states
   const didMount = useRef(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [image, setImage] = useState(null);
@@ -38,6 +39,8 @@ export default function Upload({navigation}) {
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
 
+  console.log('op', API_IP)
+  // camera access functionality
   const CameraAccess = () => {
     async function camera() {
       return await CameraRoll();
@@ -53,6 +56,7 @@ export default function Upload({navigation}) {
     .catch((err) => console.error(err));
   }
 
+  // gallery access functionality
   const GalleryAccess = () => {
     async function gallery() {
         return await Gallery();
@@ -81,6 +85,7 @@ export default function Upload({navigation}) {
     .catch((err) => console.error(err));
   }
 
+  //upload picture to cloudinary API
   const handleUpload = (image)=>{
     const data = new FormData();
     data.append('file',image);
@@ -96,8 +101,6 @@ export default function Upload({navigation}) {
     if ( !didMount.current ) {
       return didMount.current = true;
     }
-    // if (image !== null) {
-      // console.log('let mesee', image);
       if (image !== null) {
 
         let newFile = {
@@ -105,12 +108,11 @@ export default function Upload({navigation}) {
           type:`test/${image.split(".")[1]}`,
           name:`test.${image.split(".")[1]}`
         };
-      // }
       handleUpload(newFile);
       }
-    // console.log('Do something after counter has changed', newFile);
   }, [image]);
 
+  // GPS location functionality
   const locationPicker = async (latitudeCord, longitudeCord) => {
     // if (isSelected === true) {
       // cosole.log('isSelected', isSelected);
@@ -131,10 +133,9 @@ export default function Upload({navigation}) {
         longitude : longitude === undefined ? location.coords.longitude : longitudeCord,
       })
       setLocation(gps[0].city + ', ' + gps[0].region);
-      // console.log('we have city', gps[0].city, '    ', gps[0].region);
-    // }
   }
 
+  // Post button and go back to Discovery page
   const postData = () => {
     let uploadInfo = {};
     uploadInfo['url'] = imgURL;
@@ -152,7 +153,7 @@ export default function Upload({navigation}) {
       uploadInfo['location'] = null;
     }
 
-    fetch('http://44.201.208.58:3000/post/uploadPost', {
+    fetch(`http://${API_IP}/post/uploadPost`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -165,7 +166,9 @@ export default function Upload({navigation}) {
       removeLocally("image");
       removeLocally("imageGPS");
       if (image) {
-        navigation.goBack()
+        navigation.goBack();
+        setImage(null);
+        setSelection(false);
       } else {
         alert('You forgot to add your lovely pet picture 😊');
       }
@@ -288,7 +291,6 @@ export default function Upload({navigation}) {
         }
       >
         <View style={styles.centeredView} >
-
           <View style={[
             styles.modalView,
             {
@@ -298,7 +300,7 @@ export default function Upload({navigation}) {
           ]}>
             <Pressable onPress={() => {setModalVisible(!modalVisible);}}>
               <Image
-                source={require("../../assets/close.png")}
+                source={require("../../assets/x.png")}
                 fadeDuration={0}
                 style={{ width: 20, height: 20, marginLeft: 300 }}
               />
