@@ -1,5 +1,5 @@
 import { View, Text, Image } from "react-native";
-import { Chat as styles, Item as itemStyes } from "../Styles";
+import { Message as styles, Item as itemStyles } from "../Styles";
 import { palette } from "../../../Utils/ColorScheme";
 
 export default ({ me, other, messages }) => {
@@ -7,27 +7,33 @@ export default ({ me, other, messages }) => {
     if (msg.sender === me.username) {
       return (
         <View key={i}>
-          <Text style={{ color: "red" }}>{msg.message}</Text>
+          <View style={[styles.chat, {alignSelf: "flex-end"}]}>
+            <Text style={styles.chatText}>{msg.message}</Text>
+            <View style={[styles.rTail, styles.tail]}></View>
+          </View>
           <Image
-              style={itemStyes.profileImage}
-              resizeMode="cover"
-              source={{
-                uri: `${me.profPhoto}`,
-              }}
-            />
+            style={[styles.rProfileImage, styles.profileImage]}
+            resizeMode="cover"
+            source={{
+              uri: `${me.profPhoto}`,
+            }}
+          />
         </View>
       );
     } else if (msg.sender === other.username) {
       return (
         <View key={i}>
-          <Text style={{ color: "green" }}>{msg.message}</Text>
+          <View style={styles.chat}>
+            <Text style={styles.chatText}>{msg.message}</Text>
+            <View style={[styles.lTail, styles.tail]}></View>
+          </View>
           <Image
-              style={itemStyes.profileImage}
-              resizeMode="cover"
-              source={{
-                uri: `${other.profPhoto}`,
-              }}
-            />
+            style={[styles.lProfileImage, styles.profileImage]}
+            resizeMode="cover"
+            source={{
+              uri: `${me.profPhoto}`,
+            }}
+          />
         </View>
       );
     }
