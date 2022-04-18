@@ -20,7 +20,6 @@ export default function Google() {
   const _handleRedirect = event => {
     WebBrowser.dismissBrowser();
     let data = Linking.parse(event.url);
-    console.log('DATA ', data);
     setUser(data);
   }
 
@@ -32,23 +31,13 @@ export default function Google() {
         redirectData = Linking.parse(result.url);
       }
 
-      console.log('RES ', result);
-      // let username = redirectData.queryParams.username;
-      // dispatch(login(username));
+      let username = redirectData.queryParams.username;
+      dispatch(login(username));
     } catch (err) {
       alert(err);
       console.log(err);
     }
   }
-
-  // const googleReg = async () => {
-  //   try {
-  //     const register = await axios.get(googleRegEndpoint);
-  //     console.log('G ', register);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
 
   return (
     // button will include Google logo
