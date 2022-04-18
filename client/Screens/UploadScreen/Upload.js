@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { Cloudinary } from '@cloudinary/url-gen';
 import axios from 'axios';
 import { CLOUDINARY_API, upload_preset } from '@env';
+import { useNavigation } from '@react-navigation/native';
 
 //Internal Dependencies
 import { getLocally, storeLocally, removeLocally } from '../../LocalStorage/index';
@@ -24,7 +25,7 @@ import { colorTheme1 } from '../../constants';
 import { palette } from '../../Utils/ColorScheme';
 import { API_IP } from '../../constants';
 
-export default function Upload({navigation}) {
+export default function Upload() {
   //define states
   const didMount = useRef(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -38,8 +39,9 @@ export default function Upload({navigation}) {
   const [longitude, setLongitude] = useState(undefined);
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
+  const navigation = useNavigation();
 
-  console.log('op', API_IP)
+  console.log('check', navigation);
   // camera access functionality
   const CameraAccess = () => {
     async function camera() {
@@ -166,7 +168,7 @@ export default function Upload({navigation}) {
       removeLocally("image");
       removeLocally("imageGPS");
       if (image) {
-        navigation.goBack();
+        navigation.navigate("DiscoverScreen");
         setImage(null);
         setSelection(false);
       } else {
