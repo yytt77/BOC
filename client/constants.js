@@ -31,3 +31,4 @@ export const darkTheme = {
 };
 
 export const API_IP = "localhost:3000";
+export const API_IP_login = "192.168.0.20:3000";

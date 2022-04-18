@@ -5,10 +5,14 @@ import axios from 'axios';
 
 
 import { Register as styles } from '../RegisterScreen/Styles'
-import { API_IP } from '../../../constants.js';
-import { login } from '../../../Redux/actions';
+import { API_IP_login } from '../../../constants.js';
+//import { login } from '../../../Redux/actions';
+import { authLog } from '../../../Redux/actions';
+import { authReg } from '../../../Redux/actions';
 
-const loginEndpoint = `http://${API_IP}/user/login/password`;
+//import { authlog } from '../../../Redux/actions';
+
+const loginEndpoint = `http://${API_IP_login}/user/login/password`;
 
 export default function AccountInput(){
   const state = useSelector(state => state);
@@ -22,20 +26,23 @@ export default function AccountInput(){
      console.log('endpoint', loginEndpoint);
      console.log('username', username);
      console.log('password', password);
-  }
 
-  axios.post(loginEndpoint, {
+
+  await axios.post(loginEndpoint, {
     username: username,
     password: password
   })
   .then(function (response) {
-    dispatch(login())
+    //dispatch(authLog());
     console.log('successfully sent login data to backend');
   })
   .catch(function (error) {
     console.log('error sending login', error);
     console.log(error.response.data)
   });
+
+
+}
 
 
 
@@ -45,6 +52,8 @@ export default function AccountInput(){
 
   const handleSignUpRedirect= async () => {
     console.log('handleSignUpRedirect was called');
+    dispatch(authReg());
+
   }
 
   return (
