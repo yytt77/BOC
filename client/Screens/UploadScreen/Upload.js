@@ -24,8 +24,10 @@ import HeaderTemplate from '../../Templates/HeaderTemplate';
 import { colorTheme1 } from '../../constants';
 import { palette } from '../../Utils/ColorScheme';
 import { API_IP } from '../../constants';
+import DiscoverScreen from '../DiscoverScreen/index'
 
-export default function Upload() {
+export default function Upload({ navigation }) {
+
   //define states
   const didMount = useRef(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -39,9 +41,7 @@ export default function Upload() {
   const [longitude, setLongitude] = useState(undefined);
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
-  const navigation = useNavigation();
 
-  console.log('check', navigation);
   // camera access functionality
   const CameraAccess = () => {
     async function camera() {
@@ -52,8 +52,11 @@ export default function Upload() {
     })
     .then((res) => {
         let img = JSON.parse(res);
-        setImage(img[img.length - 1]);
-        setModalVisible(!modalVisible);
+        console.log('after camera', img)
+        if (img) {
+          setImage(img[img.length - 1]);
+          setModalVisible(!modalVisible);
+        }
     })
     .catch((err) => console.error(err));
   }
@@ -68,8 +71,11 @@ export default function Upload() {
     })
     .then((res) => {
       let img = JSON.parse(res);
-      setImage(img[img.length - 1]);
-      return getLocally('imageGPS');
+      console.log('after glaa', img);
+      if (img) {
+        setImage(img[img.length - 1]);
+        return getLocally('imageGPS');
+      }
     })
     .then((gps) => {
       let gpsData = JSON.parse(gps);
@@ -88,57 +94,52 @@ export default function Upload() {
   }
 
   //upload picture to cloudinary API
-  const handleUpload = (image)=>{
+  const handleUpload = async (image)  =>  {
     const data = new FormData();
     data.append('file',image);
     data.append('upload_preset',upload_preset);
 
-    fetch(CLOUDINARY_API,{  method:'post',body:data})
+    await fetch(CLOUDINARY_API,{ method:'post', body:data })
       .then(res=>res.json())
       .then(data=>{ setImgURL(data.url); })
       .catch((error) => { console.error('Error:', error); });
-}
+  }
 
   useEffect(() => {
     if ( !didMount.current ) {
       return didMount.current = true;
     }
       if (image !== null) {
-
         let newFile = {
-          uri:image,
-          type:`test/${image.split(".")[1]}`,
-          name:`test.${image.split(".")[1]}`
+          uri:  image,
+          type: `test/${image.split(".")[1]}`,
+          name: `test.${image.split(".")[1]}`
         };
-      handleUpload(newFile);
+        handleUpload(newFile);
       }
   }, [image]);
 
   // GPS location functionality
   const locationPicker = async (latitudeCord, longitudeCord) => {
-    // if (isSelected === true) {
-      // cosole.log('isSelected', isSelected);
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Lowest,
+    });
 
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-      // setSelection(true);
-
-      let location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Lowest,
-      });
-
-      let gps = await Location.reverseGeocodeAsync({
-        latitude : latitude === undefined ? location.coords.latitude : latitudeCord,
-        longitude : longitude === undefined ? location.coords.longitude : longitudeCord,
-      })
-      setLocation(gps[0].city + ', ' + gps[0].region);
+    let gps = await Location.reverseGeocodeAsync({
+      latitude : latitude === undefined ? location.coords.latitude : latitudeCord,
+      longitude : longitude === undefined ? location.coords.longitude : longitudeCord,
+    })
+    setLocation(gps[0].city + ', ' + gps[0].region);
   }
 
   // Post button and go back to Discovery page
-  const postData = () => {
+  const postData = async (imgURL) => {
+
     let uploadInfo = {};
     uploadInfo['url'] = imgURL;
     uploadInfo['caption'] = text.text;
@@ -155,7 +156,7 @@ export default function Upload() {
       uploadInfo['location'] = null;
     }
 
-    fetch(`http://${API_IP}/post/uploadPost`, {
+    await fetch(`http://${API_IP}/post/uploadPost`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -168,8 +169,8 @@ export default function Upload() {
       removeLocally("image");
       removeLocally("imageGPS");
       if (image) {
-        navigation.navigate("DiscoverScreen");
         setImage(null);
+        navigation.navigate("Home");
         setSelection(false);
       } else {
         alert('You forgot to add your lovely pet picture 😊');
@@ -271,7 +272,7 @@ export default function Upload() {
             }
           ]}
           // onPress={() => navigate('HomeScreen')}
-          onPress={() => postData()}
+          onPress={() => postData(imgURL)}
           underlayColor='#fff'>
           <Text style={[
             styles.post,

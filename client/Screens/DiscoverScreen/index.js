@@ -9,24 +9,32 @@ import { randomData } from '../../Templates/sampleData';
 import { palette } from '../../Utils/ColorScheme';
 import { API_IP } from '../../constants';
 
-export default function DiscoverScreen() {
+export default function DiscoverScreen({ navigation }) {
 
-  //state
+  //State
   const [data, setData] = useState([]);
   const [offsetdata, setoffsetData] = useState(0);
 
-  //redux
+  //Redux
   const state = useSelector((state) => state);
   const userData = useSelector(state => state.user);
 
-  //pull to refresh
-  const refreshRandomUserData = () => {
+  //Pull to refresh
+  const refreshRandomUserData = async () => {
     console.log('this should run a get request for new random user data')
     setoffsetData(0);
-    getData();
+    getData(0, 'loadNewData');
   };
 
-  //load more icon
+  //Refresh page when naviagte to Discover
+  useEffect(() => {
+    const refreshPage = navigation.addListener('focus', () => {
+      getData(0, 'loadNewData');
+    });
+    return refreshPage;
+  }, [navigation]);
+
+  //Load more icon
   const loadMoreView = () => {
     return <View style={styles.loadMore}>
     <ActivityIndicator
@@ -39,31 +47,11 @@ export default function DiscoverScreen() {
   </View>
   }
 
-  //load more post
-  const loadMoreData = () => {
+  //Get data, two type: loadMoreData or loadNewData
+  //loadNewData is to fresh the page
+  //loadMoreData is to scroll down to get more data
+  const getData = async (offset, type) => {
     const limit = 2;
-    var config = {
-      method: 'GET',
-      url: `http://${API_IP}/post/discover?limit=${limit}&offset=${offsetdata}`,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    axios(config)
-    .then(function (response) {
-      const newData = data.concat(response.data);
-      setData(newData);
-      setoffsetData(offsetdata + limit);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
-  //
-  const getData = () => {
-    const limit = 2;
-    const offset = 0;
     var config = {
       method: 'GET',
       url: `http://${API_IP}/post/discover?limit=${limit}&offset=${offset}`,
@@ -71,17 +59,25 @@ export default function DiscoverScreen() {
         'Content-Type': 'application/json'
       }
     };
-    axios(config)
+    await axios(config)
     .then(function (response) {
-      setData(response.data);
-      setoffsetData(limit);
+      if (type === 'loadNewData') {
+        setData(response.data);
+        setoffsetData(limit);
+      }
+      if (type === 'loadMoreData') {
+        const newData = data.concat(response.data);
+        setData(newData);
+        setoffsetData(offset + limit);
+      }
     })
     .catch(function (error) {
       console.log(error);
     });
   }
+
   useEffect(() => {
-    getData();
+    getData(0, 'loadNewData');
   },[]);
 
   return (
@@ -97,7 +93,7 @@ export default function DiscoverScreen() {
       // </View>
         <View>
           <FeedTemplate userData={data} refreshData={refreshRandomUserData}
-          renderLoadMoreView = {loadMoreView} loadMoreData = {loadMoreData}></FeedTemplate>
+          renderLoadMoreView = {loadMoreView} loadMoreData = {() => {getData(offsetdata,'loadMoreData' )}}></FeedTemplate>
         </View>
       }
     </View>
