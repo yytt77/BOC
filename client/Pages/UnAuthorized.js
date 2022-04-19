@@ -2,6 +2,7 @@ import { useState, getState } from 'react';
 import { Button, Text, View } from "react-native";
 import { connect, useSelector, useDispatch } from 'react-redux';
 
+import DiscoverScreen from '../Screens/DiscoverScreen/index';
 import AuthScreen from '../Screens/AuthScreen/index';
 import { guestAuth } from '../Redux/actions';
 
@@ -10,17 +11,15 @@ const UnAuthorized = (props) => {
   const dispatch = useDispatch();
   const screen = useSelector(state => state.guestHome);
 
-  // home will be default once implemented
   return (
     props.guestHome === 'home' ? (
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <Text>Discovery Feed Here</Text>
+        <DiscoverScreen />
         <Button title={'Login Icon Here'} onPress={() => dispatch(guestAuth())}></Button>
       </View>
     ) : (
       <AuthScreen />
     )
-
   )
 };
 
