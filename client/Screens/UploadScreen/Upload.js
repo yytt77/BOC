@@ -53,7 +53,6 @@ export default function Upload({ navigation }) {
     })
     .then((res) => {
         let img = JSON.parse(res);
-        console.log('after camera', img)
         if (img) {
           setImage(img[img.length - 1]);
         }
@@ -71,7 +70,6 @@ export default function Upload({ navigation }) {
     })
     .then((res) => {
       let img = JSON.parse(res);
-      console.log('after glaa', img);
       if (img) {
         setImage(img[img.length - 1]);
         return getLocally('imageGPS');
@@ -143,7 +141,6 @@ export default function Upload({ navigation }) {
   }
 
   // Post button and go back to Discovery page
-
   const postData = async () => {
 
     let uploadInfo = {};
@@ -171,7 +168,7 @@ export default function Upload({ navigation }) {
       })
       .then(response => response.json())
       .then(data => {
-        console.log('Success:', data);
+        // console.log('Success:', data);
         removeLocally("image");
         removeLocally("imageGPS");
         setImage(null);
