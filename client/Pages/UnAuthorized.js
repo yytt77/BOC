@@ -11,10 +11,10 @@ const UnAuthorized = (props) => {
   const dispatch = useDispatch();
   const screen = useSelector(state => state.guestHome);
 
+  // <DiscoverScreen />
   return (
     props.guestHome === 'home' ? (
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <DiscoverScreen />
         <Button title={'Login Icon Here'} onPress={() => dispatch(guestAuth())}></Button>
       </View>
     ) : (
