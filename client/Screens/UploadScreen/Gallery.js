@@ -21,6 +21,7 @@ export default function Gallery() {
     if (!result.cancelled) {
       let url = result.uri;
       let GPS = [];
+      console.log('gallery', url)
       const onUserPress = async (url) => {
         // Save image to local storage;
         const uploadImage = await getLocally("image");
