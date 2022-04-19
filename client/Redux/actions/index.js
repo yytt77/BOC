@@ -25,7 +25,7 @@ export const logout = () => {
   return (dispatch) => {
     dispatch({
       type: 'UNAUTHORIZED',
-      payload: user
+      payload: null
     })
   }
 }
