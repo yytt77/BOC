@@ -116,6 +116,7 @@ export default function Upload({ navigation }) {
       .catch((error) => { console.error('Error:', error); });
   }
 
+  //to Detect if new image upload, if new image is upload, send to clodinary API
   useEffect(() => {
     if ( !didMount.current ) {
       return didMount.current = true;
@@ -166,30 +167,30 @@ export default function Upload({ navigation }) {
     } else {
       uploadInfo['location'] = null;
     }
-
-    await fetch(`http://${API_IP}/post/uploadPost`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(uploadInfo),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-      removeLocally("image");
-      removeLocally("imageGPS");
-      if (image) {
+    if (image) {
+      await fetch(`http://${API_IP}/post/uploadPost`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(uploadInfo),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        removeLocally("image");
+        removeLocally("imageGPS");
         setImage(null);
         navigation.navigate("Home");
         setSelection(false);
-      } else {
-        alert('You forgot to add your lovely pet picture 😊');
-      }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    } else {
+      alert('You forgot to add your lovely pet picture 😊');
+    }
+
   }
 
   return (
