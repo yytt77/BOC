@@ -77,7 +77,7 @@ export default function SearchBar({ navigation }) {
   };
 
   const debouncedQuery = async () => {
-    if (!matchFollowing(currentSearch.current)) {
+    if (currentSearch.current && !matchFollowing(currentSearch.current)) {
       try {
         const user = await axios.get(
           `${userExistsEndpoint}${currentSearch.current}`

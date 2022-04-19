@@ -170,17 +170,18 @@ const Message = StyleSheet.create({
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
     position: "absolute",
-    borderTopColor: "blue",
     bottom: -10,
   },
   lTail: {
     borderLeftWidth: 10,
     borderRightWidth: 20,
+    borderTopColor: "blue",
     left: 20
   },
   rTail: {
     borderLeftWidth: 20,
     borderRightWidth: 10,
+    borderTopColor: "grey",
     right: 20
   },
   lProfileImage: {
