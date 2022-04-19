@@ -49,9 +49,11 @@ export default function UserScreen() {
 
 const styles = StyleSheet.create({
   userScreenContainer: {
+    flex: 1,
   },
   headerContainer: {
   },
   feedContainer: {
+
   }
 })

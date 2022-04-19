@@ -2,7 +2,7 @@ import { useState, getState } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import SignInScreen from './LoginScreen/SignIn';
+import SignInScreen from './LoginScreen/LoginScreen.js';
 import RegisterScreen from './RegisterScreen/Register';
 
 const AuthScreen = function (props) {

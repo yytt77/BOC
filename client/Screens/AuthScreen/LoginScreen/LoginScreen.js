@@ -1,25 +1,36 @@
+//import { Text, View, Image } from 'react-native';
+
 import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 
-// import HeaderTemplate from '../../../Templates/HeaderTemplate';
 import PetPixLogo from '../../../Templates/PetPixLogo';
 import Tabs from '../Shared/Tabs';
 import BackButton from '../Shared/BackButton';
 import Google from '../Shared/Google';
 import Twitter from '../Shared/Twitter';
-import AccountInput from './components/AccountInput';
-import { Register as styles } from './Styles'
-import { lightTheme, darkTheme } from '../../../constants';
 
-// console.log(props.theme)
-const RegisterScreen = function(props) {
+
+import AccountInput from './AccountInput.js';
+import PasswordInput from './PasswordInput.js';
+import ContinueButton from './ContinueButton.js';
+import Logo from '../../../assets/logo_small.png';
+
+
+//import { Register as styles } from '..RegisterScreen/Styles'
+import { Register as styles } from '../RegisterScreen/Styles'
+
+import { lightTheme, darkTheme } from '../../../constants.js';
+
+
+const SignInScreen = function(props){
   var theme;
   if (props.theme) {
     theme = lightTheme;
   } else {
     theme = darkTheme;
   }
+
 
   return (
     <View style={[{ backgroundColor: theme.pageColor }, styles.container]}>
@@ -37,4 +48,6 @@ const mapStateToProps = (state) => ({
   theme: state.theme
 })
 
-export default connect(mapStateToProps, null)(RegisterScreen);
+export default connect(mapStateToProps, null)(SignInScreen);
+
+

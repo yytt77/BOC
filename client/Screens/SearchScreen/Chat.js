@@ -1,7 +1,14 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import { Chat as styles, SearchBar as searchStyles } from "./Styles";
 import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { palette } from "../../Utils/ColorScheme";
 import ChatFeed from "./components/ChatFeed";
 import { io } from "socket.io-client";
@@ -15,6 +22,7 @@ export default ({ navigation, route }) => {
   const [userData, setUserData] = useState(route.params);
   const [chatSocket, setChatSocket] = useState();
   const [messages, setMessages] = useState([]);
+  const scrollViewRef = useRef();
   let sender = user.userInfo.username;
   let receiver = userData.userInfo.username;
 
@@ -34,7 +42,7 @@ export default ({ navigation, route }) => {
     });
     setChatSocket(socket);
     return () => {
-      chatSocket.disconnect();
+      // chatSocket.disconnect();
       setChatSocket(null);
     };
   }, []);
@@ -73,11 +81,19 @@ export default ({ navigation, route }) => {
               submitChatMessage();
             }}
           />
-          <ChatFeed
-            me={user.userInfo}
-            other={userData.userInfo}
-            messages={messages}
-          />
+          <ScrollView
+            style={styles.feed}
+            ref={scrollViewRef}
+            onContentSizeChange={() =>
+              scrollViewRef.current.scrollToEnd({ animated: true })
+            }
+          >
+            <ChatFeed
+              me={user.userInfo}
+              other={userData.userInfo}
+              messages={messages}
+            />
+          </ScrollView>
         </View>
       ) : (
         <View style={styles.chatError}>

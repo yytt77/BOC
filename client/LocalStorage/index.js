@@ -1,5 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Only used for testing, revert for production
+// import { AsyncStorage } from 'react-native';
+
 export const storeLocally = async (key, value) => {
   try {
     await AsyncStorage.setItem(key, value)
