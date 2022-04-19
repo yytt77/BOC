@@ -39,6 +39,7 @@ export default function Upload({ navigation }) {
   const [imgURL, setImgURL] = useState(null);
   const [latitude, setLatitude] = useState(undefined);
   const [longitude, setLongitude] = useState(undefined);
+  const [readytoSend, setReadytoSend] = useState(false);
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
 
@@ -55,7 +56,6 @@ export default function Upload({ navigation }) {
         console.log('after camera', img)
         if (img) {
           setImage(img[img.length - 1]);
-          setModalVisible(!modalVisible);
         }
     })
     .catch((err) => console.error(err));
@@ -88,7 +88,6 @@ export default function Upload({ navigation }) {
           locationPicker(undefined, undefined);
         }
       }
-      setModalVisible(!modalVisible);
     })
     .catch((err) => console.error(err));
   }
@@ -98,22 +97,16 @@ export default function Upload({ navigation }) {
     const data = new FormData();
     data.append('file',image);
     data.append('upload_preset',upload_preset);
-    axios({
-      method: 'POST',
-      url: 'http://localhost:3000/post/uploadPost',
-      data: 'data sent'
-    })
-    .then(data => {
-      console.log(data)
-    })
-    .catch((err) => {
-      console.log('not send', err);
-    })
 
     await fetch(CLOUDINARY_API,{ method:'post', body:data })
-      .then(res=>res.json())
-      .then(data=>{ setImgURL(data.url); })
-      .catch((error) => { console.error('Error:', error); });
+      .then(res => res.json())
+      .then(data => { setImgURL(data.url); })
+      .then(() => { setModalVisible(!modalVisible); })
+      .catch((error) => {
+        setModalVisible(!modalVisible);
+        alert('You picture upload failed, please upload another lovely pet 😩');
+        console.error('Error:', error);
+      });
   }
 
   //to Detect if new image upload, if new image is upload, send to clodinary API
@@ -150,7 +143,8 @@ export default function Upload({ navigation }) {
   }
 
   // Post button and go back to Discovery page
-  const postData = async (imgURL) => {
+
+  const postData = async () => {
 
     let uploadInfo = {};
     uploadInfo['url'] = imgURL;
@@ -284,7 +278,7 @@ export default function Upload({ navigation }) {
             }
           ]}
           // onPress={() => navigate('HomeScreen')}
-          onPress={() => postData(imgURL)}
+          onPress={() => postData()}
           underlayColor='#fff'>
           <Text style={[
             styles.post,
