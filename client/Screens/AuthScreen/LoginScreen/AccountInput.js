@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import { Register as styles } from '../RegisterScreen/Styles'
 import { API_IP_login } from '../../../constants.js';
-//import { login } from '../../../Redux/actions';
+import { login } from '../../../Redux/actions';
 import { authLog } from '../../../Redux/actions';
 import { authReg } from '../../../Redux/actions';
 
@@ -33,8 +33,10 @@ export default function AccountInput(){
     password: password
   })
   .then(function (response) {
-    //dispatch(authLog());
+
     console.log('successfully sent login data to backend');
+    dispatch(login(username));
+
   })
   .catch(function (error) {
     console.log('error sending login', error);
@@ -53,6 +55,7 @@ export default function AccountInput(){
   const handleSignUpRedirect= async () => {
     console.log('handleSignUpRedirect was called');
     dispatch(authReg());
+
 
   }
 
@@ -84,3 +87,4 @@ export default function AccountInput(){
 
 
 }
+
