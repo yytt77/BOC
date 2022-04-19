@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import AppWrapper from '../../App';
+import AppWrapper from '../App';
 
 describe('App', () => {
 
