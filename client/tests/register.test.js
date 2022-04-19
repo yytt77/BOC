@@ -5,26 +5,24 @@ import AppWrapper from '../App';
 
 describe('App', () => {
 
-  // Unit Test
+  const tree = renderer.create(<AppWrapper />).toJSON();
+  const c = 'children';
+
   it('should render AppWrapper', () => {
-    const tree = renderer.create(<AppWrapper />).toJSON();
 
     // AppWrapper renders UnAuthorized page by default
     expect(tree.children.length).toBe(2);
   })
 
-  // Unit Test
-  it('should render guest discovery feed', () => {
-    const tree = renderer.create(<AppWrapper />).toJSON();
-    const feed = tree['children'][0]['children'][0];
-
-    // placeholder text from UnAuthorized page
-    expect(feed).toBe('Discovery Feed Here');
+  it('should render guest discovery feed background', () => {
+    // create additional tests/change this one to be more meaningful once
+    // guest discovery feed is complete
+    const feedBGC = tree[c][0]['props']['style'][1]['backgroundColor'];
+    expect(feedBGC).toBe('#84C0FB');
   })
 
   // Snapshot Test
   it('should render app wrapper', () => {
-    const tree = renderer.create(<AppWrapper />).toJSON();
     expect(tree).toMatchSnapshot();
   })
 
