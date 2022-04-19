@@ -15,14 +15,12 @@ let pictureWidth = width - 50;
 let height = Dimensions.get('window').height;
 
 const PostTemplate = (props) => {
-  // console.log('props', props);
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const [isVisible, setIsVisible] = useState(false);
   const [inputText, setInputText] = useState('');
-  // const [selectedPostId, setSelectedPostId] = useState('');
   const displayModal = (show) => {
     setIsVisible(show);
   }
@@ -96,7 +94,7 @@ const PostTemplate = (props) => {
             <ScrollView
             style={styles.modalCommentContainer}>
               {props.data.comments.map((element, index) => {
-              return <CommentTemplate commentData={element}></CommentTemplate>
+              return <CommentTemplate commentData={element} key={index}></CommentTemplate>
             })}
             </ScrollView>
           </View>
@@ -105,7 +103,6 @@ const PostTemplate = (props) => {
             <TextInput
             style={styles.inputText}
             placeholder='Type Comment Here'
-            // multiline={true}
             onChangeText={(text) => {
               setInputText(text);
             }}
