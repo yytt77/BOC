@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { Cloudinary } from '@cloudinary/url-gen';
 import axios from 'axios';
 import { CLOUDINARY_API, upload_preset } from '@env';
+import { useNavigation } from '@react-navigation/native';
 
 //Internal Dependencies
 import { getLocally, storeLocally, removeLocally } from '../../LocalStorage/index';
@@ -22,9 +23,12 @@ import styles from '../UploadScreen/Styles';
 import HeaderTemplate from '../../Templates/HeaderTemplate';
 import { colorTheme1 } from '../../constants';
 import { palette } from '../../Utils/ColorScheme';
+import { API_IP } from '../../constants';
+import DiscoverScreen from '../DiscoverScreen/index'
 
+export default function Upload({ navigation }) {
 
-export default function Upload({navigation}) {
+  //define states
   const didMount = useRef(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [image, setImage] = useState(null);
@@ -38,6 +42,7 @@ export default function Upload({navigation}) {
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
 
+  // camera access functionality
   const CameraAccess = () => {
     async function camera() {
       return await CameraRoll();
@@ -47,12 +52,16 @@ export default function Upload({navigation}) {
     })
     .then((res) => {
         let img = JSON.parse(res);
-        setImage(img[img.length - 1]);
-        setModalVisible(!modalVisible);
+        console.log('after camera', img)
+        if (img) {
+          setImage(img[img.length - 1]);
+          setModalVisible(!modalVisible);
+        }
     })
     .catch((err) => console.error(err));
   }
 
+  // gallery access functionality
   const GalleryAccess = () => {
     async function gallery() {
         return await Gallery();
@@ -62,8 +71,11 @@ export default function Upload({navigation}) {
     })
     .then((res) => {
       let img = JSON.parse(res);
-      setImage(img[img.length - 1]);
-      return getLocally('imageGPS');
+      console.log('after glaa', img);
+      if (img) {
+        setImage(img[img.length - 1]);
+        return getLocally('imageGPS');
+      }
     })
     .then((gps) => {
       let gpsData = JSON.parse(gps);
@@ -81,7 +93,8 @@ export default function Upload({navigation}) {
     .catch((err) => console.error(err));
   }
 
-  const handleUpload = (image)=>{
+  //upload picture to cloudinary API
+  const handleUpload = async (image)  =>  {
     const data = new FormData();
     data.append('file',image);
     data.append('upload_preset',upload_preset);
@@ -97,56 +110,48 @@ export default function Upload({navigation}) {
       console.log('not send', err);
     })
 
-    fetch(CLOUDINARY_API,{  method:'post',body:data})
+    await fetch(CLOUDINARY_API,{ method:'post', body:data })
       .then(res=>res.json())
       .then(data=>{ setImgURL(data.url); })
       .catch((error) => { console.error('Error:', error); });
-}
+  }
 
+  //to Detect if new image upload, if new image is upload, send to clodinary API
   useEffect(() => {
     if ( !didMount.current ) {
       return didMount.current = true;
     }
-    // if (image !== null) {
-      // console.log('let mesee', image);
       if (image !== null) {
-
         let newFile = {
-          uri:image,
-          type:`test/${image.split(".")[1]}`,
-          name:`test.${image.split(".")[1]}`
+          uri:  image,
+          type: `test/${image.split(".")[1]}`,
+          name: `test.${image.split(".")[1]}`
         };
-      // }
-      handleUpload(newFile);
+        handleUpload(newFile);
       }
-    // console.log('Do something after counter has changed', newFile);
   }, [image]);
 
+  // GPS location functionality
   const locationPicker = async (latitudeCord, longitudeCord) => {
-    // if (isSelected === true) {
-      // cosole.log('isSelected', isSelected);
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Lowest,
+    });
 
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-      // setSelection(true);
-
-      let location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Lowest,
-      });
-
-      let gps = await Location.reverseGeocodeAsync({
-        latitude : latitude === undefined ? location.coords.latitude : latitudeCord,
-        longitude : longitude === undefined ? location.coords.longitude : longitudeCord,
-      })
-      setLocation(gps[0].city + ', ' + gps[0].region);
-      // console.log('we have city', gps[0].city, '    ', gps[0].region);
-    // }
+    let gps = await Location.reverseGeocodeAsync({
+      latitude : latitude === undefined ? location.coords.latitude : latitudeCord,
+      longitude : longitude === undefined ? location.coords.longitude : longitudeCord,
+    })
+    setLocation(gps[0].city + ', ' + gps[0].region);
   }
 
-  const postData = () => {
+  // Post button and go back to Discovery page
+  const postData = async (imgURL) => {
+
     let uploadInfo = {};
     uploadInfo['url'] = imgURL;
     uploadInfo['caption'] = text.text;
@@ -162,28 +167,30 @@ export default function Upload({navigation}) {
     } else {
       uploadInfo['location'] = null;
     }
+    if (image) {
+      await fetch(`http://${API_IP}/post/uploadPost`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(uploadInfo),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        removeLocally("image");
+        removeLocally("imageGPS");
+        setImage(null);
+        navigation.navigate("Home");
+        setSelection(false);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    } else {
+      alert('You forgot to add your lovely pet picture 😊');
+    }
 
-    fetch('http://44.201.208.58:3000/post/uploadPost', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(uploadInfo),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-      removeLocally("image");
-      removeLocally("imageGPS");
-      if (image) {
-        navigation.goBack()
-      } else {
-        alert('You forgot to add your lovely pet picture 😊');
-      }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
   }
 
   return (
@@ -277,7 +284,7 @@ export default function Upload({navigation}) {
             }
           ]}
           // onPress={() => navigate('HomeScreen')}
-          onPress={() => postData()}
+          onPress={() => postData(imgURL)}
           underlayColor='#fff'>
           <Text style={[
             styles.post,
@@ -299,7 +306,6 @@ export default function Upload({navigation}) {
         }
       >
         <View style={styles.centeredView} >
-
           <View style={[
             styles.modalView,
             {
@@ -309,7 +315,7 @@ export default function Upload({navigation}) {
           ]}>
             <Pressable onPress={() => {setModalVisible(!modalVisible);}}>
               <Image
-                source={require("../../assets/close.png")}
+                source={require("../../assets/x.png")}
                 fadeDuration={0}
                 style={{ width: 20, height: 20, marginLeft: 300 }}
               />

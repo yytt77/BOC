@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Modal, Dimensions, ScrollView, StyleSheet, Image, TouchableOpacity, RefreshControl, StatusBar } from 'react-native';
+import { Text, View, Modal, Dimensions, FlatList, ScrollView, StyleSheet, Image, TouchableOpacity, RefreshControl, StatusBar } from 'react-native';
 import Constants from 'expo-constants';
 import PostTemplate from './PostTemplate';
 
@@ -23,12 +23,17 @@ const FeedTemplate = (props) => {
   const dispatch = useDispatch();
   const { notificationToUser } = bindActionCreators(actions, dispatch);
 
+  // console.log('dada', props.userData);
   // add toUser to state and toUser, url to redux as well
   const displayModal = (show, url, toUser, caption) => {
     setIsVisible(show);
     setDisplayedPhoto(url);
     settoUser(toUser);
     notificationToUser(toUser, url, caption);
+  }
+
+  const renderItemView = (data) => {
+    return <PostTemplate data={data.item} key={data.index} displayModal={displayModal} refreshData={props.refreshData}></PostTemplate>
   }
 
   return (
@@ -51,8 +56,11 @@ const FeedTemplate = (props) => {
             }}/>
           </TouchableOpacity>
       </Modal>
-      <ScrollView
+      <FlatList
         style={styles.scrollcontainer}
+        data={props.userData}
+        renderItem={(data) => renderItemView(data)}
+        keyExtractor={(data, index) => index.toString()}
         refreshControl={
           <RefreshControl
             refreshing={false}
@@ -61,12 +69,16 @@ const FeedTemplate = (props) => {
             }}
           />
         }
+
+        ListFooterComponent={() => props.renderLoadMoreView()}
+        onEndReached={() => props.loadMoreData()}
+        onEndReachedThreshold={0.4}
       >
-        {props.userData.map((element, index) => {
+        {/* {props.userData.map((element, index) => {
           return <PostTemplate data={element}
           key={index} displayModal={displayModal} refreshData={props.refreshData}></PostTemplate>
-        })}
-      </ScrollView>
+        })} */}
+      </FlatList>
     </View>
     );
   };

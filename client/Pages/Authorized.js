@@ -35,7 +35,6 @@ export default function Authorized() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const currUser = useSelector(state => state.user);
-  // console.log(currUser);
   const getUser = async () => {
     //for now hardcoded, but later get current logged in user from redux store (Dominic puts in there from login screen)
     const currentUser = "joe"
