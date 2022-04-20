@@ -1,8 +1,4 @@
 // import AsyncStorage from '@react-native-async-storage/async-storage';
-<<<<<<< HEAD
-=======
-import { AsyncStorage } from 'react-native';
->>>>>>> eed2da9f7404e09c5b9a4915c95e35689291a7b7
 
 // Only used for testing, revert for production
 import { AsyncStorage } from 'react-native';

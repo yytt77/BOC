@@ -10,10 +10,7 @@ const UnAuthorized = () => {
   const guestHome = useSelector(state => state.guestHome);
   const dispatch = useDispatch();
 
-<<<<<<< HEAD
-=======
   // <DiscoverScreen />
->>>>>>> eed2da9f7404e09c5b9a4915c95e35689291a7b7
   return (
     guestHome === 'home' ? (
       <View style={{flex: 1, justifyContent: 'center'}}>
