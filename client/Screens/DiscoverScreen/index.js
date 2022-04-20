@@ -92,7 +92,7 @@ export default function DiscoverScreen({ navigation }) {
       // <HeaderTemplate userData={null} showUserDisplay={false}></HeaderTemplate>
       // </View>
         <View>
-          <FeedTemplate userData={data} refreshData={refreshRandomUserData}
+          <FeedTemplate userData={data} refreshData={refreshRandomUserData} type={'discover'}
           renderLoadMoreView = {loadMoreView} loadMoreData = {() => {getData(offsetdata,'loadMoreData' )}}></FeedTemplate>
         </View>
       }
