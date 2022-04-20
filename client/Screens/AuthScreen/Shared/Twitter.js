@@ -29,8 +29,6 @@ export default function Twitter() {
       let username = redirectData.queryParams.username;
       dispatch(login(username));
     } catch (err) {
-      // alert(err);
-      // console.log(err);
       setFailed(<Text>Unable to connect to Twitter</Text>);
     }
   }
