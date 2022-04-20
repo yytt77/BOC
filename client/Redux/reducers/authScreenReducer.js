@@ -1,5 +1,4 @@
-// change register to login once login finished
-const authScreenReducer = (state = 'register', action) => {
+const authScreenReducer = (state = 'login', action) => {
   switch (action.type) {
     case 'authLog':
       return 'login'
