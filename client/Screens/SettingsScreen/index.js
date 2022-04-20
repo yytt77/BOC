@@ -50,7 +50,7 @@ export default function SettingsScreen() {
         console.log('Success: ', result.status);
       }).catch(err => {
         console.log(`Error updating profile photo: ${err}`);
-      })
+      });
     }
     // console.log('profPhotoUrl out', state.user.userInfo.profPhoto);
     // console.log('state out', state);
@@ -112,7 +112,7 @@ export default function SettingsScreen() {
                 {
                   color: palette(state.theme).buttonText
                 }
-              ]}>Messages</Text>
+              ]}>Notifications</Text>
               <Pressable
                 style={[styles.exit]}
                 onPress={() => setModalVisible(!modalVisible)}

@@ -10,14 +10,14 @@ const App = function() {
   const user = useSelector((state) => state.user);
 
   console.log('PROPS ', state)
-  return (
-    state.user.username ? (
-      <Authorized />
-    ) : (
-      <UnAuthorized />
-    )
-  )
-  // return <Authorized />
+  // return (
+  //   state.user.username ? (
+  //     <Authorized />
+  //   ) : (
+  //     <UnAuthorized />
+  //   )
+  // )
+  return <Authorized />
 }
 
 // const mapStateToProps = (state) => ({
