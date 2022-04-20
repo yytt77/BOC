@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//import { useNavigation } from '@react-navigation/native';
 
 
 import { Register as styles } from '../RegisterScreen/Styles'
@@ -10,14 +13,18 @@ import { login } from '../../../Redux/actions';
 import { authLog } from '../../../Redux/actions';
 import { authReg } from '../../../Redux/actions';
 
+
+
 //import { authlog } from '../../../Redux/actions';
 
 const loginEndpoint = `http://${API_IP_login}/user/login/password`;
 
-export default function AccountInput(){
+export default function AccountInput({ navigation }){
   const state = useSelector(state => state);
   const dispatch = useDispatch();
   const screen = useSelector(state => state.authScreen);
+
+
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -48,9 +55,6 @@ export default function AccountInput(){
 
 
 
-  const handleForgotPassword = async () => {
-    console.log('handleForgotPassword was called');
-  }
 
   const handleSignUpRedirect= async () => {
     console.log('handleSignUpRedirect was called');
@@ -74,7 +78,7 @@ export default function AccountInput(){
       onChangeText={text => setPassword(text)}
 
     />
-    <Button title={'ForgotPassword'} onPress={() => handleForgotPassword()}>Forgot password?</Button>
+    <Button title={'ForgotPassword'}  onPress={() => navigation.navigate("SearchBar")}>Forgot password?</Button>
 
     <Button title={'Continue'} onPress={() => handleLogin()}>Continue</Button>
     <Text>Don't have an account?</Text>

@@ -22,17 +22,10 @@ export const updateProfilePhoto = (profilePhotoUrl) => {
 // }
 
 export const login = (user) => {
-<<<<<<< HEAD
-   return {
-          type: 'AUTHORIZED',
-          payload: user
-        }
-=======
   return {
     type: 'AUTHORIZED',
     payload: user
   }
->>>>>>> 57426608aa36c893ab4d3b7b2c616eeea863eae8
 }
 
 export const logout = () => {

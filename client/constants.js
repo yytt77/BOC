@@ -32,4 +32,5 @@ export const darkTheme = {
 
 export const API_IP = "44.201.208.58:3000";
 // export const API_IP = 'localhost:3000'
-export const API_IP_login = "54.215.206.56:3000";
+// export const API_IP_login = "54.215.206.56:3000";
+export const API_IP_login = "192.168.0.20:3000";
