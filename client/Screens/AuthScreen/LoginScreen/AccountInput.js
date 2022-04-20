@@ -35,6 +35,8 @@ export default function AccountInput(){
   .then(function (response) {
     //dispatch(authLog());
     console.log('successfully sent login data to backend');
+    console.log('USER ', username)
+    dispatch(login(username))
   })
   .catch(function (error) {
     console.log('error sending login', error);
