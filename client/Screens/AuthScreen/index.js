@@ -1,14 +1,15 @@
 import { useState, getState } from 'react';
 import { Text, View } from 'react-native';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import SignInScreen from './LoginScreen/LoginScreen.js';
 import RegisterScreen from './RegisterScreen/Register';
 
 const AuthScreen = function (props) {
-  // login will be default once implemented
+  const authScreen = useSelector(state => state.authScreen);
+
   return (
-    props.authScreen === 'login' ? (
+    authScreen === 'login' ? (
       <SignInScreen />
     ) : (
       <RegisterScreen />
@@ -16,8 +17,4 @@ const AuthScreen = function (props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  authScreen: state.authScreen
-})
-
-export default connect(mapStateToProps, null)(AuthScreen);
+export default AuthScreen;
