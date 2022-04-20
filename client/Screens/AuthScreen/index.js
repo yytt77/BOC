@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import SignInScreen from './LoginScreen/LoginScreen.js';
 import RegisterScreen from './RegisterScreen/Register';
 
-const AuthScreen = function (props) {
+const AuthScreen = function () {
   const authScreen = useSelector(state => state.authScreen);
 
   return (
