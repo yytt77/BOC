@@ -14,7 +14,7 @@ import AccountInput from '../Screens/AuthScreen/RegisterScreen/components/Accoun
 
 const mockStore = configureStore();
 
-describe('Samples', () => {
+xdescribe('Samples', () => {
 
   describe('@testing-library/react-native', () => {
     const state = {
