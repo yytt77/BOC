@@ -20,8 +20,4 @@ const App = function() {
   // return <Authorized />
 }
 
-// const mapStateToProps = (state) => ({
-//   user: state.user
-// })
-
 export default App;
