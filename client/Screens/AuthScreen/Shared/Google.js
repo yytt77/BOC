@@ -32,6 +32,7 @@ export default function Google() {
       }
 
       let username = redirectData.queryParams.username;
+      console.log('USER ', username)
       dispatch(login(username));
     } catch (err) {
       alert(err);
