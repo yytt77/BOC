@@ -6,6 +6,9 @@ import UnAuthorized from "./UnAuthorized";
 
 // replace return statement w/ Authorized to bypass
 const App = function(props) {
+
+  //console.log('props', props);
+  console.log('props userInfo username', props.user.userInfo.username);
   return (
     props.user.username ? (
       <Authorized />
