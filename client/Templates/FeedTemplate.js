@@ -72,7 +72,7 @@ const FeedTemplate = (props) => {
         }
          ListFooterComponent={() => props.type === 'discover' && props.renderLoadMoreView() }
          onEndReached={() => props.type === 'discover' && props.loadMoreData()}
-         onEndReachedThreshold={() => props.type === 'discover' && 0.4}
+         onEndReachedThreshold={() => props.type === 'discover' &&  0.4}
       >
         {/* {props.userData.map((element, index) => {
           return <PostTemplate data={element}

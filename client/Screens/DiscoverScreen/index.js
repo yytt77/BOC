@@ -14,6 +14,7 @@ export default function DiscoverScreen({ navigation }) {
   //State
   const [data, setData] = useState([]);
   const [offsetdata, setoffsetData] = useState(0);
+  const [isloading, setIsloading] = useState(false);
 
   //Redux
   const state = useSelector((state) => state);
@@ -36,15 +37,15 @@ export default function DiscoverScreen({ navigation }) {
 
   //Load more icon
   const loadMoreView = () => {
-    return <View style={styles.loadMore}>
-    <ActivityIndicator
-        style={styles.indicator}
-        size={"large"}
-        color={"red"}
-        animating={true}
-    />
-    <Text>Loading</Text>
-  </View>
+      return <View style={styles.loadMore}>
+        <ActivityIndicator
+            style={styles.indicator}
+            size={"large"}
+            color={"red"}
+            animating={true}
+        />
+        <Text>Loading</Text>
+      </View>
   }
 
   //Get data, two type: loadMoreData or loadNewData
@@ -93,7 +94,7 @@ export default function DiscoverScreen({ navigation }) {
       // </View>
         <View>
           <FeedTemplate userData={data} refreshData={refreshRandomUserData} type={'discover'}
-          renderLoadMoreView = {loadMoreView} loadMoreData = {() => {getData(offsetdata,'loadMoreData' )}}></FeedTemplate>
+          renderLoadMoreView = {() => loadMoreView()} loadMoreData = {() => {getData(offsetdata,'loadMoreData' )}}></FeedTemplate>
         </View>
       }
     </View>
