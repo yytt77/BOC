@@ -1,16 +1,17 @@
 import { View } from "react-native";
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Authorized from "./Authorized";
 import UnAuthorized from "./UnAuthorized";
 
 // replace return statement w/ Authorized to bypass
-const App = function(props) {
+const App = function() {
+  const state = useSelector(state => state);
+  const user = useSelector((state) => state.user);
 
-  //console.log('props', props);
-  console.log('props userInfo username', props.user.userInfo.username);
+  console.log('PROPS ', state)
   return (
-    props.user.username ? (
+    state.user.username ? (
       <Authorized />
     ) : (
       <UnAuthorized />
@@ -19,8 +20,8 @@ const App = function(props) {
   // return <Authorized />
 }
 
-const mapStateToProps = (state) => ({
-  user: state.user
-})
+// const mapStateToProps = (state) => ({
+//   user: state.user
+// })
 
-export default connect(mapStateToProps, null)(App);
+export default App;

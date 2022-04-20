@@ -35,11 +35,9 @@ export default ({ navigation, route }) => {
   useEffect(() => {
     const socket = io(socketEndpoint);
     socket.on(`${sender}${receiver}`, (msg) => {
-      console.log("sent");
       setMessages((messages) => [...messages, msg]);
     });
     socket.on(`${receiver}${sender}`, (msg) => {
-      console.log("received");
       setMessages((messages) => [...messages, msg]);
     });
     setChatSocket(socket);

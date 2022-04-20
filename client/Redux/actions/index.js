@@ -22,62 +22,57 @@ export const updateProfilePhoto = (profilePhotoUrl) => {
 // }
 
 export const login = (user) => {
+<<<<<<< HEAD
    return {
           type: 'AUTHORIZED',
           payload: user
         }
+=======
+  return {
+    type: 'AUTHORIZED',
+    payload: user
+  }
+>>>>>>> 57426608aa36c893ab4d3b7b2c616eeea863eae8
 }
 
 export const logout = () => {
-  return (dispatch) => {
-    dispatch({
-      type: 'UNAUTHORIZED',
-      payload: null
-    })
+  return {
+    type: 'UNAUTHORIZED',
+    payload: null
   }
 }
 
 export const authLog = () => {
-  return (dispatch) => {
-    dispatch({
-      type: 'authLog',
-      payload: 'login'
-    })
+  return {
+    type: 'authLog',
+    payload: 'login'
   }
 }
 
 export const authReg = () => {
-  return (dispatch) => {
-    dispatch({
-      type: 'authReg',
-      payload: 'register'
-    })
+  return {
+    type: 'authReg',
+    payload: 'register'
   }
 }
 
 export const guestHome = () => {
-  return (dispatch) => {
-    dispatch({
-      type: 'home',
-      payload: 'home'
-    })
+  return {
+    type: 'home',
+    payload: 'home'
   }
 }
 
 export const guestAuth = () => {
-  return (dispatch) => {
-    dispatch({
-      type: 'auth',
-      payload: 'auth'
-    })
+  return {
+    type: 'auth',
+    payload: 'auth'
   }
 }
 
 export const updateColorScheme = () => {
-  return (dispatch) => {
-    dispatch({
-      type: 'CHANGE_COLOR_SCHEME',
-    })
+  return {
+    type: 'CHANGE_COLOR_SCHEME',
   }
 }
 

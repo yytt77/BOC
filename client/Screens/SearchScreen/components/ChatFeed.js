@@ -7,7 +7,7 @@ export default ({ me, other, messages }) => {
     if (msg.sender === me.username) {
       return (
         <View key={i}>
-          <View style={[styles.chat, {alignSelf: "flex-end"}]}>
+          <View style={[styles.chat, {alignSelf: "flex-end", backgroundColor: "grey"}]}>
             <Text style={styles.chatText}>{msg.message}</Text>
             <View style={[styles.rTail, styles.tail]}></View>
           </View>
