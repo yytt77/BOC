@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import { Register as styles } from '../Styles';
