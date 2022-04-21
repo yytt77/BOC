@@ -10,14 +10,14 @@ const App = function() {
 
 
   // console.log('PROPS ', state)
-  // return (
-  //   state.user.username ? (
-  //     <Authorized />
-  //   ) : (
-  //     <UnAuthorized />
-  //   )
-  // )
-  return <Authorized />
+  return (
+    user.username ? (
+      <Authorized />
+    ) : (
+      <UnAuthorized />
+    )
+  )
+  // return <Authorized />
 }
 
 export default App;
