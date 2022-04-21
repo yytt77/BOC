@@ -77,6 +77,9 @@ export default function Upload({ navigation }) {
       }
     })
     .then((gps) => {
+      if (gps === undefined) {
+        return;
+      }
       let gpsData = JSON.parse(gps);
       if (gpsData[0] && gpsData[1]) {
         setLatitude(gpsData[0]);
@@ -93,6 +96,7 @@ export default function Upload({ navigation }) {
 
   //upload picture to cloudinary API
   const handleUpload = async (image)  =>  {
+
     const data = new FormData();
     data.append('file',image);
     data.append('upload_preset',upload_preset);
