@@ -27,8 +27,7 @@ export default function NavBar() {
         />
         <Text
           style={[{ color: current.iconColor }, styles.loginText]}
-          onPress={() => dispatch(guestAuth())}
-        >
+          onPress={() => dispatch(guestAuth())}>
           Log In
         </Text>
       </View>

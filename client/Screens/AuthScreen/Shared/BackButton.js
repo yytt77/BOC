@@ -19,8 +19,7 @@ export default function BackButton() {
     <View>
       <Text
         style={[{ color: current.tabIconInactive }, styles.x]}
-        onPress={ () => dispatch(guestHome())}
-      >
+        onPress={ () => dispatch(guestHome())}>
         X
       </Text>
     </View>
