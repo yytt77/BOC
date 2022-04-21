@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const Register = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center'
@@ -18,5 +18,3 @@ const Register = StyleSheet.create({
     justifyContent: 'flex-end'
   }
 })
-
-export { Register };

@@ -14,26 +14,28 @@ import AccountInput from './components/AccountInput';
 import NavBar from '../Shared/NavBar';
 
 // Styling
-import { Register as styles } from './Styles'
+import styles from '../Styles'
 import { lightTheme, darkTheme } from '../../../constants';
 
 
 const RegisterScreen = function() {
   const theme = useSelector(state => state.theme);
-
-  var current;
-  if (theme) {
-    current = lightTheme;
-  } else {
-    current = darkTheme;
-  }
+  const [current, setCurrent] = useState(() => {
+    if (theme) {
+      return lightTheme;
+    } else {
+      return darkTheme;
+    }
+  })
 
   return (
     <View style={[{ backgroundColor: current.pageColor }, styles.container]}>
       <Header />
       <LogoBackButton />
       <Tabs />
-      <AccountInput />
+      <View>
+        <AccountInput />
+      </View>
       <Google />
       <Twitter />
       <View style={styles.bottom}>

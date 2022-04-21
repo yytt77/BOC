@@ -3,7 +3,7 @@ import { Button, Text, TextInput, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { Register as styles } from '../Styles';
+import styles from '../../Styles';
 import { API_IP } from '../../../../constants.js';
 import { containsUpperCase, containsNumber, containsSpecial } from '../registerHelpers';
 import { authLog } from '../../../../Redux/actions';
