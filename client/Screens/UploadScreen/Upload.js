@@ -98,7 +98,9 @@ export default function Upload({ navigation }) {
     data.append('upload_preset',upload_preset);
 
     await fetch(CLOUDINARY_API,{ method:'post', body:data })
-      .then(res => res.json())
+      .then(async res => {
+        return await res.json();
+      })
       .then(data => { setImgURL(data.url); })
       .then(() => { setModalVisible(!modalVisible); })
       .catch((error) => {
@@ -167,7 +169,9 @@ export default function Upload({ navigation }) {
         },
         body: JSON.stringify(uploadInfo),
       })
-      .then(response => response.json())
+      .then(async res => {
+        return await res.json();
+      })
       .then(data => {
         // console.log('Success:', data);
         removeLocally("image");
