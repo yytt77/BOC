@@ -13,6 +13,6 @@ export default function Header() {
   }
 
   return (
-    <View style={[{ backgroundColor: current.navColor, height: 50 }]} />
+    <View style={{ backgroundColor: current.navColor, height: 50 }} />
   )
 }
