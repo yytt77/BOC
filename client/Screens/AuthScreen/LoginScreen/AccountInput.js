@@ -4,7 +4,7 @@ import { connect, useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 
-import styles from '../../Styles'
+import styles from '../Styles'
 import { API_IP_login } from '../../../constants.js';
 import { login } from '../../../Redux/actions';
 import { authLog } from '../../../Redux/actions';
