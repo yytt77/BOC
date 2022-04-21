@@ -4,6 +4,7 @@ import * as ScreenCapture from 'expo-screen-capture';
 import * as MediaLibrary from 'expo-media-library';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import { API_IP } from '../constants';
 
 
 class ScreenShotDetector extends React.Component {
@@ -30,7 +31,7 @@ class ScreenShotDetector extends React.Component {
     if (notification['touser'] && notification['url']) {
       notification['fromuser'] = 'joe';
       console.log('let see state', notification);
-      fetch('http://44.201.208.58:3000/post/screenshot', {
+      fetch(`http://${API_IP}/post/screenshot`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
