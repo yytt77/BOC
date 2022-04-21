@@ -8,6 +8,8 @@ import UnAuthorized from "./UnAuthorized";
 const App = function() {
   const user = useSelector(state => state.user);
 
+
+  // console.log('PROPS ', state)
   return (
     user.username ? (
       <Authorized />

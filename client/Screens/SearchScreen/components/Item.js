@@ -108,6 +108,7 @@ export default (
             </TouchableOpacity>
             <Text
               style={[styles.comicText, styles.username, { color: textColor }]}
+              numberOfLines={1}
             >
               {item.username}
             </Text>
