@@ -25,7 +25,7 @@ export default function NavBar() {
           color={current.tabIconInactive}
           style={current}
           onPress={() => dispatch(guestAuth())}
-        ></FontAwesome5>
+        />
         <Text
           style={[{ color: current.iconColor }, styles.loginText]}
           onPress={() => dispatch(guestAuth())}
