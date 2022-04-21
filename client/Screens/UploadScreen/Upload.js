@@ -43,6 +43,7 @@ export default function Upload({ navigation }) {
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
 
+  console.log('state', state.user.userInfo.profPhoto)
   // camera access functionality
   const CameraAccess = () => {
     async function camera() {
@@ -146,8 +147,8 @@ export default function Upload({ navigation }) {
     let uploadInfo = {};
     uploadInfo['url'] = imgURL;
     uploadInfo['caption'] = text.text;
-    uploadInfo['username'] = "joe";
-    uploadInfo['profPhoto'] = "Joe's profile photo";
+    uploadInfo['username'] = state.user.userInfo.username;
+    uploadInfo['profPhoto'] = state.user.userInfo.profPhoto;
 
     if (isSelected) {
       if (location === "null, null") {

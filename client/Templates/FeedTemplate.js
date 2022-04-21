@@ -23,7 +23,7 @@ const FeedTemplate = (props) => {
   const dispatch = useDispatch();
   const { notificationToUser } = bindActionCreators(actions, dispatch);
 
-  console.log('dada', props.type);
+  // console.log('dada', props.userData);
   // add toUser to state and toUser, url to redux as well
   const displayModal = (show, url, toUser, caption) => {
     setIsVisible(show);
@@ -59,7 +59,6 @@ const FeedTemplate = (props) => {
       <FlatList
         style={styles.scrollcontainer}
         data={props.userData}
-        // type={props.type}
         renderItem={(data) => renderItemView(data)}
         keyExtractor={(data, index) => index.toString()}
         refreshControl={
@@ -70,9 +69,12 @@ const FeedTemplate = (props) => {
             }}
           />
         }
-         ListFooterComponent={() => props.type === 'discover' && props.renderLoadMoreView() }
+
+        // ListFooterComponent={() => props.renderLoadMoreView()}
+        // onEndReached={() => props.loadMoreData()}
+          ListFooterComponent={() => props.type === 'discover' && props.renderLoadMoreView() }
          onEndReached={() => props.type === 'discover' && props.loadMoreData()}
-         onEndReachedThreshold={() => props.type === 'discover' &&  0.4}
+        onEndReachedThreshold={0.4}
       >
         {/* {props.userData.map((element, index) => {
           return <PostTemplate data={element}
