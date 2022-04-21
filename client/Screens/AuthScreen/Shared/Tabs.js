@@ -9,7 +9,7 @@ import styles from './Styles';
 export default function Tabs() {
   const theme = useSelector(state => state.theme);
   const authScreen = useSelector(state => state.authScreen);
-  const [lines, setLines] = useState(function() {
+  const [lines, setLines] = useState(() => {
     if (authScreen === 'login') {
       return {
         log: <View style={styles.tabLines}></View>,
