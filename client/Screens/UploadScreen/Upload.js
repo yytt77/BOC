@@ -97,7 +97,9 @@ export default function Upload({ navigation }) {
     data.append('upload_preset',upload_preset);
 
     await fetch(CLOUDINARY_API,{ method:'post', body:data })
-      .then(res => res.json())
+      .then(async res => {
+        return await res.json();
+      })
       .then(data => { setImgURL(data.url); })
       .then(() => { setModalVisible(!modalVisible); })
       .catch((error) => {
