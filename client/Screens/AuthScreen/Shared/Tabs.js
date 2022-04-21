@@ -21,7 +21,7 @@ export default function Tabs() {
         reg: <View style={styles.tabLines}></View>
       }
     }
-  }());
+  });
 
   const dispatch = useDispatch();
   let current;
