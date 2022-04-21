@@ -25,5 +25,20 @@ export default StyleSheet.create({
   x: {
     fontSize: 20,
     fontWeight: 'bold'
+  },
+  tabs: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  tabText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  tabLines: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'white',
+    marginTop: 6
   }
 });
