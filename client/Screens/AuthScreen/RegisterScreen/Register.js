@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // import HeaderTemplate from '../../../Templates/HeaderTemplate';
 import PetPixLogo from '../../../Templates/PetPixLogo';
@@ -13,16 +13,18 @@ import { Register as styles } from './Styles'
 import { lightTheme, darkTheme } from '../../../constants';
 
 // console.log(props.theme)
-const RegisterScreen = function(props) {
-  var theme;
-  if (props.theme) {
-    theme = lightTheme;
+const RegisterScreen = function() {
+  const theme = useSelector(state => state.theme);
+
+  var current;
+  if (theme) {
+    current = lightTheme;
   } else {
-    theme = darkTheme;
+    current = darkTheme;
   }
 
   return (
-    <View style={[{ backgroundColor: theme.pageColor }, styles.container]}>
+    <View style={[{ backgroundColor: current.pageColor }, styles.container]}>
       <PetPixLogo />
       <BackButton />
       <Tabs />
@@ -33,8 +35,4 @@ const RegisterScreen = function(props) {
   )
 }
 
-const mapStateToProps = (state) => ({
-  theme: state.theme
-})
-
-export default connect(mapStateToProps, null)(RegisterScreen);
+export default RegisterScreen;

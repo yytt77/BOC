@@ -6,12 +6,12 @@ import UnAuthorized from "./UnAuthorized";
 
 // replace return statement w/ Authorized to bypass
 const App = function() {
-  const state = useSelector(state => state);
-  const user = useSelector((state) => state.user);
+  const user = useSelector(state => state.user);
 
-  console.log('PROPS ', state)
+
+  // console.log('PROPS ', state)
   return (
-    state.user.username ? (
+    user.username ? (
       <Authorized />
     ) : (
       <UnAuthorized />
@@ -19,9 +19,5 @@ const App = function() {
   )
   // return <Authorized />
 }
-
-// const mapStateToProps = (state) => ({
-//   user: state.user
-// })
 
 export default App;

@@ -17,12 +17,6 @@ export default function Google() {
   const dispatch = useDispatch();
   const screen = useSelector(state => state.user);
 
-  const _handleRedirect = event => {
-    WebBrowser.dismissBrowser();
-    let data = Linking.parse(event.url);
-    setUser(data);
-  }
-
   const _openAuthSessionAsync = async () => {
     try {
       let result = await WebBrowser.openAuthSessionAsync(googleRegEndpoint);
@@ -32,7 +26,6 @@ export default function Google() {
       }
 
       let username = redirectData.queryParams.username;
-      console.log('USER ', username)
       dispatch(login(username));
     } catch (err) {
       alert(err);

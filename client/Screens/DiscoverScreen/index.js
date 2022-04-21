@@ -51,6 +51,7 @@ export default function DiscoverScreen({ navigation }) {
   //loadNewData is to fresh the page
   //loadMoreData is to scroll down to get more data
   const getData = async (offset, type) => {
+    console.log('this is bot')
     const limit = 2;
     var config = {
       method: 'GET',
@@ -92,7 +93,7 @@ export default function DiscoverScreen({ navigation }) {
       // <HeaderTemplate userData={null} showUserDisplay={false}></HeaderTemplate>
       // </View>
         <View>
-          <FeedTemplate userData={data} refreshData={refreshRandomUserData}
+          <FeedTemplate userData={data} refreshData={refreshRandomUserData} type={'discover'}
           renderLoadMoreView = {loadMoreView} loadMoreData = {() => {getData(offsetdata,'loadMoreData' )}}></FeedTemplate>
         </View>
       }

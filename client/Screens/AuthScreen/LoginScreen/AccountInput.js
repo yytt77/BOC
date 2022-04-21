@@ -65,7 +65,7 @@ export default function AccountInput(){
     <TextInput
       style={styles.field}
       onChangeText={text => setUsername(text)}
-
+      autoCapitalize="none"
     />
     <Text>Password</Text>
     <TextInput

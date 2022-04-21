@@ -43,6 +43,7 @@ export default function Upload({ navigation }) {
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
 
+  console.log('state', state.user.userInfo.profPhoto)
   // camera access functionality
   const CameraAccess = () => {
     async function camera() {
@@ -97,7 +98,9 @@ export default function Upload({ navigation }) {
     data.append('upload_preset',upload_preset);
 
     await fetch(CLOUDINARY_API,{ method:'post', body:data })
-      .then(res => res.json())
+      .then(async res => {
+        return await res.json();
+      })
       .then(data => { setImgURL(data.url); })
       .then(() => { setModalVisible(!modalVisible); })
       .catch((error) => {
@@ -146,8 +149,8 @@ export default function Upload({ navigation }) {
     let uploadInfo = {};
     uploadInfo['url'] = imgURL;
     uploadInfo['caption'] = text.text;
-    uploadInfo['username'] = "joe";
-    uploadInfo['profPhoto'] = "Joe's profile photo";
+    uploadInfo['username'] = state.user.userInfo.username;
+    uploadInfo['profPhoto'] = state.user.userInfo.profPhoto;
 
     if (isSelected) {
       if (location === "null, null") {
@@ -166,7 +169,9 @@ export default function Upload({ navigation }) {
         },
         body: JSON.stringify(uploadInfo),
       })
-      .then(response => response.json())
+      .then(async res => {
+        return await res.json();
+      })
       .then(data => {
         // console.log('Success:', data);
         removeLocally("image");
