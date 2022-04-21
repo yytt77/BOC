@@ -8,8 +8,9 @@ import UnAuthorized from "./UnAuthorized";
 const App = function() {
   const user = useSelector(state => state.user);
 
+
   // return (
-  //   user.username ? (
+  //   state.user.username ? (
   //     <Authorized />
   //   ) : (
   //     <UnAuthorized />
