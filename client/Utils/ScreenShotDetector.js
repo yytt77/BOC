@@ -22,14 +22,16 @@ class ScreenShotDetector extends React.Component {
     if (status === 'granted') {
       ScreenCapture.addScreenshotListener(() => {
         alert('Thanks for screenshotting PetPix 😊');
-        this.postRequest(this.props.notification);
+        if(this.props.username !== 'defaultUser') {
+          this.postRequest(this.props.notification, this.props.username);
+        }
       });
     }
   }
 
-  postRequest(notification) {
+  postRequest(notification, username) {
     if (notification['touser'] && notification['url']) {
-      notification['fromuser'] = 'joe';
+      notification['fromuser'] = username;
       console.log('let see state', notification);
       fetch(`http://${API_IP}/post/screenshot`, {
         method: 'POST',
@@ -54,7 +56,8 @@ class ScreenShotDetector extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    notification: state.notification
+    notification: state.notification,
+    username: state.user.userInfo.username
   }
 }
 
