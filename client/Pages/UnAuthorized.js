@@ -8,7 +8,7 @@ import { guestAuth } from '../Redux/actions';
 // Components
 import Header from '../Screens/AuthScreen/Shared/Header';
 import NavBar from '../Screens/AuthScreen/Shared/NavBar';
-import HeaderTemplate from '../Templates/HeaderTemplate';
+import HeaderTemplate from '../Templates/HeaderTemplate'; // Logo
 import DiscoverScreen from '../Screens/DiscoverScreen/index';
 import AuthScreen from '../Screens/AuthScreen/index';
 
