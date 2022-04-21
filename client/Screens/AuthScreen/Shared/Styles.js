@@ -12,5 +12,18 @@ export default StyleSheet.create({
   loginText: {
     fontSize: 20,
     fontWeight: 'bold'
+  },
+  top: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  backButton: {
+    flex: 1,
+    marginLeft: '65%',
+    marginTop: '5%'
+  },
+  x: {
+    fontSize: 20,
+    fontWeight: 'bold'
   }
 });

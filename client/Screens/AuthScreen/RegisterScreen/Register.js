@@ -1,18 +1,23 @@
+// React | Redux
 import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-// import HeaderTemplate from '../../../Templates/HeaderTemplate';
-import PetPixLogo from '../../../Templates/PetPixLogo';
+// Components
+import Header from '../Shared/Header';
+import LogoBackButton from '../Shared/LogoBackButton';
 import Tabs from '../Shared/Tabs';
 import BackButton from '../Shared/BackButton';
 import Google from '../Shared/Google';
 import Twitter from '../Shared/Twitter';
 import AccountInput from './components/AccountInput';
+import NavBar from '../Shared/NavBar';
+
+// Styling
 import { Register as styles } from './Styles'
 import { lightTheme, darkTheme } from '../../../constants';
 
-// console.log(props.theme)
+
 const RegisterScreen = function() {
   const theme = useSelector(state => state.theme);
 
@@ -25,12 +30,15 @@ const RegisterScreen = function() {
 
   return (
     <View style={[{ backgroundColor: current.pageColor }, styles.container]}>
-      <PetPixLogo />
-      <BackButton />
+      <Header />
+      <LogoBackButton />
       <Tabs />
       <AccountInput />
       <Google />
       <Twitter />
+      <View style={styles.bottom}>
+        <NavBar />
+      </View>
     </View>
   )
 }

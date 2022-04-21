@@ -1,16 +1,28 @@
 import { Text, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { guestHome } from '../../../Redux/actions';
+import { lightTheme, darkTheme } from '../../../constants';
+import styles from './Styles';
 
 export default function BackButton() {
-  const state = useSelector(state => state);
+  const theme = useSelector(state => state.theme);
   const dispatch = useDispatch();
-  const screen = useSelector(state => state.guestHome);
+  let current;
+
+  if (theme) {
+    current = lightTheme;
+  } else {
+    current = darkTheme;
+  }
 
   return (
     <View>
-      <Text onPress={ () => dispatch(guestHome())}>X</Text>
+      <Text
+        style={[{ color: current.tabIconInactive }, styles.x]}
+        onPress={ () => dispatch(guestHome())}
+      >
+        X
+      </Text>
     </View>
   )
 }
