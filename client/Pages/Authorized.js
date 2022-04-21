@@ -34,12 +34,11 @@ export default function Authorized() {
 
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const currUser = useSelector(state => state.user);
+  const currUser = useSelector(state => state.user.username);
   const getUser = async () => {
     //for now hardcoded, but later get current logged in user from redux store (Dominic puts in there from login screen)
-    const currentUser = "joe"
     try {
-      const user = await axios.get(`${userEndpoint}${currentUser}`);
+      const user = await axios.get(`${userEndpoint}${currUser}`);
       if (user.data.userInfo) {
         dispatch(updateUser(user.data))
       } else {

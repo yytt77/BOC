@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import { Register as styles } from '../RegisterScreen/Styles'
 import { API_IP_login } from '../../../constants.js';
-//import { login } from '../../../Redux/actions';
+import { login } from '../../../Redux/actions';
 import { authLog } from '../../../Redux/actions';
 import { authReg } from '../../../Redux/actions';
 
@@ -64,7 +64,7 @@ export default function AccountInput(){
     <TextInput
       style={styles.field}
       onChangeText={text => setUsername(text)}
-
+      autoCapitalize="none"
     />
     <Text>Password</Text>
     <TextInput

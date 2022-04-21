@@ -8,14 +8,16 @@ import UnAuthorized from "./UnAuthorized";
 const App = function() {
   const user = useSelector(state => state.user);
 
-  // return (
-  //   user.username ? (
-  //     <Authorized />
-  //   ) : (
-  //     <UnAuthorized />
-  //   )
-  // )
-  return <Authorized />
+
+  // console.log('PROPS ', state)
+  return (
+    user.username ? (
+      <Authorized />
+    ) : (
+      <UnAuthorized />
+    )
+  )
+  // return <Authorized />
 }
 
 export default App;
