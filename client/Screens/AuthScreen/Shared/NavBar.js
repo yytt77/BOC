@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Text, View } from "react-native";
 import { useDispatch, useSelector } from 'react-redux';
 import { lightTheme, darkTheme } from '../../../constants';
@@ -6,29 +7,44 @@ import styles from './Styles'
 import { guestAuth } from '../../../Redux/actions';
 
 export default function NavBar() {
-  const dispatch = useDispatch();
   const theme = useSelector(state => state.theme);
-  let current;
+  const guestHome = useSelector(state => state.guestHome);
+  const dispatch = useDispatch();
+  const [current, setCurrent] = useState(() => {
+    if (theme) {
+      return lightTheme;
+    } else {
+      return darkTheme;
+    }
+  })
 
-  if (theme) {
-    current = lightTheme;
-  } else {
-    current = darkTheme;
-  }
-
-  return (
-    <View style={[{ backgroundColor: current.navColor }, styles.loginBar]}>
-      <View style={styles.icon}>
-        <FontAwesome5
+  const [icon, setIcon] = useState(() => {
+    if (guestHome === 'home') {
+      return {
+        icon: <FontAwesome5
           name="door-open"
           size={50}
           color={current.tabIconInactive}
           onPress={() => dispatch(guestAuth())}
-        />
+        />,
+        text: 'Log In'
+      }
+    } else {
+      return {
+        icon: <></>,
+        text: <></>
+      }
+    }
+  });
+
+  return (
+    <View style={[{ backgroundColor: current.navColor }, styles.loginBar]}>
+      <View style={styles.icon}>
+        {icon.icon}
         <Text
           style={[{ color: current.iconColor }, styles.loginText]}
           onPress={() => dispatch(guestAuth())}>
-          Log In
+          {icon.text}
         </Text>
       </View>
     </View>
