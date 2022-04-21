@@ -23,7 +23,6 @@ export default function NavBar() {
           name="door-open"
           size={50}
           color={current.tabIconInactive}
-          style={current}
           onPress={() => dispatch(guestAuth())}
         />
         <Text
