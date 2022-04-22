@@ -23,7 +23,6 @@ const FeedTemplate = (props) => {
   const dispatch = useDispatch();
   const { notificationToUser } = bindActionCreators(actions, dispatch);
 
-  // console.log('dada', props.userData);
   // add toUser to state and toUser, url to redux as well
   const displayModal = (show, url, toUser, caption) => {
     setIsVisible(show);
