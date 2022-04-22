@@ -1,6 +1,17 @@
 import { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 import { getLocally, storeLocally, removeLocally } from "../../LocalStorage";
+
+export const getFileInfo = async (fileURI: string) => {
+  const fileInfo = await FileSystem.getInfoAsync(fileURI);
+  return fileInfo;
+}
+
+export const isLessThanTheMB = (fileSize: number, smallerThanSizeMB: number) => {
+  const isOk = fileSize / 1024 / 1024 < smallerThanSizeMB
+  return isOk
+}
 
 export default function Gallery() {
 
@@ -21,7 +32,12 @@ export default function Gallery() {
     if (!result.cancelled) {
       let url = result.uri;
       let GPS = [];
-      // console.log('gallery', url)
+      const fileInfo = await getFileInfo(url);
+      const isLt10MB = isLessThanTheMB(fileInfo.size, 10);
+      if (!isLt10MB) {
+        alert('Imagee size must be smaller than 10MB.');
+        return;
+      }
       const onUserPress = async (url) => {
         // Save image to local storage;
         const uploadImage = await getLocally("image");

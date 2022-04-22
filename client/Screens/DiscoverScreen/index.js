@@ -14,6 +14,9 @@ export default function DiscoverScreen({ navigation }) {
   //State
   const [data, setData] = useState([]);
   const [offsetdata, setoffsetData] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [isListEnd, setIsListEnd] = useState(false);
+
 
   //Redux
   const state = useSelector((state) => state);
@@ -21,7 +24,6 @@ export default function DiscoverScreen({ navigation }) {
 
   //Pull to refresh
   const refreshRandomUserData = async () => {
-    console.log('this should run a get request for new random user data')
     setoffsetData(0);
     getData(0, 'loadNewData');
   };
@@ -29,7 +31,6 @@ export default function DiscoverScreen({ navigation }) {
   //Refresh page when naviagte to Discover
   useEffect(() => {
     if (!navigation) { return }
-
     const refreshPage = navigation.addListener('focus', () => {
       getData(0, 'loadNewData');
     });
@@ -39,13 +40,17 @@ export default function DiscoverScreen({ navigation }) {
   //Load more icon
   const loadMoreView = () => {
     return <View style={styles.loadMore}>
-    <ActivityIndicator
-        style={styles.indicator}
-        size={"large"}
-        color={"red"}
-        animating={true}
-    />
-    <Text>Loading</Text>
+      { loading ? (
+        <ActivityIndicator
+            style={styles.indicator}
+            size={"large"}
+            color={"red"}
+            animating={true}
+        />
+        ) : null}
+           {loading ? (
+       <Text>Loading</Text>) : null
+      }
   </View>
   }
 
@@ -53,29 +58,40 @@ export default function DiscoverScreen({ navigation }) {
   //loadNewData is to fresh the page
   //loadMoreData is to scroll down to get more data
   const getData = async (offset, type) => {
-    const limit = 2;
-    var config = {
-      method: 'GET',
-      url: `http://${API_IP}/post/discover?limit=${limit}&offset=${offset}`,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    await axios(config)
-    .then(function (response) {
-      if (type === 'loadNewData') {
-        setData(response.data);
-        setoffsetData(limit);
-      }
-      if (type === 'loadMoreData') {
-        const newData = data.concat(response.data);
-        setData(newData);
-        setoffsetData(offset + limit);
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    setIsListEnd(false);
+    if (!loading && !isListEnd) {
+      setLoading(true);
+      const limit = 2;
+      var config = {
+        method: 'GET',
+        url: `http://${API_IP}/post/discover?limit=${limit}&offset=${offset}`,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      await axios(config)
+      .then(function (response) {
+        if (type === 'loadNewData') {
+          setData(response.data);
+          setoffsetData(limit);
+          setLoading(false);
+        }
+        if (type === 'loadMoreData') {
+          if (response.data.length > 0) {
+            const newData = data.concat(response.data);
+            setData(newData);
+            setoffsetData(offset + limit);
+            setLoading(false);
+          } else {
+            setLoading(false);
+            setIsListEnd(true);
+          }
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
   }
 
   useEffect(() => {
