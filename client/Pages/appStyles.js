@@ -22,5 +22,9 @@ export default StyleSheet.create({
   plus: {
     width: 25,
     height: 25,
+  },
+  unAuthorizedView: {
+    flex: 1,
+    justifyContent: 'center'
   }
 });

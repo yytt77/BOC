@@ -28,6 +28,8 @@ export default function DiscoverScreen({ navigation }) {
 
   //Refresh page when naviagte to Discover
   useEffect(() => {
+    if (!navigation) { return }
+
     const refreshPage = navigation.addListener('focus', () => {
       getData(0, 'loadNewData');
     });
