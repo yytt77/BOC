@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import { API_IP } from '../constants';
 
-
 class ScreenShotDetector extends React.Component {
   constructor(props){
     super(props)
@@ -32,8 +31,7 @@ class ScreenShotDetector extends React.Component {
   postRequest(notification, username) {
     if (notification['touser'] && notification['url']) {
       notification['fromuser'] = username;
-      console.log('let see state', notification);
-      fetch(`http://${API_IP}/post/screenshot`, {
+      fetch(`http://${API_IP}/user/screenshot`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
