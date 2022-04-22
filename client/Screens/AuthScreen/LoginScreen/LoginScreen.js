@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import PetPixLogo from '../../../Templates/PetPixLogo';
 import Tabs from '../Shared/Tabs';
 import BackButton from '../Shared/BackButton';
-import Google from '../Shared/Google';
+import Google from './Google';
 import Twitter from '../Shared/Twitter';
 
 
