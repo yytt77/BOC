@@ -12,6 +12,15 @@ export const updateProfilePhoto = (profilePhotoUrl) => {
   }
 }
 
+// export const login = (user) => {
+//   return (dispatch) => {
+//     dispatch({
+//       type: 'AUTHORIZED',
+//       payload: user
+//     })
+//   }
+// }
+
 export const login = (user) => {
   return {
     type: 'AUTHORIZED',

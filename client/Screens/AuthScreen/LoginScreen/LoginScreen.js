@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import PetPixLogo from '../../../Templates/PetPixLogo';
 import Tabs from '../Shared/Tabs';
 import BackButton from '../Shared/BackButton';
-import Google from '../Shared/Google';
+import Google from './Google';
 import Twitter from '../Shared/Twitter';
 
 
@@ -18,7 +18,7 @@ import Logo from '../../../assets/logo_small.png';
 
 
 //import { Register as styles } from '..RegisterScreen/Styles'
-import { Register as styles } from '../RegisterScreen/Styles'
+import styles from '../Styles'
 
 import { lightTheme, darkTheme } from '../../../constants.js';
 

@@ -1,17 +1,71 @@
+import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { authLog, authReg } from '../../../Redux/actions';
+import { lightTheme, darkTheme } from '../../../constants';
+import { FontAwesome5 } from "@expo/vector-icons";
+import styles from './Styles';
 
 export default function Tabs() {
-  const state = useSelector(state => state);
+  const theme = useSelector(state => state.theme);
+  const authScreen = useSelector(state => state.authScreen);
+  const [lines, setLines] = useState(() => {
+    if (authScreen === 'login') {
+      return {
+        log: <View style={styles.tabLines}></View>,
+        reg: <View></View>
+      }
+    } else {
+      return {
+        log: <View></View>,
+        reg: <View style={styles.tabLines}></View>
+      }
+    }
+  });
+
   const dispatch = useDispatch();
-  const screen = useSelector(state => state.authScreen);
+  let current;
+
+  if (theme) {
+    current = lightTheme;
+  } else {
+    current = darkTheme;
+  }
+
+  const switchView = (view) => {
+    if (view === 'login') {
+      setLines({
+        log: <View style={styles.tabLines}></View>,
+        reg: <View></View>
+      });
+      dispatch(authLog());
+    } else {
+      setLines({
+        log: <View></View>,
+        reg: <View style={styles.tabLines}></View>
+      });
+      dispatch(authReg());
+    }
+  }
 
   return (
-    <View>
-      <Text onPress={() => dispatch(authLog())}>Log In</Text>
-      <Text onPress={() => dispatch(authReg())}>Register</Text>
+    <View style={styles.tabs}>
+      <View>
+        <Text
+          style={styles.tabText}
+          onPress={() => switchView('login')}>
+          Log In
+        </Text>
+        {lines.log}
+      </View>
+      <View>
+        <Text
+          style={styles.tabText}
+          onPress={() => switchView('register')}>
+          Register
+        </Text>
+        {lines.reg}
+      </View>
     </View>
   )
 }

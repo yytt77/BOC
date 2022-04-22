@@ -43,7 +43,6 @@ export default function Upload({ navigation }) {
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
 
-  console.log('state', state.user.userInfo.profPhoto)
   // camera access functionality
   const CameraAccess = () => {
     async function camera() {
@@ -183,6 +182,7 @@ export default function Upload({ navigation }) {
         setImage(null);
         navigation.navigate("Home");
         setSelection(false);
+        setText('');
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -255,6 +255,7 @@ export default function Upload({ navigation }) {
           placeholder="Say something about your pet!"
           onChangeText={(text) => setText({ text })}
           multiline={true}
+          value={text}
         />
         <View style={styles.checkBoxSection}>
           <Checkbox

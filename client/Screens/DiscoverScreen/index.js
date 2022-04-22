@@ -24,13 +24,13 @@ export default function DiscoverScreen({ navigation }) {
 
   //Pull to refresh
   const refreshRandomUserData = async () => {
-    console.log('this should run a get request for new random user data')
     setoffsetData(0);
     getData(0, 'loadNewData');
   };
 
   //Refresh page when naviagte to Discover
   useEffect(() => {
+    if (!navigation) { return }
     const refreshPage = navigation.addListener('focus', () => {
       getData(0, 'loadNewData');
     });
@@ -40,17 +40,17 @@ export default function DiscoverScreen({ navigation }) {
   //Load more icon
   const loadMoreView = () => {
     return <View style={styles.loadMore}>
-      {loading ? (    
+      { loading ? (
         <ActivityIndicator
             style={styles.indicator}
             size={"large"}
             color={"red"}
             animating={true}
-        /> 
+        />
         ) : null}
-           {loading ? (      
+           {loading ? (
        <Text>Loading</Text>) : null
-           }
+      }
   </View>
   }
 
@@ -58,7 +58,6 @@ export default function DiscoverScreen({ navigation }) {
   //loadNewData is to fresh the page
   //loadMoreData is to scroll down to get more data
   const getData = async (offset, type) => {
-    console.log('this is bot', loading, 'and ', isListEnd)
     setIsListEnd(false);
     if (!loading && !isListEnd) {
       setLoading(true);
@@ -82,7 +81,7 @@ export default function DiscoverScreen({ navigation }) {
             const newData = data.concat(response.data);
             setData(newData);
             setoffsetData(offset + limit);
-            setLoading(false);     
+            setLoading(false);
           } else {
             setLoading(false);
             setIsListEnd(true);
@@ -99,6 +98,11 @@ export default function DiscoverScreen({ navigation }) {
     getData(0, 'loadNewData');
   },[]);
 
+  //Conditional render of user profile component depending on whether user is logged in or not
+  const headerComponent = (userData.userInfo.username !== 'defaultUser') ?
+  (<HeaderTemplate userData={userData} showUserDisplay={true}></HeaderTemplate>) :
+  <HeaderTemplate userData={null} showUserDisplay={false}></HeaderTemplate>;
+
   return (
     <View style={[
       styles.discoverScreenContainer,
@@ -106,15 +110,13 @@ export default function DiscoverScreen({ navigation }) {
         backgroundColor: palette(state.theme).pageColor
       }
      ]}>
-      {
-      //  <View>
-      // <HeaderTemplate userData={null} showUserDisplay={false}></HeaderTemplate>
-      // </View>
-        <View>
-          <FeedTemplate userData={data} refreshData={refreshRandomUserData} type={'discover'}
-          renderLoadMoreView = {loadMoreView} loadMoreData = {() => {getData(offsetdata,'loadMoreData' )}}></FeedTemplate>
-        </View>
-      }
+      <View>
+        {headerComponent}
+      </View>
+      <View>
+        <FeedTemplate userData={data} refreshData={refreshRandomUserData} type={'discover'}
+        renderLoadMoreView = {loadMoreView} loadMoreData = {() => {getData(offsetdata,'loadMoreData' )}}></FeedTemplate>
+      </View>
     </View>
   );
 };

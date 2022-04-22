@@ -32,9 +32,7 @@ export default function Gallery() {
     if (!result.cancelled) {
       let url = result.uri;
       let GPS = [];
-      // console.log('gallery', url)
       const fileInfo = await getFileInfo(url);
-      console.log('filesize', fileInfo.size);
       const isLt10MB = isLessThanTheMB(fileInfo.size, 10);
       if (!isLt10MB) {
         alert('Imagee size must be smaller than 10MB.');
