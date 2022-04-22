@@ -3,6 +3,8 @@ import { Text, View } from "react-native";
 import { useDispatch, useSelector } from 'react-redux';
 import { lightTheme, darkTheme } from '../../../constants';
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
+
 import styles from './Styles'
 import { guestAuth } from '../../../Redux/actions';
 
@@ -35,6 +37,10 @@ export default function NavBar() {
         text: <></>
       }
     }
+  });
+
+  const [fontsLoaded] = useFonts({
+    comicSans: require('../../../assets/fonts/comic.ttf')
   });
 
   return (

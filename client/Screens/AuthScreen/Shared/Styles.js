@@ -18,12 +18,13 @@ export default StyleSheet.create({
   },
   backButton: {
     flex: 1,
-    marginLeft: '65%',
+    marginLeft: '64%',
     marginTop: '5%'
   },
   x: {
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'comicSans'
   },
   tabs: {
     flex: 1,

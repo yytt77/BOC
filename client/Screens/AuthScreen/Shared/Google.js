@@ -11,6 +11,7 @@ import { API_IP } from '../../../constants.js';
 import styles from './Styles'
 import { lightTheme, darkTheme } from '../../../constants';
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 
 
 const googleRegEndpoint = `http://${API_IP}/user/login/federated/google`;
@@ -35,6 +36,10 @@ export default function Google() {
     } else {
       return 'Register';
     }
+  });
+
+  const [fontsLoaded] = useFonts({
+    comicSans: require('../../../assets/fonts/comic.ttf')
   });
 
   const dispatch = useDispatch();

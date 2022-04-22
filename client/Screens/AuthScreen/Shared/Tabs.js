@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { authLog, authReg } from '../../../Redux/actions';
 import { lightTheme, darkTheme } from '../../../constants';
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 import styles from './Styles';
 
 export default function Tabs() {
@@ -29,6 +30,10 @@ export default function Tabs() {
         reg: <View style={styles.tabLines}></View>
       }
     }
+  });
+
+  const [fontsLoaded] = useFonts({
+    comicSans: require('../../../assets/fonts/comic.ttf')
   });
 
   const dispatch = useDispatch();
