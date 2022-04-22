@@ -19,7 +19,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 export default function Google() {
   const state = useSelector(state => state);
-  const screen = useSelector(state => state.user);
+  const authScreen = useSelector(state => state.authScreen);
   const theme = useSelector(state => state.theme);
   const [current, setCurrent] = useState(() => {
     if (theme) {
@@ -27,7 +27,15 @@ export default function Google() {
     } else {
       return darkTheme;
     }
-  })
+  });
+
+  const [screen, setScreen] = useState(() => {
+    if (authScreen === 'login') {
+      return 'Login';
+    } else {
+      return 'Register';
+    }
+  });
 
   const dispatch = useDispatch();
   const _openAuthSessionAsync = async () => {
@@ -61,7 +69,7 @@ export default function Google() {
           />
           <Text
             style={[{ color: current.tabIconInactive }, styles.socialText]}>
-            &nbsp;&nbsp;Register with Google
+            &nbsp;&nbsp;{screen} with Google
           </Text>
         </View>
       </Pressable>

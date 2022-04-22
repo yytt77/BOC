@@ -18,7 +18,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 export default function Twitter() {
   const state = useSelector(state => state);
-  const screen = useSelector(state => state.user);
+  const authScreen = useSelector(state => state.authScreen);
   const theme = useSelector(state => state.theme);
   const [failed, setFailed] = useState(<></>);
   const [current, setCurrent] = useState(() => {
@@ -27,7 +27,15 @@ export default function Twitter() {
     } else {
       return darkTheme;
     }
-  })
+  });
+
+  const [screen, setScreen] = useState(() => {
+    if (authScreen === 'login') {
+      return 'Login';
+    } else {
+      return 'Register';
+    }
+  });
 
   const dispatch = useDispatch();
   const _openAuthSessionAsync = async () => {
@@ -61,7 +69,7 @@ export default function Twitter() {
           />
           <Text
             style={[{ color: current.tabIconInactive }, styles.socialText]}>
-            &nbsp;&nbsp;Register with Twitter
+            &nbsp;&nbsp;{screen} with Twitter
           </Text>
         </View>
       </Pressable>

@@ -9,6 +9,14 @@ import styles from './Styles';
 export default function Tabs() {
   const theme = useSelector(state => state.theme);
   const authScreen = useSelector(state => state.authScreen);
+  const [current, setCurrent] = useState(() => {
+    if (theme) {
+      return lightTheme;
+    } else {
+      return darkTheme;
+    }
+  });
+
   const [lines, setLines] = useState(() => {
     if (authScreen === 'login') {
       return {
@@ -24,14 +32,6 @@ export default function Tabs() {
   });
 
   const dispatch = useDispatch();
-  let current;
-
-  if (theme) {
-    current = lightTheme;
-  } else {
-    current = darkTheme;
-  }
-
   const switchView = (view) => {
     if (view === 'login') {
       setLines({
