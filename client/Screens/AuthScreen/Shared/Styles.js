@@ -33,7 +33,7 @@ export default StyleSheet.create({
   },
   tabText: {
     fontSize: 30,
-    fontWeight: 'bold',
+    fontFamily: 'comicSans',
     color: 'white'
   },
   tabLines: {
