@@ -58,6 +58,7 @@ export default function AccountInput() {
         });
 
         dispatch(authLog());
+        alert('We\'ve sent you an activation email!\nPlease check your inbox.');
       } catch (err) {
         console.log(err);
       }
