@@ -18,7 +18,7 @@ import Logo from '../../../assets/logo_small.png';
 
 
 //import { Register as styles } from '..RegisterScreen/Styles'
-import { Register as styles } from '../RegisterScreen/Styles'
+import styles from '../Styles'
 
 import { lightTheme, darkTheme } from '../../../constants.js';
 

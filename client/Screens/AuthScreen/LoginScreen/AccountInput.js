@@ -7,7 +7,7 @@ import axios from 'axios';
 //import { useNavigation } from '@react-navigation/native';
 
 
-import { Register as styles } from '../RegisterScreen/Styles'
+import styles from '../Styles'
 import { API_IP_login } from '../../../constants.js';
 import { login } from '../../../Redux/actions';
 import { authLog } from '../../../Redux/actions';

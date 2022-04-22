@@ -3,7 +3,7 @@ import { Button, Text, TextInput, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { Register as styles } from '../Styles';
+import styles from '../../Styles';
 import { API_IP } from '../../../../constants.js';
 import { containsUpperCase, containsNumber, containsSpecial } from '../registerHelpers';
 import { authLog } from '../../../../Redux/actions';
@@ -133,18 +133,21 @@ export default function AccountInput() {
       <Text>Username</Text>
       <TextInput
         style={styles.field}
+        accessibilityLabel="reg-username"
         onChangeText={text => setUsername(text)}
         autoCapitalize="none"
       />
       <Text>Email Address</Text>
       <TextInput
         style={styles.field}
+        accessibilityLabel="reg-email"
         onChangeText={text => setEmail(text)}
         autoCapitalize="none"
       />
       <Text>Password</Text>
       <TextInput
         style={styles.field}
+        accessibilityLabel="reg-pw1"
         onChangeText={text => setPassword(text)}
         secureTextEntry={true}
         textContentType="oneTimeCode"
@@ -152,6 +155,7 @@ export default function AccountInput() {
       <Text>Password Again</Text>
       <TextInput
         style={styles.field}
+        accessibilityLabel="reg-pw2"
         onChangeText={text => setConfirmPw(text)}
         secureTextEntry={true}
         textContentType="oneTimeCode"

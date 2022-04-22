@@ -38,7 +38,7 @@ const PostTemplate = (props) => {
   const submitComment = () => {
     var config = {
       method: 'POST',
-      url: `http://localhost:3000/post/comment`,
+      url: `http://${API_IP}/post/comment`,
       headers: {
         'Content-Type': 'application/json'
       },
