@@ -8,6 +8,7 @@ import { API_IP } from '../../../../constants.js';
 import { containsUpperCase, containsNumber, containsSpecial } from '../registerHelpers';
 import { authLog } from '../../../../Redux/actions';
 import { lightTheme, darkTheme } from '../../../../constants';
+import { useFonts } from "expo-font";
 
 const registrationEndpoint = `http://${API_IP}/user/addNewUser`;
 
@@ -34,7 +35,11 @@ export default function AccountInput() {
     } else {
       return darkTheme;
     }
-  })
+  });
+
+  const [fontsLoaded] = useFonts({
+    comicSans: require('../../../../assets/fonts/comic.ttf')
+  });
 
   const handleSignUp = async () => {
 

@@ -19,7 +19,11 @@ export default StyleSheet.create({
     height: 50,
     marginTop: 2,
     marginBottom: 10,
-    borderRadius: 10
+    borderRadius: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 16,
+    fontFamily: 'comicSans'
   },
   fieldLabels: {
     color: 'white',
@@ -48,8 +52,5 @@ export default StyleSheet.create({
     marginRight: 'auto',
     marginTop: 'auto',
     marginBottom: 'auto'
-  },
-  // google: {
-
-  // }
+  }
 })
