@@ -31,7 +31,7 @@ export default function Twitter() {
 
   const [screen, setScreen] = useState(() => {
     if (authScreen === 'login') {
-      return 'Login';
+      return 'Sign In';
     } else {
       return 'Register';
     }
