@@ -5,7 +5,7 @@ import PetPixLogo from './PetPixLogo'
 
 
 const HeaderTemplate = (props) => {
-  console.log('header props', props);
+  // console.log('header props', props);
   return (
     <View
     style={styles.headerContainer}>

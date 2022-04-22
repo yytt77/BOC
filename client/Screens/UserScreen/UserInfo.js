@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { palette } from '../../Utils/ColorScheme';
 
 const UserInfo = (props) => {
-  console.log('userInfo', props);
+  // console.log('userInfo', props);
 
   const state = useSelector((state) => state);
 

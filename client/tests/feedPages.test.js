@@ -93,3 +93,24 @@ describe('Testing Header Templates', () => {
     )
   });
 });
+
+describe('Testing UserInfo Component', () => {
+  const state = {
+    theme: true,
+    user: {
+      userInfo: {
+        username: 'ash',
+        profPhoto: 'https://placeimg.com/100/100/animals'
+      }
+    }
+  };
+  const store = mockStore(state)
+
+  it('renders the component correctly', () => {
+    render(
+      <Provider store={store}>
+        <UserInfo data={fakeProps}/>
+      </Provider>
+    )
+  });
+});
