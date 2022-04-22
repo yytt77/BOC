@@ -6,7 +6,7 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   fieldContainer: {
-
+    alignItems: 'center'
   },
   fields: {
     width: '70%'

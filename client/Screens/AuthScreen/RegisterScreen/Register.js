@@ -38,9 +38,6 @@ const RegisterScreen = function() {
       </View>
       <Google />
       <Twitter />
-      <View style={styles.bottom}>
-        <NavBar />
-      </View>
     </View>
   )
 }
