@@ -17,7 +17,6 @@ export default function UserScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const updateReduxUser = async () => {
-    console.log('update just ran');
     try {
       const response = await axios.get(
         `http://${API_IP}/user/getUser/${state.user.userInfo.username}`
@@ -37,7 +36,6 @@ export default function UserScreen({ navigation }) {
     return refreshPage;
   }, [navigation]);
 
-  console.log('posts', userData);
   return (
     <View style={[
       styles.userScreenContainer,

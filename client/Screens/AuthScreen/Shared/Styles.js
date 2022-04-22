@@ -11,34 +11,63 @@ export default StyleSheet.create({
   },
   loginText: {
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'comicSans'
   },
   top: {
-    flex: 1,
     flexDirection: 'row'
   },
   backButton: {
     flex: 1,
-    marginLeft: '65%',
+    marginLeft: '64%',
     marginTop: '5%'
   },
   x: {
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'comicSans'
   },
   tabs: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    marginTop: 10
   },
   tabText: {
-    fontSize: 30,
-    fontWeight: 'bold',
+    fontSize: 25,
+    fontFamily: 'comicSans',
     color: 'white'
   },
   tabLines: {
     borderBottomWidth: 1,
     borderBottomColor: 'white',
-    marginTop: 6
+    marginTop: 10
+  },
+  socialButton: {
+    width: 300,
+    height: 50,
+    borderRadius: 10
+  },
+  socialInner: {
+    flexDirection: 'row',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
+  socialText: {
+    fontSize: 20,
+    fontFamily: 'comicSans'
+  },
+  googleContainer: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: 10,
+    marginTop: 50
+  },
+  twitterContainer: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: 25
   }
 });

@@ -4,11 +4,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { authLog, authReg } from '../../../Redux/actions';
 import { lightTheme, darkTheme } from '../../../constants';
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 import styles from './Styles';
 
 export default function Tabs() {
   const theme = useSelector(state => state.theme);
   const authScreen = useSelector(state => state.authScreen);
+  const [current, setCurrent] = useState(() => {
+    if (theme) {
+      return lightTheme;
+    } else {
+      return darkTheme;
+    }
+  });
+
   const [lines, setLines] = useState(() => {
     if (authScreen === 'login') {
       return {
@@ -23,15 +32,11 @@ export default function Tabs() {
     }
   });
 
+  const [fontsLoaded] = useFonts({
+    comicSans: require('../../../assets/fonts/comic.ttf')
+  });
+
   const dispatch = useDispatch();
-  let current;
-
-  if (theme) {
-    current = lightTheme;
-  } else {
-    current = darkTheme;
-  }
-
   const switchView = (view) => {
     if (view === 'login') {
       setLines({

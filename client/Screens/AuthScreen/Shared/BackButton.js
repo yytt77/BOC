@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { guestHome } from '../../../Redux/actions';
 import { lightTheme, darkTheme } from '../../../constants';
 import styles from './Styles';
+import { useFonts } from "expo-font";
 
 export default function BackButton() {
   const theme = useSelector(state => state.theme);
@@ -14,6 +15,10 @@ export default function BackButton() {
   } else {
     current = darkTheme;
   }
+
+  const [fontsLoaded] = useFonts({
+    comicSans: require('../../../assets/fonts/comic.ttf')
+  });
 
   return (
     <View>

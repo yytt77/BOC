@@ -36,7 +36,6 @@ export default function UnAuthorized() {
     guestHome === 'home' ? (
       <View style={[{ backgroundColor: current.pageColor }, styles.unAuthorizedView]}>
         <Header />
-        <HeaderTemplate />
         <DiscoverScreen />
         <NavBar />
       </View>

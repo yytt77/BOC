@@ -27,7 +27,7 @@ import { API_IP } from '../../constants';
 import DiscoverScreen from '../DiscoverScreen/index'
 
 export default function Upload({ navigation }) {
-
+// console.log(CLOUDINARY_API, upload_preset)
   //define states
   const didMount = useRef(false);
   const [modalVisible, setModalVisible] = useState(false);
