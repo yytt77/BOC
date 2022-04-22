@@ -12,6 +12,7 @@ web-build/
 .env
 coverage
 *__snapshots__
+AWS.pem
 
 # macOS
 .DS_Store

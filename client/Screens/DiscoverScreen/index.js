@@ -80,10 +80,10 @@ export default function DiscoverScreen({ navigation }) {
     getData(0, 'loadNewData');
   },[]);
 
-  const showComponent = (userData.userInfo.username) ?
+  //Conditional render of user profile component depending on whether user is logged in or not
+  const headerComponent = (userData.userInfo.username !== 'defaultUser') ?
   (<HeaderTemplate userData={userData} showUserDisplay={true}></HeaderTemplate>) :
-  <Text>test test</Text>
-  // <HeaderTemplate userData={null} showUserDisplay={false}></HeaderTemplate>;
+  <HeaderTemplate userData={null} showUserDisplay={false}></HeaderTemplate>;
 
   return (
     <View style={[
@@ -93,7 +93,7 @@ export default function DiscoverScreen({ navigation }) {
       }
      ]}>
       <View>
-        {showComponent}
+        {headerComponent}
       </View>
       <View>
         <FeedTemplate userData={data} refreshData={refreshRandomUserData} type={'discover'}
