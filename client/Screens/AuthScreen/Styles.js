@@ -10,7 +10,8 @@ export default StyleSheet.create({
   fields: {
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginBottom: 125
+    // marginBottom: 125
+    // marginBottom: 70
   },
   field: {
     backgroundColor: 'white',
@@ -36,7 +37,8 @@ export default StyleSheet.create({
   button: {
     width: 150,
     height: 50,
-    marginTop: 40,
+    marginTop: 20,
+    marginBottom: 30,
     borderRadius: 10
   },
   buttonText: {
@@ -46,6 +48,8 @@ export default StyleSheet.create({
     marginRight: 'auto',
     marginTop: 'auto',
     marginBottom: 'auto'
-  }
+  },
+  // google: {
 
+  // }
 })

@@ -1,23 +1,35 @@
-import { useCallback, useState } from 'react';
-import { Alert, Button, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Alert, Pressable, Text, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
-
 import axios from 'axios';
 
 import { login } from '../../../Redux/actions';
 import { API_IP } from '../../../constants.js';
+
+import styles from './Styles'
+import { lightTheme, darkTheme } from '../../../constants';
+import { FontAwesome5 } from "@expo/vector-icons";
+
 const twitterRegEndpoint = `http://${API_IP}/user/auth/twitter`;
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function Twitter() {
   const state = useSelector(state => state);
-  const dispatch = useDispatch();
   const screen = useSelector(state => state.user);
+  const theme = useSelector(state => state.theme);
   const [failed, setFailed] = useState(<></>);
+  const [current, setCurrent] = useState(() => {
+    if (theme) {
+      return lightTheme;
+    } else {
+      return darkTheme;
+    }
+  })
 
+  const dispatch = useDispatch();
   const _openAuthSessionAsync = async () => {
     try {
       let result = await WebBrowser.openAuthSessionAsync(twitterRegEndpoint);
@@ -34,15 +46,25 @@ export default function Twitter() {
   }
 
   return (
-    // button will include Twitter logo
-    <View>
-      <Button
+    <View style={styles.twitterContainer}>
+      <Pressable
+        style={[{ backgroundColor: current.buttonColor }, styles.socialButton]}
         title="Register with Twitter"
         accessibilityLabel="twitter"
-        onPress={ () => _openAuthSessionAsync() }
-      >
-        Register with Twitter
-      </Button>
+        onPress={ () => _openAuthSessionAsync() }>
+        <View
+          style={styles.socialInner}>
+          <FontAwesome5
+            name='twitter'
+            size={30}
+            color={current.iconColor}
+          />
+          <Text
+            style={[{ color: current.tabIconInactive }, styles.socialText]}>
+            &nbsp;&nbsp;Register with Twitter
+          </Text>
+        </View>
+      </Pressable>
       {failed}
     </View>
   )

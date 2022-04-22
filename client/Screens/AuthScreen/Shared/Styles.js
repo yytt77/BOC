@@ -14,7 +14,6 @@ export default StyleSheet.create({
     fontWeight: 'bold'
   },
   top: {
-    flex: 1,
     flexDirection: 'row'
   },
   backButton: {
@@ -41,5 +40,32 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'white',
     marginTop: 10
+  },
+  socialButton: {
+    width: 300,
+    height: 50,
+    borderRadius: 10
+  },
+  socialInner: {
+    flexDirection: 'row',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
+  socialText: {
+    fontSize: 20,
+    fontFamily: 'comicSans'
+  },
+  googleContainer: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: 10,
+    marginTop: 50
+  },
+  twitterContainer: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: 25
   }
 });
