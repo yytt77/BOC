@@ -21,7 +21,6 @@ export default function Twitter() {
   const state = useSelector(state => state);
   const authScreen = useSelector(state => state.authScreen);
   const theme = useSelector(state => state.theme);
-  const [failed, setFailed] = useState(<></>);
   const [current, setCurrent] = useState(() => {
     if (theme) {
       return lightTheme;
@@ -54,7 +53,7 @@ export default function Twitter() {
       let username = redirectData.queryParams.username;
       dispatch(login(username));
     } catch (err) {
-      setFailed(<Text>Unable to connect to Twitter</Text>);
+      alert('Unable to connect to Twitter.');
     }
   }
 
@@ -78,7 +77,6 @@ export default function Twitter() {
           </Text>
         </View>
       </Pressable>
-      {failed}
     </View>
   )
 }

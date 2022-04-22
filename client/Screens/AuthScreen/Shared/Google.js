@@ -54,8 +54,7 @@ export default function Google() {
       let username = redirectData.queryParams.username;
       dispatch(login(username));
     } catch (err) {
-      alert(err);
-      console.log(err);
+      alert('Unable to connect to Google.');
     }
   }
 
