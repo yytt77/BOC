@@ -18,10 +18,10 @@ const UserInfo = (props) => {
           {props.userData.userInfo.username} </Text>
           <Text
           style={[styles.followersText, {color: palette(state.theme).buttonText}]}>
-          {props.userData.userInfo.followers.length} Followers</Text>
+          {(props.userData.userInfo.followers) ? props.userData.userInfo.followers.length : 0} Followers</Text>
           <Text
           style={[styles.followingText, {color: palette(state.theme).buttonText}]}>
-          {props.userData.userInfo.following.length} Following</Text>
+          {(props.userData.userInfo.followers) ?props.userData.userInfo.following.length : 0} Following</Text>
       </View>
       <View
         style={styles.profileContainer}>

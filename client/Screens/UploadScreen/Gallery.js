@@ -35,7 +35,7 @@ export default function Gallery() {
       const fileInfo = await getFileInfo(url);
       const isLt10MB = isLessThanTheMB(fileInfo.size, 10);
       if (!isLt10MB) {
-        alert('Imagee size must be smaller than 10MB.');
+        alert('Image size must be smaller than 10MB.');
         return;
       }
       const onUserPress = async (url) => {

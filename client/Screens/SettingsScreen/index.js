@@ -6,11 +6,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 import * as actions from '../../Redux/actions/index';
 import { palette } from '../../Utils/ColorScheme';
 import NotificationTile from './NotificationTile';
 import x from '../../assets/x.png';
+import { CLOUDINARY_API, upload_preset } from '@env';
 
 
 export default function SettingsScreen() {
@@ -20,6 +22,28 @@ export default function SettingsScreen() {
   const { updateProfilePhoto, updateColorScheme, logout } = bindActionCreators(actions, dispatch);
 
   const [modalVisible, setModalVisible] = useState(false);
+
+  const isLessThanTenMB = (fileSize: number, smallerThanSizeMB: number) => {
+    const isOk = fileSize / 1024 / 1024 < smallerThanSizeMB
+    return isOk
+  }
+
+  const handleCloudinaryUpload = async (file)  =>  {
+
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', upload_preset);
+
+    await fetch(CLOUDINARY_API,{ method:'post', body:data })
+      .then(async res => {
+        return await res.json();
+      })
+      .then(data => data.url)
+      .catch((error) => {
+        alert('You picture upload failed. Please try again.');
+        console.error('Error:', error);
+      });
+  }
 
   const choosePhotoAndUpdate = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -36,24 +60,99 @@ export default function SettingsScreen() {
     });
 
     if (!result.cancelled) {
-      let url = result.uri;
-      updateProfilePhoto(url);
-      axios({
-        method: 'patch',
-        baseURL: 'http://localhost:3000',
-        url: '/user/profPhoto',
-        data: {
-          username: 'test',
-          profPhoto: url
-        }
-      }).then(result => {
-        console.log('Success: ', result.status);
-      }).catch(err => {
-        console.log(`Error updating profile photo: ${err}`);
+      let filepath = result.uri;
+      let fileInfo = await FileSystem.getInfoAsync(filepath);
+      let file = {
+        uri:  filepath,
+        type: `profile/${filepath.split(".")[1]}`,
+          name: `profile.${filepath.split(".")[1]}`
+      };
+      const isLt10MB = isLessThanTenMB(fileInfo.size, 10);
+      if (!isLt10MB) {
+        alert('Image size must be smaller than 10MB.');
+        return;
+      }
+
+      let data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', upload_preset);
+
+      await fetch(CLOUDINARY_API, { method:'post', body: data })
+        .then(async res => {
+          return await res.json();
+        })
+        .then(data => {
+          let profPhotoUrl = data.url;
+          updateProfilePhoto(profPhotoUrl);
+          axios({
+            method: 'patch',
+            baseURL: 'http://54.215.206.56',
+            url: '/user/profPhoto',
+            data: {
+              username: 'troyqyang',
+              profPhoto: profPhotoUrl
+            }
+          }).then(result => {
+            console.log('Success: ', result.status);
+          }).catch(err => {
+            console.log(`Error updating profile photo: ${err}`);
+          });
+      })
+      .catch((error) => {
+        alert('You picture upload failed. Please try again.');
+        console.error('Error:', error);
       });
     }
-    // console.log('profPhotoUrl out', state.user.userInfo.profPhoto);
-    // console.log('state out', state);
+  }
+
+  const getNotificationData = () => {
+    const defaultData = [
+      {
+        "_id": 0,
+        "fromuser": "glen",
+        "to" : "joe",
+        "url" : "https://placeimg.com/100/100/animals",
+        "caption": "hello world",
+        "createdAt" : "2022-04-14T21:07:14.225Z",
+      },
+      {
+        "_id": 1,
+        "fromuser": "troy",
+        "to": "ash",
+        "url": "https://placeimg.com/100/100/animals",
+        "caption": "new pet",
+        "createdAt": "2022-04-14T22:07:14.225Z",
+      },
+      {
+        "_id": 2,
+        "fromuser": "dominic",
+        "to": "jenya",
+        "url": "https://placeimg.com/100/100/animals",
+        "caption": "d tempor incididunt ut labore et dolore magna al",
+        "createdAt": "2022-04-14T23:07:14.225Z",
+      },
+      {
+        "_id": 3,
+        "fromuser" : "jenya",
+        "to" : "dominic",
+        "url" : "https://placeimg.com/100/100/animals",
+        "caption": "bus pulvinar elementum integer ",
+        "createdAt" : "2022-04-14T24:07:14.225Z",
+      }
+    ];
+    axios({
+      method: 'get',
+      // baseURL: 'http://localhost:3000',
+      baseURL: 'http://54.215.206.56',
+      url: '/post/discover?limit=2&offset=0',
+      params: { username: state.user.userInfo.username }
+    }).then(result => {
+      console.log('Success: ', result);
+      return result;
+    }).catch(err => {
+      console.log(`Error getting notifications: ${err}`);
+      return defaultData;
+    })
   }
 
   return (
@@ -115,14 +214,15 @@ export default function SettingsScreen() {
               ]}>Notifications</Text>
               <Pressable
                 style={[styles.exit]}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}>
                 <Image
                   source={x}
                   style={[styles.exit]}
                 ></Image>
               </Pressable>
-              <NotificationTile/>
+              <NotificationTile data={getNotificationData()}/>
             </View>
           </View>
         </Modal>

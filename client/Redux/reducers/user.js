@@ -19,8 +19,6 @@ const userReducer = (state = userData, action) => {
         username: null
       };
     case 'UPDATE_PROF_PHOTO':
-      // console.log('profPhotoUrl', state.userInfo.profPhoto);
-      // console.log('action payload', action.payload);
       return {
         ...state,
         userInfo: {
