@@ -22,7 +22,7 @@ export default function NavBar() {
     if (guestHome === 'home') {
       return {
         icon: <FontAwesome5
-          name="door-open"
+          name='door-open'
           size={50}
           color={current.tabIconInactive}
           onPress={() => dispatch(guestAuth())}
