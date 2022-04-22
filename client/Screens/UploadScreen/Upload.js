@@ -255,7 +255,7 @@ export default function Upload({ navigation }) {
           placeholder="Say something about your pet!"
           onChangeText={(text) => setText({ text })}
           multiline={true}
-          value={text}
+          value={text.toString()}
         />
         <View style={styles.checkBoxSection}>
           <Checkbox
