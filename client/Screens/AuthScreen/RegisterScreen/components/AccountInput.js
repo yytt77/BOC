@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import { Pressable, Text, TextInput, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
@@ -7,13 +7,16 @@ import styles from '../../Styles';
 import { API_IP } from '../../../../constants.js';
 import { containsUpperCase, containsNumber, containsSpecial } from '../registerHelpers';
 import { authLog } from '../../../../Redux/actions';
+import { lightTheme, darkTheme } from '../../../../constants';
+import { useFonts } from "expo-font";
 
 const registrationEndpoint = `http://${API_IP}/user/addNewUser`;
 
 export default function AccountInput() {
   const state = useSelector(state => state);
-  const dispatch = useDispatch();
   const screen = useSelector(state => state.authScreen);
+  const theme = useSelector(state => state.theme);
+  const dispatch = useDispatch();
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -26,6 +29,17 @@ export default function AccountInput() {
   const [passwordCaptial, setPasswordCapital] = useState(<></>);
   const [passwordNum, setPasswordNum] = useState(<></>);
   const [passwordSpecial, setPasswordSpecial] = useState(<></>);
+  const [current, setCurrent] = useState(() => {
+    if (theme) {
+      return lightTheme;
+    } else {
+      return darkTheme;
+    }
+  });
+
+  const [fontsLoaded] = useFonts({
+    comicSans: require('../../../../assets/fonts/comic.ttf')
+  });
 
   const handleSignUp = async () => {
 
@@ -44,6 +58,7 @@ export default function AccountInput() {
         });
 
         dispatch(authLog());
+        alert('We\'ve sent you an activation email!\nPlease check your inbox.');
       } catch (err) {
         console.log(err);
       }
@@ -130,21 +145,21 @@ export default function AccountInput() {
 
   return (
     <View style={styles.fields}>
-      <Text>Username</Text>
+      <Text style={styles.fieldLabels}>Username</Text>
       <TextInput
         style={styles.field}
         accessibilityLabel="reg-username"
         onChangeText={text => setUsername(text)}
         autoCapitalize="none"
       />
-      <Text>Email Address</Text>
+      <Text style={styles.fieldLabels}>Email Address</Text>
       <TextInput
         style={styles.field}
         accessibilityLabel="reg-email"
         onChangeText={text => setEmail(text)}
         autoCapitalize="none"
       />
-      <Text>Password</Text>
+      <Text style={styles.fieldLabels}>Password</Text>
       <TextInput
         style={styles.field}
         accessibilityLabel="reg-pw1"
@@ -152,7 +167,7 @@ export default function AccountInput() {
         secureTextEntry={true}
         textContentType="oneTimeCode"
       />
-      <Text>Password Again</Text>
+      <Text style={styles.fieldLabels}>Password Again</Text>
       <TextInput
         style={styles.field}
         accessibilityLabel="reg-pw2"
@@ -160,7 +175,17 @@ export default function AccountInput() {
         secureTextEntry={true}
         textContentType="oneTimeCode"
       />
-      <Button title={'Sign Up'} onPress={() => handleSignUp()}>Sign Up</Button>
+      <View style={styles.buttonContainer}>
+        <Pressable
+          title={'Sign Up'}
+          style={[{ backgroundColor: current.buttonColor }, styles.button]}
+          onPress={() => handleSignUp()}>
+          <Text
+            style={[{ color: current.tabIconInactive }, styles.buttonText]}>
+            Sign Up
+          </Text>
+        </Pressable>
+      </View>
       {invalidUsername}
       {invalidEmail}
       {passwordLength}
