@@ -18,25 +18,6 @@ export default function NavBar() {
     } else {
       return darkTheme;
     }
-  })
-
-  const [icon, setIcon] = useState(() => {
-    if (guestHome === 'home') {
-      return {
-        icon: <FontAwesome5
-          name='door-open'
-          size={50}
-          color={current.tabIconInactive}
-          onPress={() => dispatch(guestAuth())}
-        />,
-        text: 'Log In'
-      }
-    } else {
-      return {
-        icon: <></>,
-        text: <></>
-      }
-    }
   });
 
   const [fontsLoaded] = useFonts({
@@ -46,11 +27,16 @@ export default function NavBar() {
   return (
     <View style={[{ backgroundColor: current.navColor }, styles.loginBar]}>
       <View style={styles.icon}>
-        {icon.icon}
+        <FontAwesome5
+          name='door-open'
+          size={50}
+          color={current.tabIconInactive}
+          onPress={() => dispatch(guestAuth())}
+        />
         <Text
           style={[{ color: current.iconColor }, styles.loginText]}
           onPress={() => dispatch(guestAuth())}>
-          {icon.text}
+          Log In
         </Text>
       </View>
     </View>

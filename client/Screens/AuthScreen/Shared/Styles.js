@@ -11,7 +11,8 @@ export default StyleSheet.create({
   },
   loginText: {
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'comicSans'
   },
   top: {
     flexDirection: 'row'
