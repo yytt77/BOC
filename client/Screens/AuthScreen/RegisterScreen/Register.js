@@ -33,7 +33,7 @@ const RegisterScreen = function() {
       <Header />
       <LogoBackButton />
       <Tabs />
-      <View>
+      <View style={styles.fieldContainer}>
         <AccountInput />
       </View>
       <Google />

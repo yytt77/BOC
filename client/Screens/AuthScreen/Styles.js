@@ -5,6 +5,9 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
+  fieldContainer: {
+
+  },
   fields: {
     width: '70%'
   },
@@ -16,5 +19,6 @@ export default StyleSheet.create({
   bottom: {
     flex: 1,
     justifyContent: 'flex-end'
-  }
+  },
+
 })
