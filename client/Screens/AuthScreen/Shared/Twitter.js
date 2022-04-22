@@ -16,6 +16,7 @@ export default function Twitter() {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
   const screen = useSelector(state => state.user);
+  const [failed, setFailed] = useState(<></>);
 
   const _openAuthSessionAsync = async () => {
     try {
@@ -28,15 +29,21 @@ export default function Twitter() {
       let username = redirectData.queryParams.username;
       dispatch(login(username));
     } catch (err) {
-      alert(err);
-      console.log(err);
+      setFailed(<Text>Unable to connect to Twitter</Text>);
     }
   }
 
   return (
     // button will include Twitter logo
     <View>
-      <Button title="Register with Twitter" onPress={ () => _openAuthSessionAsync() }>Register with Twitter</Button>
+      <Button
+        title="Register with Twitter"
+        accessibilityLabel="twitter"
+        onPress={ () => _openAuthSessionAsync() }
+      >
+        Register with Twitter
+      </Button>
+      {failed}
     </View>
   )
 }
