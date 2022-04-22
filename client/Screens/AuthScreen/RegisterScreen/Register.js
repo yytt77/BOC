@@ -33,9 +33,7 @@ const RegisterScreen = function() {
       <Header />
       <LogoBackButton />
       <Tabs />
-      <View style={styles.fieldContainer}>
-        <AccountInput />
-      </View>
+      <AccountInput />
       <Google />
       <Twitter />
     </View>

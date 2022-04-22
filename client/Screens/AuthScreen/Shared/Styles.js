@@ -29,16 +29,17 @@ export default StyleSheet.create({
   tabs: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    marginTop: 10
   },
   tabText: {
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: 'comicSans',
     color: 'white'
   },
   tabLines: {
     borderBottomWidth: 1,
     borderBottomColor: 'white',
-    marginTop: 6
+    marginTop: 10
   }
 });
