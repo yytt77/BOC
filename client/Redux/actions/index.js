@@ -12,6 +12,15 @@ export const updateProfilePhoto = (profilePhotoUrl) => {
   }
 }
 
+// export const login = (user) => {
+//   return (dispatch) => {
+//     dispatch({
+//       type: 'AUTHORIZED',
+//       payload: user
+//     })
+//   }
+// }
+
 export const login = (user) => {
   return {
     type: 'AUTHORIZED',
@@ -61,7 +70,6 @@ export const updateColorScheme = () => {
 }
 
 export const notificationToUser = (toUser, url, caption) => {
-  console.log('we have', toUser);
   return (dispatch) => {
     dispatch({
       type: 'toUser',

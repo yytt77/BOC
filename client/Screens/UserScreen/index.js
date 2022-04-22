@@ -1,5 +1,6 @@
 import { Text, View, Modal, StyleSheet } from 'react-native';
 import { useSelector, useStore, useDispatch } from "react-redux";
+import { useEffect } from 'react';
 import axios from "axios";
 
 import FeedTemplate from '../../Templates/FeedTemplate';
@@ -9,13 +10,14 @@ import { palette } from '../../Utils/ColorScheme';
 import { API_IP } from "../../constants";
 import { updateUser } from "../../Redux/actions";
 
-export default function UserScreen() {
+export default function UserScreen({ navigation }) {
 
   const state = useSelector(state => state);
   const userData = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const updateReduxUser = async () => {
+    console.log('update just ran');
     try {
       const response = await axios.get(
         `http://${API_IP}/user/getUser/${state.user.userInfo.username}`
@@ -28,6 +30,14 @@ export default function UserScreen() {
     }
   };
 
+  useEffect(() => {
+    const refreshPage = navigation.addListener('focus', () => {
+      updateReduxUser();
+    });
+    return refreshPage;
+  }, [navigation]);
+
+  console.log('posts', userData);
   return (
     <View style={[
       styles.userScreenContainer,
