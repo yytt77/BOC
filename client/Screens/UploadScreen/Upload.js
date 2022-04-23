@@ -318,7 +318,13 @@ export default function Upload({ navigation }) {
               <Image
                 source={require("../../assets/x.png")}
                 fadeDuration={0}
-                style={{ width: 20, height: 20, marginLeft: 300 }}
+                style={{
+                  width: 20,
+                  height: 20,
+                  position: 'absolute',
+                  top: -15,
+                  right: -15
+                }}
               />
             </Pressable>
             <Pressable
