@@ -8,7 +8,7 @@ import { palette } from '../../Utils/ColorScheme';
 export default function NotificationTile(props) {
   const state = useSelector((state) => state);
 
-  const Item = ({ fromuser, url, caption }) => (
+  const Item = ({ fromuser, url, caption, _id }) => (
     <View>
       <Text style={{ fontWeight: 'bold', marginTop: 20 }}>{fromuser} took a screenshot of your picture!</Text>
       <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -29,7 +29,7 @@ export default function NotificationTile(props) {
     <FlatList
       data={props.data}
       renderItem={renderItem}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item._id}
     />
   );
 }
