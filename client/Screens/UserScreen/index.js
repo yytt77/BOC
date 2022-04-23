@@ -49,7 +49,7 @@ export default function UserScreen({ navigation }) {
       </View>
       <View
         styles={styles.feedContainer}>
-        <FeedTemplate userData={userData.posts} refreshData={updateReduxUser}></FeedTemplate>
+        <FeedTemplate userData={userData.posts} refreshData={updateReduxUser} type={'feed'}></FeedTemplate>
       </View>
     </View>
   );

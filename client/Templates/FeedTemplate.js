@@ -35,6 +35,11 @@ const FeedTemplate = (props) => {
     return <PostTemplate data={data.item} key={data.index} displayModal={displayModal} refreshData={props.refreshData}></PostTemplate>
   }
 
+  let commentData = props.userData;
+  if(props.type === 'feed'){
+    commentData = props.userData.reverse();
+  }
+
   return (
     <View style={styles.mainContainer}>
       <Modal
@@ -57,7 +62,7 @@ const FeedTemplate = (props) => {
       </Modal>
       <FlatList
         style={styles.scrollcontainer}
-        data={props.userData}
+        data={commentData}
         renderItem={(data) => renderItemView(data)}
         keyExtractor={(data, index) => index.toString()}
         refreshControl={
