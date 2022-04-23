@@ -89,7 +89,7 @@ export default function SettingsScreen() {
             baseURL: 'http://54.215.206.56',
             url: '/user/profPhoto',
             data: {
-              username: 'troyqyang',
+              username: state.user.userInfo.username,
               profPhoto: profPhotoUrl
             }
           }).then(result => {
@@ -143,11 +143,11 @@ export default function SettingsScreen() {
     axios({
       method: 'get',
       // baseURL: 'http://localhost:3000',
-      baseURL: 'http://54.215.206.56',
-      url: '/post/discover?limit=2&offset=0',
-      params: { username: state.user.userInfo.username }
+      // baseURL: 'http://54.215.206.56',
+      url: 'http://54.215.206.56/user/notifications',
+      params: { touser: state.user.userInfo.username }
     }).then(result => {
-      console.log('Success: ', result);
+      // console.log('Success: ', result.data);
       return result;
     }).catch(err => {
       console.log(`Error getting notifications: ${err}`);

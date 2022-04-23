@@ -337,7 +337,7 @@ export default function Upload({ navigation }) {
                 {
                   color: palette(state.theme).buttonText
                 }
-              ]}>Pick From Photos Gallary</Text>
+              ]}>Pick From Photos Gallery</Text>
             </Pressable>
             <Pressable
               style={[
@@ -355,7 +355,7 @@ export default function Upload({ navigation }) {
                 {
                   color: palette(state.theme).buttonText,
                 }
-              ]}>Pick From Camera roll</Text>
+              ]}>Take a Photo</Text>
             </Pressable>
           </View>
         </View>
