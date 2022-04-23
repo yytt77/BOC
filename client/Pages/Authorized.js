@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Image } from "react-native";
 import styles from "./appStyles";
 import { useEffect } from "react";
-import { useFonts } from "expo-font";
+// import { useFonts } from "expo-font";
 
 //Navigation/Screens
 import { NavigationContainer, StackRouter } from "@react-navigation/native";
@@ -55,9 +55,9 @@ export default function Authorized() {
     getUser()
   }, []);
 
-  const [fontsLoaded] = useFonts({
-    comicSans: require('../assets/fonts/comic.ttf')
-  });
+  // const [fontsLoaded] = useFonts({
+  //   comicSans: require('../assets/fonts/comic.ttf')
+  // });
 
   return (
     <NavigationContainer>
