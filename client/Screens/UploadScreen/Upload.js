@@ -104,7 +104,7 @@ export default function Upload({ navigation }) {
       .then(async res => {
         return await res.json();
       })
-      .then(data => { setImgURL(data.url); })
+      .then((data) => { setImgURL(data.url); })
       .then(() => { setModalVisible(!modalVisible); })
       .catch((error) => {
         setModalVisible(!modalVisible);
