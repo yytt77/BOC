@@ -16,7 +16,11 @@ const CommentTemplate = (props) => {
 
   return (
     <View
-    style={styles.commentContainer}>
+    style={styles.commentContainer}
+    style={[styles.commentContainer,
+      {
+        borderColor: palette(state.theme).commentBorderColor
+      }]}>
       <View
       style={styles.profileContainer}>
         <View
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
   commentContainer: {
     padding: 10,
     borderBottomWidth: 2,
-    borderColor: 'black',
+    // borderColor: 'black',
     flexDirection: 'row',
   },
   textContainer: {
