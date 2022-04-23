@@ -151,7 +151,7 @@ export default function Upload({ navigation }) {
 
     let uploadInfo = {};
     uploadInfo['url'] = imgURL;
-    uploadInfo['caption'] = text.text;
+    uploadInfo['caption'] = text;
     uploadInfo['username'] = state.user.userInfo.username;
     uploadInfo['profPhoto'] = state.user.userInfo.profPhoto;
 
@@ -253,9 +253,9 @@ export default function Upload({ navigation }) {
             }
           ]}
           placeholder="Say something about your pet!"
-          onChangeText={(text) => setText({ text })}
+          onChangeText={(text) => setText(text)}
           multiline={true}
-          value={text.toString()}
+          value={text}
         />
         <View style={styles.checkBoxSection}>
           <Checkbox

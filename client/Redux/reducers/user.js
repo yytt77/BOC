@@ -1,33 +1,36 @@
-import { userData } from '../../Templates/sampleData';
+import { userData } from "../../Templates/sampleData";
 
 const userReducer = (state = userData, action) => {
   switch (action.type) {
-    case 'UPDATE':
+    case "UPDATE":
       return {
         ...state,
         posts: action.payload.posts,
-        userInfo: action.payload.userInfo
-      }
-    case 'AUTHORIZED':
+        userInfo: action.payload.userInfo,
+      };
+    case "AUTHORIZED":
       return {
         ...state,
-        username: action.payload
+        username: action.payload,
       };
-    case 'UNAUTHORIZED':
-      return {
-        ...state,
-        username: null
-      };
-    case 'UPDATE_PROF_PHOTO':
+    case "UNAUTHORIZED":
       return {
         ...state,
         userInfo: {
-          profPhoto: action.payload
-        }
+          username: "defaultUser",
+        },
+        username: null,
+      };
+    case "UPDATE_PROF_PHOTO":
+      return {
+        ...state,
+        userInfo: {
+          profPhoto: action.payload,
+        },
       };
     default:
       return state;
   }
-}
+};
 
 export default userReducer;
