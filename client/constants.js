@@ -12,6 +12,7 @@ export const lightTheme = {
   inputColor: "azure",
   searchBarColor: "rgba(255,255,255,0.3)",
   searchText: "black",
+  commentBorderColor: "black",
 };
 
 export const darkTheme = {
@@ -28,6 +29,7 @@ export const darkTheme = {
   inputColor: "azure",
   searchBarColor: "rgba(0,0,0,0.3)",
   searchText: "white",
+  commentBorderColor: "white",
 };
 
 // export const API_IP = "44.201.208.58:3000";
